@@ -42,7 +42,7 @@ class Branches extends Model
       'website' => 'string',
     ];
 
-    public function company(): HasMany
+    public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
     }
