@@ -6,19 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransactionCategory extends Model
 {
-    protected $fillable = [
-        'name',
-        'slug',
-        'is_active',
-        'description',
-        'type',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
-      'name' => 'string',
-      'slug' => 'string',
-      'is_active' => 'boolean',
-      'description' => 'string',
-      'type' => 'string',
+        'name' => 'string',
+        'slug' => 'string',
+        'is_active' => 'boolean',
+        'description' => 'string',
+        'type' => 'string',
     ];
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

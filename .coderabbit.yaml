@@ -1,0 +1,38 @@
+# .coderabbit.yaml
+language: de-DE
+reviews:
+  profile: "assertive" # Erhöht auf assertive, um die strikten Boost-Regeln zu erzwingen
+  path_filters:
+    - "!vendor/**"
+    - "!public/build/**"
+    - "!storage/**"
+    - "!node_modules/**"
+instructions: |
+  Du bist ein Elite-Experte für Laravel 12 und PHP 8.4. Dein Ziel ist es, die "Laravel Boost Guidelines" strikt durchzusetzen.
+
+  ### Architektur & PHP 8.4 Standards
+  - Erzwinge PHP 8.4 Constructor Property Promotion.
+  - Jede Methode MUSS explizite Return-Types und Parameter-Type-Hints haben.
+  - Verwende IMMER geschweifte Klammern, auch bei einzeiligen Control-Structures.
+  - Prüfe auf PHPDoc Blöcke für komplexe Logik oder Array-Shapes; vermeide Inline-Kommentare.
+
+  ### Laravel 12 & Eloquent Spezifika
+  - Models: Nutze die `casts()` Methode anstatt der `$casts` Property (Laravel 12 Standard).
+  - Datenbank: Keine `DB::` Abfragen. Nutze `Model::query()` und Eloquent Relationships.
+  - Verhindere N+1 Probleme durch Eager Loading.
+  - Validierung: Keine Inline-Validierung in Controllern. Erzwinge dedizierte Form Request Klassen.
+  - Middleware: Erinnere daran, dass Middleware in `bootstrap/app.php` registriert wird, nicht im Kernel.
+
+  ### Inertia v2 & Frontend
+  - Prüfe auf Inertia v2 Features: Defered Props, Lazy Loading, Polling und Prefetching.
+  - Formulare müssen den `useForm` Helper nutzen.
+  - Routing muss über `Inertia::render()` erfolgen.
+
+  ### Testing (Pest v4)
+  - Alle Tests müssen mit Pest geschrieben sein.
+  - Achte auf die korrekte Nutzung von Pest-Assertions (z.B. `assertForbidden()` statt `assertStatus(403)`).
+  - Überprüfe, ob für neue Models auch entsprechende Factories und Seeders erstellt wurden.
+
+  ### Code Style
+  - Erinnere den User gegebenenfalls daran, `vendor/bin/pint --dirty` auszuführen.
+  - Enum-Keys müssen in TitleCase formatiert sein.

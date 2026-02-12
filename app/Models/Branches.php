@@ -25,20 +25,20 @@ class Branches extends Model
     ];
 
     protected $casts = [
-      'company_id' => 'integer',
-      'user_id' => 'integer',
-      'is_active' => 'boolean',
-      'slug' => 'string',
-      'name' => 'string',
-      'description' => 'string',
-      'address' => 'string',
-      'zip_code' => 'string',
-      'city' => 'string',
-      'state' => 'string',
-      'country' => 'string',
-      'email' => 'string',
-      'phone' => 'string',
-      'website' => 'string',
+        'company_id' => 'integer',
+        'user_id' => 'integer',
+        'is_active' => 'boolean',
+        'slug' => 'string',
+        'name' => 'string',
+        'description' => 'string',
+        'address' => 'string',
+        'zip_code' => 'string',
+        'city' => 'string',
+        'state' => 'string',
+        'country' => 'string',
+        'email' => 'string',
+        'phone' => 'string',
+        'website' => 'string',
     ];
 
     public function company(): BelongsTo

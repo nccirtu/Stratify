@@ -6,25 +6,11 @@ use App\Enums\CatalogTypeEnum;
 use App\Enums\TypeEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CatalogItem extends Model
 {
-    protected $fillable = [
-        'name',
-        'slug',
-        'description',
-        'type',
-        'company_id',
-        'user_id',
-        'currency_id',
-        'tax_id',
-        'branch_id',
-        'transaction_category_id',
-        'type',
-        'catalog_type',
-        'is_active',
-        'default_amount',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'name' => 'string',
@@ -56,6 +42,7 @@ class CatalogItem extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function tax(): BelongsTo
     {
         return $this->belongsTo(Tax::class);
@@ -71,4 +58,8 @@ class CatalogItem extends Model
         return $this->belongsTo(TransactionCategory::class);
     }
 
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

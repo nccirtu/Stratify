@@ -6,20 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tax extends Model
 {
-    protected $fillable = [
-        'name',
-        'slug',
-        'is_active',
-        'description',
-        'country_code',
-        'code',
-        'rate',
-        'reverse_charge',
-        'applies_to',
-        'valid_from',
-        'valid_to',
-        'is_inclusive',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'name' => 'string',
@@ -35,4 +22,9 @@ class Tax extends Model
         'description' => 'string',
         'slug' => 'string',
     ];
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }
