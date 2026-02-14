@@ -23,6 +23,17 @@ return new class extends Migration
             $table->string('status');
             $table->date('period_from');
             $table->date('period_until');
+            $table->text('business_idea')->nullable();
+            $table->string('currency')->nullable();
+            $table->string('language')->nullable();
+            $table->string('foundation_type')->nullable();
+            $table->string('plan_recipient')->nullable();
+            $table->text('corporate_purpose')->nullable();
+            $table->text('benefits_offered')->nullable();
+            $table->text('inspiration')->nullable();
+            $table->text('experience')->nullable();
+            $table->text('motivation')->nullable();
+             $table->text('usp')->nullable();
             $table->timestamps();
         });
     }

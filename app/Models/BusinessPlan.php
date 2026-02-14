@@ -69,6 +69,11 @@ class BusinessPlan extends Model
         return $this->hasMany(Document::class);
     }
 
+    public function notes(): HasMany
+    {
+        return $this->hasMany(Note::class);
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);

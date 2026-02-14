@@ -13,20 +13,10 @@ return new class extends Migration
     {
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->constrained('companies')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->boolean('is_active')->default(true);
             $table->string('slug')->unique();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('address');
-            $table->string('zip_code');
-            $table->string('city');
-            $table->string('state');
-            $table->string('country');
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('website')->nullable();
             $table->timestamps();
         });
     }
