@@ -56,7 +56,7 @@ class BusinessPlanController extends Controller
     {
         $businessPlan = $this->upsertStepOne->handle($request->validated());
 
-        return redirect()->route('businessplan.edit', [$businessPlan->id, 'step' => 2])
+        return redirect()->route('businessplan.edit', ['businessplan' => $businessPlan->id, 'step' => 2])
             ->with('success', 'Step 1 saved.');
     }
 
@@ -67,7 +67,7 @@ class BusinessPlanController extends Controller
     {
         $this->upsertStepTwo->handle($businessPlan, $request->validated());
 
-        return redirect()->route('businessplan.edit', [$businessPlan->id, 'step' => 3])
+        return redirect()->route('businessplan.edit', ['businessplan' => $businessPlan->id, 'step' => 3])
             ->with('success', 'Step 2 saved.');
     }
 

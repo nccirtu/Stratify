@@ -1,4 +1,4 @@
-import { Form } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
 import { Check } from 'lucide-react';
 import React from 'react';
 
@@ -21,6 +21,18 @@ interface Props {
     branches: { id: number; name: string }[];
 }
 
+interface BusinessPlanForm {
+    name: string;
+    slug: string;
+    description: string;
+    status: string;
+    company_id: string | number;
+    branch_id: string | number;
+    period_from: string;
+    period_until: string;
+    step: number;
+}
+
 export default function BusinessPlanMultistepForm({ businessPlan, step: initialStep, companies, branches }: Props) {
     const steps = [
         { id: 1, name: 'Basic Information' },
@@ -28,17 +40,30 @@ export default function BusinessPlanMultistepForm({ businessPlan, step: initialS
         { id: 3, name: 'Planning Period' },
     ];
 
+    const { data, setData, errors, processing, submit } = useForm<BusinessPlanForm>({
+        name: businessPlan?.name || '',
+        slug: businessPlan?.slug || '',
+        description: businessPlan?.description || '',
+        status: (businessPlan?.status as string) || 'draft',
+        company_id: businessPlan?.company_id || '',
+        branch_id: businessPlan?.branch_id || '',
+        period_from: businessPlan?.period_from || '',
+        period_until: businessPlan?.period_until || '',
+        step: initialStep,
+    });
+
     const getAction = () => {
+        const id = businessPlan?.id ?? 0;
         if (!businessPlan) {
             if (initialStep === 1) {
                 return storeStepOne().url;
             } else if (initialStep === 2) {
-                return storeStepTwo(businessPlan?.id ?? 0).url;
+                return storeStepTwo(id).url;
             } else if (initialStep === 3) {
-                return storeStepThree(businessPlan?.id ?? 0).url;
+                return storeStepThree(id).url;
             }
         }
-        return updateBusinessPlan(businessPlan?.id ?? 0).url;
+        return updateBusinessPlan(id).url;
     };
 
     const getMethod = () => {
@@ -46,6 +71,11 @@ export default function BusinessPlanMultistepForm({ businessPlan, step: initialS
             return 'post';
         }
         return 'patch';
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        submit(getMethod(), getAction());
     };
 
     return (
@@ -76,46 +106,27 @@ export default function BusinessPlanMultistepForm({ businessPlan, step: initialS
                 </ol>
             </nav>
 
-            <Form
-                action={getAction()}
-                method={getMethod()}
-                initialValues={{
-                    name: businessPlan?.name || '',
-                    slug: businessPlan?.slug || '',
-                    description: businessPlan?.description || '',
-                    status: businessPlan?.status || 'draft',
-                    company_id: businessPlan?.company_id || '',
-                    branch_id: businessPlan?.branch_id || '',
-                    period_from: businessPlan?.period_from || '',
-                    period_until: businessPlan?.period_until || '',
-                    step: initialStep,
-                }}
-                className="mx-auto w-full max-w-2xl space-y-6"
-            >
-                {({ data, setData, errors, processing }) => (
-                    <>
-                        {initialStep === 1 && <StepOne data={data} setData={setData} errors={errors} />}
+            <form onSubmit={handleSubmit} className="mx-auto w-full max-w-2xl space-y-6">
+                {initialStep === 1 && <StepOne data={data} setData={setData} errors={errors} />}
 
-                        {initialStep === 2 && (
-                            <StepTwo data={data} setData={setData} errors={errors} companies={companies} branches={branches} />
-                        )}
-
-                        {initialStep === 3 && <StepThree data={data} setData={setData} errors={errors} />}
-
-                        <div className="flex justify-end gap-4">
-                            {initialStep > 1 && (
-                                <Button type="button" variant="outline" onClick={() => window.history.back()}>
-                                    Back
-                                </Button>
-                            )}
-                            <Button type="submit" disabled={processing}>
-                                {processing && <Spinner className="mr-2" />}
-                                {initialStep === 3 ? 'Complete' : 'Save & Next'}
-                            </Button>
-                        </div>
-                    </>
+                {initialStep === 2 && (
+                    <StepTwo data={data} setData={setData} errors={errors} companies={companies} branches={branches} />
                 )}
-            </Form>
+
+                {initialStep === 3 && <StepThree data={data} setData={setData} errors={errors} />}
+
+                <div className="flex justify-end gap-4">
+                    {initialStep > 1 && (
+                        <Button type="button" variant="outline" onClick={() => window.history.back()}>
+                            Back
+                        </Button>
+                    )}
+                    <Button type="submit" disabled={processing}>
+                        {processing && <Spinner className="mr-2" />}
+                        {initialStep === 3 ? 'Complete' : 'Save & Next'}
+                    </Button>
+                </div>
+            </form>
         </div>
     );
 }

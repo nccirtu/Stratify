@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Field, FieldDescription, FieldError, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 
@@ -7,7 +8,7 @@ interface StepThreeProps {
         period_from: string;
         period_until: string;
     };
-    setData: (key: string, value: string) => void;
+    setData: (key: string, value: string | number | boolean | null) => void;
     errors: Partial<Record<string, string>>;
 }
 
@@ -20,7 +21,7 @@ export default function StepThree({ data, setData, errors }: StepThreeProps) {
                     id="period_from"
                     name="period_from"
                     type="date"
-                    value={data.period_from}
+                    value={data?.period_from || ''}
                     onChange={(e) => setData('period_from', e.target.value)}
                     required
                 />
@@ -34,7 +35,7 @@ export default function StepThree({ data, setData, errors }: StepThreeProps) {
                     id="period_until"
                     name="period_until"
                     type="date"
-                    value={data.period_until}
+                    value={data?.period_until || ''}
                     onChange={(e) => setData('period_until', e.target.value)}
                     required
                 />

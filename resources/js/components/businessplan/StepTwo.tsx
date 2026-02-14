@@ -8,7 +8,7 @@ interface StepTwoProps {
         company_id: number | string;
         branch_id: number | string;
     };
-    setData: (key: string, value: string | number) => void;
+    setData: (key: string, value: string | number | boolean | null) => void;
     errors: Partial<Record<string, string>>;
     companies: { id: number; name: string }[];
     branches: { id: number; name: string }[];
@@ -19,7 +19,7 @@ export default function StepTwo({ data, setData, errors, companies, branches }: 
         <div className="grid gap-6">
             <Field>
                 <FieldLabel htmlFor="company_id">Company</FieldLabel>
-                <Select value={data.company_id?.toString() || ''} onValueChange={(val) => setData('company_id', val)}>
+                <Select value={data?.company_id?.toString() || ''} onValueChange={(val) => setData('company_id', val)}>
                     <SelectTrigger id="company_id">
                         <SelectValue placeholder="Select company" />
                     </SelectTrigger>
@@ -37,7 +37,7 @@ export default function StepTwo({ data, setData, errors, companies, branches }: 
 
             <Field>
                 <FieldLabel htmlFor="branch_id">Branch (Optional)</FieldLabel>
-                <Select value={data.branch_id?.toString() || ''} onValueChange={(val) => setData('branch_id', val)}>
+                <Select value={data?.branch_id?.toString() || ''} onValueChange={(val) => setData('branch_id', val)}>
                     <SelectTrigger id="branch_id">
                         <SelectValue placeholder="Select branch" />
                     </SelectTrigger>

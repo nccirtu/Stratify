@@ -12,7 +12,7 @@ interface StepOneProps {
         status: string;
         description: string;
     };
-    setData: (key: string, value: string) => void;
+    setData: (key: string, value: string | number | boolean | null) => void;
     errors: Partial<Record<string, string>>;
 }
 
@@ -24,7 +24,7 @@ export default function StepOne({ data, setData, errors }: StepOneProps) {
                 <Input
                     id="name"
                     name="name"
-                    value={data.name}
+                    value={data?.name || ''}
                     onChange={(e) => {
                         const val = e.target.value;
                         setData('name', val);
@@ -39,14 +39,14 @@ export default function StepOne({ data, setData, errors }: StepOneProps) {
 
             <Field>
                 <FieldLabel htmlFor="slug">Slug</FieldLabel>
-                <Input id="slug" name="slug" value={data.slug} onChange={(e) => setData('slug', e.target.value)} required />
+                <Input id="slug" name="slug" value={data?.slug || ''} onChange={(e) => setData('slug', e.target.value)} required />
                 <FieldDescription>The URL-friendly version of the name.</FieldDescription>
                 <FieldError>{errors.slug}</FieldError>
             </Field>
 
             <Field>
                 <FieldLabel htmlFor="status">Status</FieldLabel>
-                <Select value={data.status || 'draft'} onValueChange={(val) => setData('status', val)}>
+                <Select value={data?.status || 'draft'} onValueChange={(val) => setData('status', val)}>
                     <SelectTrigger id="status">
                         <SelectValue placeholder="Select status" />
                     </SelectTrigger>
@@ -65,7 +65,7 @@ export default function StepOne({ data, setData, errors }: StepOneProps) {
                 <Textarea
                     id="description"
                     name="description"
-                    value={data.description}
+                    value={data?.description || ''}
                     onChange={(e) => setData('description', e.target.value)}
                     rows={4}
                 />
