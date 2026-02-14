@@ -17,5 +17,9 @@
         "phpstorm",
         "vscode"
     ],
-    "guidelines": []
+    "guidelines": [
+        "Use the Inertia <Form> component for building forms in React.",
+        "Use shadcn Field components (FieldSet, FieldLegend, FieldGroup, Field, FieldLabel, FieldDescription, FieldError) from '@/components/ui/field' for form fields.",
+        "Use TypeScript definitions from '@/wayfinder/types' (e.g., App.Models.BusinessPlan) for Eloquent models in the frontend."
+    ]
 }
