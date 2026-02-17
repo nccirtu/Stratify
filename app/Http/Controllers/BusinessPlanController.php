@@ -18,6 +18,8 @@ use App\Models\CatalogItem;
 use App\Models\Company;
 use App\Models\Currency;
 use App\Models\Tax;
+use App\Models\RecurringTemplate;
+use App\Models\Transaction;
 use App\Models\TransactionCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -61,6 +63,89 @@ class BusinessPlanController extends Controller
             'incomeCatalogItems' => CatalogItem::where('user_id', auth()->id())->where('type', TypeEnum::INCOME)->where('is_active', true)->get()->map(fn ($i) => ['value' => (string) $i->id, 'label' => $i->name, 'data' => $i->only('name', 'description', 'default_amount', 'transaction_category_id', 'currency_id', 'tax_id')]),
             'expenseCatalogItems' => CatalogItem::where('user_id', auth()->id())->where('type', TypeEnum::EXPENSE)->where('is_active', true)->get()->map(fn ($i) => ['value' => (string) $i->id, 'label' => $i->name, 'data' => $i->only('name', 'description', 'default_amount', 'transaction_category_id', 'currency_id', 'tax_id')]),
         ]);
+    }
+
+    /**
+     * Store a new business plan (single-submit from wizard).
+     */
+    public function store(StoreBusinessPlanRequest $request): RedirectResponse
+    {
+        $data = $request->validated();
+
+        $businessPlan = BusinessPlan::create([
+            'name' => $data['name'],
+            'slug' => $data['slug'],
+            'description' => $data['description'] ?? null,
+            'company_id' => $data['company_id'],
+            'branch_id' => $data['branch_id'] ?? null,
+            'user_id' => auth()->id(),
+            'status' => StatusEnum::DRAFT,
+            'period_from' => $data['period_from'] ?? null,
+            'period_until' => $data['period_until'] ?? null,
+            'business_idea' => $data['business_idea'] ?? null,
+            'currency' => $data['currency_id'] ?? null,
+            'language' => $data['language'] ?? null,
+            'target_customers' => $data['target_customers'] ?? null,
+            'customer_problems' => $data['customer_problems'] ?? null,
+            'location' => $data['location'] ?? null,
+            'solution_description' => $data['solution_description'] ?? null,
+            'competitive_advantage' => $data['competitive_advantage'] ?? null,
+            'pricing_strategy' => $data['pricing_strategy'] ?? null,
+            'competitors' => $data['competitors'] ?? null,
+            'team_members' => $data['team_members'] ?? null,
+            'initial_investment' => $data['initial_investment'] ?? null,
+            'marketing_channels' => $data['marketing_channels'] ?? null,
+            'revenue_model' => $data['revenue_model'] ?? null,
+            'milestones' => $data['milestones'] ?? null,
+            'risks' => $data['risks'] ?? null,
+        ]);
+
+        $this->storeTransactions($businessPlan, $data['income_transactions'] ?? [], TypeEnum::INCOME);
+        $this->storeTransactions($businessPlan, $data['expense_transactions'] ?? [], TypeEnum::EXPENSE);
+
+        return redirect()->route('businessplan.index')
+            ->with('success', 'Business Plan created.');
+    }
+
+    private function storeTransactions(BusinessPlan $businessPlan, array $transactions, TypeEnum $type): void
+    {
+        foreach ($transactions as $txData) {
+            $recurringTemplateId = null;
+
+            if (!empty($txData['is_recurring'])) {
+                $template = RecurringTemplate::create([
+                    'business_plan_id' => $businessPlan->id,
+                    'amount' => $txData['amount'],
+                    'frequency' => $txData['frequency'],
+                    'day_of_month' => $txData['day_of_month'] ?? 1,
+                    'start_date' => $txData['start_date'],
+                    'end_date' => $txData['end_date'] ?? null,
+                    'catalog_item_id' => $txData['catalog_item_id'] ?? null,
+                ]);
+                $recurringTemplateId = $template->id;
+            }
+
+            Transaction::create([
+                'business_plan_id' => $businessPlan->id,
+                'name' => $txData['name'],
+                'slug' => Str::slug($txData['name']),
+                'description' => $txData['description'] ?? null,
+                'amount' => $txData['amount'],
+                'total_amount' => $txData['amount'],
+                'category_id' => $txData['category_id'],
+                'currency_id' => $txData['currency_id'],
+                'tax_id' => $txData['tax_id'],
+                'catalog_item_id' => $txData['catalog_item_id'] ?? null,
+                'recurring_template_id' => $recurringTemplateId,
+                'type' => $type->value,
+                'status' => StatusEnum::DRAFT->value,
+                'date' => $txData['date'] ?? now(),
+                'is_forecast' => true,
+                'is_active' => true,
+                'is_recurring' => !empty($txData['is_recurring']),
+                'payment_method' => $txData['payment_method'],
+            ]);
+        }
     }
 
     /**

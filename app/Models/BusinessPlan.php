@@ -24,6 +24,22 @@ class BusinessPlan extends Model
         'status',
         'period_from',
         'period_until',
+        'business_idea',
+        'currency',
+        'language',
+        'target_customers',
+        'customer_problems',
+        'location',
+        'solution_description',
+        'competitive_advantage',
+        'pricing_strategy',
+        'competitors',
+        'team_members',
+        'initial_investment',
+        'marketing_channels',
+        'revenue_model',
+        'milestones',
+        'risks',
     ];
 
     protected $casts = [
