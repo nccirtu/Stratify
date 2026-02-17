@@ -78,4 +78,19 @@ class BusinessPlan extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function founders(): HasMany
+    {
+        return $this->hasMany(Founder::class);
+    }
+
+    public function employees(): HasMany
+    {
+        return $this->hasMany(Employee::class);
+    }
+
+    public function serviceProviders(): HasMany
+    {
+        return $this->hasMany(ServiceProvider::class);
+    }
 }

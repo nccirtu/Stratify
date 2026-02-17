@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\BusinessPlanController;
+use App\Http\Controllers\BusinessPlanPdfController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -30,6 +32,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'update' => 'businessplan.update',
         'destroy' => 'businessplan.destroy',
     ]);
+
+    Route::get('/subscription/checkout', [SubscriptionController::class, 'checkout'])->name('subscription.checkout');
+    Route::get('/subscription/portal', [SubscriptionController::class, 'portal'])->name('subscription.portal');
+
+    Route::get('/business-plan/{businessPlan}/pdf', [BusinessPlanPdfController::class, 'show'])->name('business-plan.pdf');
+    Route::get('/business-plan/{businessPlan}/pdf/download', [BusinessPlanPdfController::class, 'download'])->name('business-plan.pdf.download');
 });
 
 require __DIR__.'/settings.php';

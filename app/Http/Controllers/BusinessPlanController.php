@@ -5,12 +5,20 @@ namespace App\Http\Controllers;
 use App\Actions\BusinessPlan\UpsertBusinessPlanStepOne;
 use App\Actions\BusinessPlan\UpsertBusinessPlanStepThree;
 use App\Actions\BusinessPlan\UpsertBusinessPlanStepTwo;
+use App\Http\Requests\Businessplan\StoreBusinessPlanRequest;
 use App\Http\Requests\Businessplan\StoreStepOneRequest;
 use App\Http\Requests\Businessplan\StoreStepThreeRequest;
 use App\Http\Requests\Businessplan\StoreStepTwoRequest;
+use App\Enums\StatusEnum;
+use App\Enums\TypeEnum;
+use Illuminate\Support\Str;
 use App\Models\Branches;
 use App\Models\BusinessPlan;
+use App\Models\CatalogItem;
 use App\Models\Company;
+use App\Models\Currency;
+use App\Models\Tax;
+use App\Models\TransactionCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -44,8 +52,14 @@ class BusinessPlanController extends Controller
     public function create(): Response
     {
         return Inertia::render('businessplan/create', [
-            'branches' => Branches::all(),
-            'companies' => Company::where('user_id', auth()->id())->get(),
+            'branches' => Branches::all()->map(fn ($b) => ['value' => (string) $b->id, 'label' => $b->name]),
+            'companies' => Company::where('user_id', auth()->id())->get()->map(fn ($c) => ['value' => (string) $c->id, 'label' => $c->name]),
+            'currencies' => Currency::all()->map(fn ($c) => ['value' => (string) $c->id, 'label' => $c->code]),
+            'taxes' => Tax::where('is_active', true)->get()->map(fn ($t) => ['value' => (string) $t->id, 'label' => $t->name]),
+            'incomeCategories' => TransactionCategory::where('type', TypeEnum::INCOME->value)->where('is_active', true)->get()->map(fn ($c) => ['value' => (string) $c->id, 'label' => $c->name]),
+            'expenseCategories' => TransactionCategory::where('type', TypeEnum::EXPENSE->value)->where('is_active', true)->get()->map(fn ($c) => ['value' => (string) $c->id, 'label' => $c->name]),
+            'incomeCatalogItems' => CatalogItem::where('user_id', auth()->id())->where('type', TypeEnum::INCOME)->where('is_active', true)->get()->map(fn ($i) => ['value' => (string) $i->id, 'label' => $i->name, 'data' => $i->only('name', 'description', 'default_amount', 'transaction_category_id', 'currency_id', 'tax_id')]),
+            'expenseCatalogItems' => CatalogItem::where('user_id', auth()->id())->where('type', TypeEnum::EXPENSE)->where('is_active', true)->get()->map(fn ($i) => ['value' => (string) $i->id, 'label' => $i->name, 'data' => $i->only('name', 'description', 'default_amount', 'transaction_category_id', 'currency_id', 'tax_id')]),
         ]);
     }
 
@@ -87,7 +101,7 @@ class BusinessPlanController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Inertia::render('businessplan/show');
     }
 
     /**
