@@ -33,7 +33,7 @@
 ### React & Inertia (v2)
 
 - **Navigation:** Use `<Link>` or `router.visit()`.
-- **Forms:** Use the `<Form>` component or `useForm` helper.
+- **Forms:** Use `@nccirtu/tablefy` for schema-driven forms (see Section 7). For simple forms, use `<Form>` or `useForm`.
 - **Components:** Functional components. Place pages in `resources/js/Pages`.
 - **Features:** Utilize Inertia v2 features like deferred props, infinite scrolling (`WhenVisible`), and prefetching.
 
@@ -67,6 +67,53 @@
 - **Model Types:** Import generated model types from `@/wayfinder/types`.
   Example: `import { App } from '@/wayfinder/types'; type Props = { post: App.Models.Post };`
 
-## 6. Cursor & Copilot Rules
+## 6. Tablefy (Schema-Driven UI)
+
+Use `@nccirtu/tablefy` for building schema-driven data tables and forms.
+
+### Forms (`@nccirtu/tablefy/forms`)
+
+- **Imports:** `import { FormSchema, TextInput, Select, FormRenderer } from "@nccirtu/tablefy/forms";`
+- **Builder:** `FormSchema.make<T>()`
+- **Fields:** `TextInput`, `Textarea`, `Select`, `Checkbox`, `Toggle`, `RadioGroup`, `DatePicker`, `FileUpload`, `Repeater`, `Hidden`.
+- **Layout:** `.columns(n)`, `.sections()`, `.tabs()`, `.wizard()`.
+- **Field Methods:** `.label()`, `.required()`, `.email()`, `.password()`, `.options([])`, `.dependsOn('field', val => val === true, 'show')`.
+- **Actions:** `.actions(a => a.submit({ label: 'Save' }).cancel())`.
+- **Example:**
+
+    ```tsx
+    const schema = FormSchema.make<User>()
+      .title("Create User")
+      .fields(
+        TextInput.make<User>("name").label("Name").required(),
+        Select.make<User>("role").options([...]).required()
+      )
+      .actions(a => a.submit({ label: "Create" }))
+      .build();
+
+    <FormRenderer schema={schema} data={data} onChange={...} onSubmit={...} />
+    ```
+
+### Tables (`@nccirtu/tablefy`)
+
+- **Imports:** `import { DataTable, TableSchema, TextColumn, ActionsColumn } from "@nccirtu/tablefy";`
+- **Builder:** `TableSchema.make<T>()`
+- **Columns:** `TextColumn`, `NumberColumn`, `DateColumn`, `BadgeColumn`, `ImageColumn`, `IconColumn`, `AvatarGroupColumn`.
+- **Editable:** `InputColumn`, `SelectColumn`. Use `.onSave((row, val) => ...)` for inline editing.
+- **Actions:** `ActionsColumn` with `.view()`, `.edit()`, `.delete()`, or custom `.action()`. Use `.render()` for complex UI (dialogs).
+- **Example:**
+
+    ```tsx
+    const columns = TableSchema.make<User>()
+      .columns(
+        TextColumn.make("name").sortable(),
+        ActionsColumn.make<User>().delete(row => ...)
+      )
+      .build();
+
+    <DataTable columns={columns} data={users} />
+    ```
+
+## 7. Cursor & Copilot Rules
 
 - Additional detailed rules are located in `.cursor/rules/laravel-boost.mdc` and `.github/copilot-instructions.md`.
