@@ -23,7 +23,7 @@ class DashboardController extends Controller
     {
         return Inertia::render('dashboard', [
             'greeting' => $this->greeting(),
-            'blogPosts' => Inertia::scroll(fn () => Post::query()->latest()->paginate(6)),
+            'blogPosts' => Inertia::scroll(fn () => Post::query()->where('posts.is_active', true)->latest()->paginate(6)),
             'postCategories' => \App\Enums\PostCategoryEnum::label(),
             'postCategoryColors' => \App\Enums\PostCategoryEnum::colors(),
         ]);

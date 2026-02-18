@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use App\Enums\PostCategoryEnum;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'title',
         'slug',
@@ -16,9 +19,11 @@ class Post extends Model
         'category',
         'author',
         'content',
+        'is_active',
     ];
 
     protected $casts = [
         'category' => PostCategoryEnum::class,
+        'is_active' => 'boolean',
     ];
 }
