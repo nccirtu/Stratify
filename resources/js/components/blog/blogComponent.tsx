@@ -20,13 +20,15 @@ const BlogGrid = ({
     categories,
     categoryColors,
 }: {
-    posts: App.Models.Post[];
+    posts: App.Models.Post[] | PaginatedData<App.Models.Post>;
     categories: Record<string, string>;
     categoryColors: Record<string, string>;
 }) => {
+    const postArray = Array.isArray(posts) ? posts : posts.data;
+
     return (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post, index) => (
+            {postArray.map((post, index) => (
                 <Card
                     key={index}
                     className="group h-full overflow-hidden shadow-none transition-all duration-300"
@@ -164,7 +166,7 @@ const Blog = ({ blogPosts, categories, categoryColors }: BlogProps) => {
                             )}
                         >
                             <BlogGrid
-                                posts={blogPosts.data}
+                                posts={blogPosts}
                                 categories={categories}
                                 categoryColors={categoryColors}
                             />
@@ -172,7 +174,7 @@ const Blog = ({ blogPosts, categories, categoryColors }: BlogProps) => {
                     </TabsContent>
 
                     {/* Category-specific Tabs */}
-                    {categoryEntries.map(([value, label]) => (
+                    {categoryEntries.map(([value]) => (
                         <TabsContent key={value} value={value}>
                             <BlogGrid
                                 posts={blogPosts.data.filter(

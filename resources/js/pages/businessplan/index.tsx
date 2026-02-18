@@ -21,7 +21,7 @@ export default function Businessplan({businessplans }: { businessplans: Paginate
             <Head title="Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="relative min-h-screen flex-1 overflow-hidden rounded-xl md:min-h-min">
-                    <div className="py-4">
+                    <div>
                         {businessplans.data.length > 0 ? (
                             <BusinessplanGridView
                                 businessplans={businessplans.data}

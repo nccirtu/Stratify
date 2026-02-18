@@ -14,20 +14,7 @@ export default function BlogShow({
     postCategories: Record<string, string>;
     postCategoryColors: Record<string, string>;
 }) {
-    const breadcrumbs: BreadcrumbItem[] = [
-        {
-            title: 'Dashboard',
-            href: '/dashboard',
-        },
-        {
-            title: 'Blog',
-            href: '/dashboard', // Oder eine Blog-Index-Seite, falls vorhanden
-        },
-        {
-            title: blogPost.title,
-            href: `/blog/${blogPost.slug}`,
-        },
-    ];
+    const breadcrumbs: BreadcrumbItem[] = [];
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
