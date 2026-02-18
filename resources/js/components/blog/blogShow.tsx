@@ -47,15 +47,16 @@ export default function BlogShowComponent({
                 </div>
             </div>
 
-            {(blogPost.image_url) && (
-                <div className="aspect-video w-full overflow-hidden rounded-xl bg-muted">
-                    <img
-                        src={blogPost.image_url ?? ''}
-                        alt={blogPost.image_alt || blogPost.title}
-                        className="h-full w-full object-cover"
-                    />
-                </div>
-            )}
+            <div className="aspect-video w-full overflow-hidden rounded-xl bg-muted">
+                <img
+                    src={blogPost.image_url ?? '/assets/images/newsPlatzhalter.jpg'}
+                    alt={blogPost.image_alt || blogPost.title}
+                    className="h-full w-full object-cover"
+                    onError={(e) => {
+                        e.currentTarget.src = '/assets/images/newsPlatzhalter.jpg';
+                    }}
+                />
+            </div>
 
             <div className="prose prose-lg dark:prose-invert max-w-none">
                 {paragraphs.length > 0 ? (

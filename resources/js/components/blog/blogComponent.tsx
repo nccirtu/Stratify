@@ -55,6 +55,10 @@ const BlogGrid = ({
                                     }
                                     alt={post.image_alt ?? ''}
                                     className="h-59.5 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                    onError={(e) => {
+                                        e.currentTarget.src =
+                                            '/assets/images/newsPlatzhalter.jpg';
+                                    }}
                                 />
                             </a>
                         </div>
