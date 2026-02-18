@@ -41,6 +41,7 @@ class BusinessPlanController extends Controller
     {
         $businessplans = BusinessPlan::with(['user', 'notes.user'])
             ->where('user_id', auth()->id())
+            ->orderBy('updated_at', 'desc')
             ->paginate(15);
 
         return Inertia::render('businessplan/index', [

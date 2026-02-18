@@ -2,21 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BusinessPlan;
+use App\Models\Post;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class DashboardController extends Controller
 {
+    public function greeting(): string
+    {
+        $hour = now()->hour;
+
+        return match (true) {
+            $hour < 12 => __('Guten Morgen'),
+            $hour < 18 => __('Guten Tag'),
+            default => __('Guten Abend'),
+        };
+    }
+
     public function index(): Response
     {
-        $businessplans = BusinessPlan::with(['user', 'notes.user'])
-            ->where('user_id', auth()->id())
-            ->orderBy('updated_at', 'desc')
-            ->paginate(15);
-
         return Inertia::render('dashboard', [
-            'businessplans' => $businessplans,
+            'greeting' => $this->greeting(),
+            'blogPosts' => Inertia::scroll(fn () => Post::query()->latest()->paginate(6)),
+            'postCategories' => \App\Enums\PostCategoryEnum::label(),
+            'postCategoryColors' => \App\Enums\PostCategoryEnum::colors(),
         ]);
     }
 }

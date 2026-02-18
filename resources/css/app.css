@@ -11,7 +11,7 @@
 :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.1448 0 0);
-    --card: oklch(1 0 0);
+    --card: #e5ffcb;
     --card-foreground: oklch(0.1448 0 0);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.1448 0 0);
@@ -21,7 +21,7 @@
     --secondary-foreground: #193200;
     --muted: #e5ffcb;
     --muted-foreground: #4b9600;
-    --accent: #fff59d;
+    --accent: #7cfc00;
     --accent-foreground: #353000;
     --destructive: oklch(0.583 0.2387 28.4765);
     --destructive-foreground: oklch(0.9702 0 0);

@@ -140,7 +140,7 @@ function buildTransactionRepeaterFields(
 export function buildBusinessPlanSchema(options: SchemaOptions) {
     return FormSchema.make<BusinessPlanFormData>()
         .title('Businessplan erstellen')
-        .columns(2)
+        .columns(1)
         .fields(
             // Step 1: Allgemein
             TextInput.make<BusinessPlanFormData>('name')
@@ -156,7 +156,7 @@ export function buildBusinessPlanSchema(options: SchemaOptions) {
             Textarea.make<BusinessPlanFormData>('description')
                 .label('Beschreibung')
                 .rows(3)
-                .columnSpan(2),
+                .columnSpan(1),
 
             // Step 2: Unternehmen
             Select.make<BusinessPlanFormData>('company_id')

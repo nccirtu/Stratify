@@ -19,9 +19,9 @@ export default function FormDialog({buttonText, dialogTitle, dialogDescription, 
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline">{buttonText}</Button>
+                <Button variant="default">{buttonText}</Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-lg">
+            <DialogContent className="lg:max-w-5xl sm:max-w-xs">
                 <DialogHeader>
                     <DialogTitle>{dialogTitle || ''}</DialogTitle>
                     <DialogDescription>{dialogDescription || ''}</DialogDescription>

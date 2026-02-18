@@ -3,6 +3,7 @@
 use App\Http\Controllers\BusinessPlanController;
 use App\Http\Controllers\BusinessPlanPdfController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,6 +39,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/business-plan/{businessPlan}/pdf', [BusinessPlanPdfController::class, 'show'])->name('business-plan.pdf');
     Route::get('/business-plan/{businessPlan}/pdf/download', [BusinessPlanPdfController::class, 'download'])->name('business-plan.pdf.download');
+
+    Route::get('/blog/{post:slug}', [PostController::class, 'show'])->name('blog.show');
 });
 
 require __DIR__.'/settings.php';

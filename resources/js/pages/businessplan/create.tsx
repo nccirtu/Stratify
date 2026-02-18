@@ -1,21 +1,11 @@
 import { Head } from '@inertiajs/react';
 
-import CreateBusinessplanForm from '@/components/forms/businessplan/createBusinessplan';
+import CreateBusinessplanForm from '@/components/businessplan/form/createBusinessplan';
 import type { SchemaOptions } from '@/components/businessplan/form/schema';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
-import { create as createBusinessPlan, index as indexBusinessPlan } from '@/wayfinder/routes/businessplan';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Businesspläne',
-        href: indexBusinessPlan().url,
-    },
-    {
-        title: 'Erstellen',
-        href: createBusinessPlan().url,
-    },
-];
+const breadcrumbs: BreadcrumbItem[] = [];
 
 export default function CreateBusinessPlanPage(props: SchemaOptions) {
     return (
