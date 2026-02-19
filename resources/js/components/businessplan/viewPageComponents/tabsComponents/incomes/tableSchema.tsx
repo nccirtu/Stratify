@@ -3,6 +3,7 @@ import {
     DropdownMenuItem,
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
+import { App } from '@/wayfinder/types';
 import { Link, router } from '@inertiajs/react';
 import {
     ActionsColumn,
@@ -15,7 +16,9 @@ import {
 } from '@nccirtu/tablefy';
 import { Download, Plus } from 'lucide-react';
 
-export type TransactionData = App.Data.TransactionData;
+export type TransactionData = App.Models.Transaction;
+
+interface CreateTransactionSchemaOptions {}
 
 export const createTransactionSchema = (
     options: CreateTransactionSchemaOptions = {},
@@ -134,26 +137,6 @@ export const createTransactionSchema = (
                     color: 'warning',
                 },
                 { value: 'cancelled', label: 'Storniert', color: 'secondary' },
-            ]),
-    );
-
-    // Payment Status
-    schema = schema.columns(
-        EnumColumn.make<BillData>('paymentStatus')
-            .label('Zahlungsstatus')
-            .sortable()
-            .searchable()
-            .visibilityLabel('Zahlungsstatus')
-            .visibleByDefault(true)
-            .options([
-                { value: 'open_payment', label: 'Offen', color: 'warning' },
-                {
-                    value: 'partially_paid',
-                    label: 'Teilweise bezahlt',
-                    color: 'info',
-                },
-                { value: 'paid', label: 'Bezahlt', color: 'success' },
-                { value: 'overdue', label: 'Überfällig', color: 'destructive' },
             ]),
     );
 

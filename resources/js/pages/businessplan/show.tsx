@@ -2,29 +2,22 @@ import { Head } from '@inertiajs/react';
 
 import ViewPageTabs from '@/components/businessplan/viewPageComponents/viewPageTabs';
 import AppLayout from '@/layouts/app-layout';
+import type { BreadcrumbItem } from '@/types';
+import { App } from '@/wayfinder/types';
 
-const breadcrumbs = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-    },
-    {
-        title: 'Businessplan',
-        href: '/businessplan',
-    },
-    {
-        title: 'Anzeigen',
-        href: '',
-    },
-];
+const breadcrumbs: BreadcrumbItem[] = [];
 
-export default function BusinessplanShow() {
+interface BusinessPlanShowProps {
+    businessPlan: App.Models.BusinessPlan;
+}
+
+export default function BusinessplanShow({ businessPlan }: BusinessPlanShowProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="relative min-h-screen flex-1 overflow-hidden rounded-xl md:min-h-min">
-                    <ViewPageTabs />
+                    <ViewPageTabs transactions={businessPlan.transactions ?? []} />
                 </div>
             </div>
         </AppLayout>

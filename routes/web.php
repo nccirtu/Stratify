@@ -30,6 +30,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'edit' => 'businessplan.edit',
         'update' => 'businessplan.update',
         'destroy' => 'businessplan.destroy',
+    ])->parameters([
+        'businessplans' => 'businessPlan',
     ]);
 
     Route::get('/subscription/checkout', [SubscriptionController::class, 'checkout'])->name('subscription.checkout');

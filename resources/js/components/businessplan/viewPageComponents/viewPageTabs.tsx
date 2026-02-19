@@ -6,15 +6,33 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { DataTable } from '@nccirtu/tablefy';
+import {
+    TransactionData,
+    createTransactionSchema,
+} from './tabsComponents/incomes/tableSchema';
 import EditFormOverview from './tabsComponents/overview/editFormOverview';
 
-export default function ViewPageTabs() {
+export default function ViewPageTabs({
+    transactions,
+}: {
+    transactions: TransactionData[];
+}) {
+    const { columns, config } = createTransactionSchema();
+
+    const incomes = transactions.filter(
+        (transaction) => transaction.type === 'income',
+    );
+    const expenses = transactions.filter(
+        (transaction) => transaction.type === 'expense',
+    );
+
     return (
         <Tabs defaultValue="overview">
             <TabsList>
                 <TabsTrigger value="overview">Übersicht</TabsTrigger>
-                <TabsTrigger value="reports">Einnahmen</TabsTrigger>
-                <TabsTrigger value="settings">Ausgaben</TabsTrigger>
+                <TabsTrigger value="incomes">Einnahmen</TabsTrigger>
+                <TabsTrigger value="expenses">Ausgaben</TabsTrigger>
                 <TabsTrigger value="analytics">Analytics</TabsTrigger>
             </TabsList>
             <TabsContent value="overview">
@@ -30,38 +48,38 @@ export default function ViewPageTabs() {
                     </CardContent>
                 </Card>
             </TabsContent>
+            <TabsContent value="incomes">
+                <Card className={'bg-white'}>
+                    <CardHeader>
+                        <CardTitle>Einkommen</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <DataTable
+                            columns={columns}
+                            data={incomes}
+                            config={config}
+                        />
+                    </CardContent>
+                </Card>
+            </TabsContent>
+            <TabsContent value="expenses">
+                <Card className={'bg-white'}>
+                    <CardHeader>
+                        <CardTitle>Ausgaben</CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-sm text-muted-foreground">
+                        <DataTable
+                            columns={columns}
+                            data={expenses}
+                            config={config}
+                        />
+                    </CardContent>
+                </Card>
+            </TabsContent>
             <TabsContent value="analytics">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Analytics</CardTitle>
-                        <CardDescription>
-                            Track performance and user engagement metrics.
-                            Monitor trends and identify growth opportunities.
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent className="text-sm text-muted-foreground">
-                        Page views are up 25% compared to last month.
-                    </CardContent>
-                </Card>
-            </TabsContent>
-            <TabsContent value="reports">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Reports</CardTitle>
-                        <CardDescription>
-                            Generate and download your detailed reports. Export
-                            data in multiple formats for analysis.
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent className="text-sm text-muted-foreground">
-                        You have 5 reports ready and available to export.
-                    </CardContent>
-                </Card>
-            </TabsContent>
-            <TabsContent value="settings">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Settings</CardTitle>
+                        <CardTitle>Bereiche</CardTitle>
                         <CardDescription>
                             Manage your account preferences and options.
                             Customize your experience to fit your needs.
