@@ -1,17 +1,21 @@
 import { Head } from '@inertiajs/react';
 
-import CreateBusinessPlanStepOne from '@/components/businessplan/form/CreateBusinessPlanStepOne';
+import CreateBusinessPlanWizard, {
+    type WizardOptions,
+} from '@/components/businessplan/form/CreateBusinessPlanWizard';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [];
 
-export default function CreateBusinessPlanPage() {
+export default function CreateBusinessPlanPage(props: WizardOptions) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Businessplan erstellen" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <CreateBusinessPlanStepOne />
+                <div className="relative min-h-screen flex-1 overflow-hidden rounded-xl md:min-h-min dark:border-sidebar-border">
+                    <CreateBusinessPlanWizard options={props} />
+                </div>
             </div>
         </AppLayout>
     );

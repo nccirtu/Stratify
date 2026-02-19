@@ -19,9 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::prefix('businessplans')->name('businessplan.')->group(function () {
-        Route::post('step-one', [BusinessPlanController::class, 'storeStepOne'])->name('step-one.store');
-        Route::post('{businessPlan}/step-two', [BusinessPlanController::class, 'storeStepTwo'])->name('step-two.store');
-        Route::post('{businessPlan}/step-three', [BusinessPlanController::class, 'storeStepThree'])->name('step-three.store');
+        Route::put('{businessPlan}/save-step', [BusinessPlanController::class, 'saveStep'])->name('save-step');
     });
 
     Route::resource('businessplans', BusinessPlanController::class)->names([

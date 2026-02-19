@@ -18,32 +18,38 @@ class UpdateBusinessPlan
         if (isset($data['create_new_company']) && $data['create_new_company']) {
             $company = Company::create([
                 'name' => $data['new_company_name'],
+                'slug' => Str::slug($data['new_company_name']),
                 'user_id' => auth()->id(),
-                // Add default fields if necessary (email, etc.) - assuming basic creation for now
+                'branch_id' => $data['branch_id'],
+                'address' => '',
+                'zip_code' => '',
+                'city' => '',
+                'state' => '',
+                'country' => '',
             ]);
             $data['company_id'] = $company->id;
         }
+
+        // Extract transactions before stripping non-column keys
+        $incomeTransactions = $data['income_transactions'] ?? null;
+        $expenseTransactions = $data['expense_transactions'] ?? null;
+
+        // Strip non-column keys before updating
+        unset($data['create_new_company'], $data['new_company_name'], $data['income_transactions'], $data['expense_transactions'], $data['step']);
 
         // Update main business plan attributes
         $businessPlan->update($data);
 
         // Handle Income Transactions
-        if (isset($data['income_transactions'])) {
-            // Delete existing incomes if fully replacing? Or update?
-            // The original controller seemed to append.
-            // But since this is a "save step", usually we replace the whole list or sync.
-            // Let's assume replace for simplicity or match the original behavior if possible.
-            // Original controller used `storeTransactions` which did `Transaction::create`.
-            // If we re-save step 11 multiple times, we'd duplicate transactions.
-            // We should probably delete existing ones of that type for this plan first.
+        if (is_array($incomeTransactions)) {
             $businessPlan->transactions()->where('type', TypeEnum::INCOME->value)->delete();
-            $this->storeTransactions($businessPlan, $data['income_transactions'], TypeEnum::INCOME);
+            $this->storeTransactions($businessPlan, $incomeTransactions, TypeEnum::INCOME);
         }
 
         // Handle Expense Transactions
-        if (isset($data['expense_transactions'])) {
+        if (is_array($expenseTransactions)) {
             $businessPlan->transactions()->where('type', TypeEnum::EXPENSE->value)->delete();
-            $this->storeTransactions($businessPlan, $data['expense_transactions'], TypeEnum::EXPENSE);
+            $this->storeTransactions($businessPlan, $expenseTransactions, TypeEnum::EXPENSE);
         }
 
         return $businessPlan;

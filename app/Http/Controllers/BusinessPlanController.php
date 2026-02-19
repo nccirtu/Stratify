@@ -7,6 +7,7 @@ use App\Actions\BusinessPlan\DeleteBusinessPlan;
 use App\Actions\BusinessPlan\UpdateBusinessPlan;
 use App\Enums\TypeEnum;
 use App\Http\Requests\Businessplan\CreateBusinessPlanRequest;
+use App\Http\Requests\Businessplan\SaveWizardStepRequest;
 use App\Http\Requests\Businessplan\UpdateBusinessPlanRequest;
 use App\Models\Branches;
 use App\Models\BusinessPlan;
@@ -15,6 +16,7 @@ use App\Models\Company;
 use App\Models\Currency;
 use App\Models\Tax;
 use App\Models\TransactionCategory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -48,12 +50,49 @@ class BusinessPlanController extends Controller
         ]);
     }
 
-    public function store(CreateBusinessPlanRequest $request, CreateBusinessPlan $action): RedirectResponse
+    public function store(CreateBusinessPlanRequest $request, CreateBusinessPlan $action): JsonResponse|RedirectResponse
     {
         $businessPlan = $action->handle($request->validated());
 
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Draft erstellt.',
+                'businessPlan' => $businessPlan,
+            ]);
+        }
+
         return redirect()->route('businessplan.edit', ['businessplan' => $businessPlan->id, 'step' => 2])
             ->with('success', 'Draft created.');
+    }
+
+    public function saveStep(SaveWizardStepRequest $request, BusinessPlan $businessPlan, UpdateBusinessPlan $action): JsonResponse
+    {
+        $validated = $request->validated();
+        $step = (int) $request->input('step', 1);
+
+        // Map currency_id to currency column
+        if (isset($validated['currency_id'])) {
+            $validated['currency'] = (string) $validated['currency_id'];
+            unset($validated['currency_id']);
+        }
+
+        $action->handle($businessPlan, $validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Schritt '.$step.' gespeichert.',
+            'step' => $step,
+        ]);
+    }
+
+    public function show(BusinessPlan $businessPlan): Response
+    {
+        $businessPlan->load(['transactions', 'businessPlanSections', 'company', 'branch']);
+
+        return Inertia::render('businessplan/show', [
+            'businessPlan' => $businessPlan,
+        ]);
     }
 
     public function edit(BusinessPlan $businessPlan, Request $request): Response
@@ -75,9 +114,23 @@ class BusinessPlanController extends Controller
         ]);
     }
 
-    public function update(UpdateBusinessPlanRequest $request, BusinessPlan $businessPlan, UpdateBusinessPlan $action): RedirectResponse
+    public function update(UpdateBusinessPlanRequest $request, BusinessPlan $businessPlan, UpdateBusinessPlan $action): JsonResponse|RedirectResponse
     {
-        $action->handle($businessPlan, $request->validated());
+        // Map currency_id to currency column
+        $validated = $request->validated();
+        if (isset($validated['currency_id'])) {
+            $validated['currency'] = (string) $validated['currency_id'];
+            unset($validated['currency_id']);
+        }
+
+        $action->handle($businessPlan, $validated);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Gespeichert.',
+            ]);
+        }
 
         $currentStep = $request->input('current_step', 1);
         $nextStep = $currentStep + 1;

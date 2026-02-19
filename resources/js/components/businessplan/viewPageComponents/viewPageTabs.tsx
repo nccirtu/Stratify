@@ -6,6 +6,7 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import EditFormOverview from './tabsComponents/overview/editFormOverview';
 
 export default function ViewPageTabs() {
     return (
@@ -17,16 +18,15 @@ export default function ViewPageTabs() {
                 <TabsTrigger value="analytics">Analytics</TabsTrigger>
             </TabsList>
             <TabsContent value="overview">
-                <Card>
+                <Card className="bg-white">
                     <CardHeader>
-                        <CardTitle>Overview</CardTitle>
+                        <CardTitle>Übersicht</CardTitle>
                         <CardDescription>
-                            View your key metrics and recent project activity.
-                            Track progress across all your active projects.
+                            Bearbeite die Übersicht deines Businessplans.
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="text-sm text-muted-foreground">
-                        You have 12 active projects and 3 pending tasks.
+                        <EditFormOverview />
                     </CardContent>
                 </Card>
             </TabsContent>

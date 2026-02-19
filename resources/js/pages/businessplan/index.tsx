@@ -1,9 +1,9 @@
-import { App } from '@/wayfinder/types';
-import { Head } from '@inertiajs/react';
 import BusinessplanGridView from '@/components/dashboard/businessplan/businessplanGridView';
 import EmptyBusinessplanList from '@/components/dashboard/businessplan/empty-businessplan-list';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
+import { App } from '@/wayfinder/types';
+import { Head } from '@inertiajs/react';
 
 interface PaginatedBusinessPlans {
     data: App.Models.BusinessPlan[];
@@ -15,7 +15,11 @@ interface PaginatedBusinessPlans {
 
 const breadcrumbs: BreadcrumbItem[] = [];
 
-export default function Businessplan({businessplans }: { businessplans: PaginatedBusinessPlans }) {
+export default function Businessplan({
+    businessplans,
+}: {
+    businessplans: PaginatedBusinessPlans;
+}) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -25,14 +29,6 @@ export default function Businessplan({businessplans }: { businessplans: Paginate
                         {businessplans.data.length > 0 ? (
                             <BusinessplanGridView
                                 businessplans={businessplans.data}
-                                branches={[]}
-                                companies={[]}
-                                currencies={[]}
-                                taxes={[]}
-                                incomeCategories={[]}
-                                expenseCategories={[]}
-                                incomeCatalogItems={[]}
-                                expenseCatalogItems={[]}
                             />
                         ) : (
                             /* Overlay wird angezeigt, wenn Liste leer ist */
