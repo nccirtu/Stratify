@@ -35,7 +35,9 @@ export default function Step1General({
             </FieldDescription>
             <FieldGroup>
                 <Field>
-                    <FieldLabel htmlFor="name">Name</FieldLabel>
+                    <FieldLabel htmlFor="name">
+                        Name des Businessplans
+                    </FieldLabel>
                     <Input
                         id="name"
                         value={data.name || ''}
@@ -67,7 +69,9 @@ export default function Step1General({
                 </Field>
 
                 <Field>
-                    <FieldLabel htmlFor="description">Beschreibung</FieldLabel>
+                    <FieldLabel htmlFor="description">
+                        Interne Kurzbeschreibung
+                    </FieldLabel>
                     <Textarea
                         id="description"
                         value={data.description || ''}

@@ -21,10 +21,12 @@ export default function FormDialog({buttonText, dialogTitle, dialogDescription, 
             <DialogTrigger asChild>
                 <Button variant="default">{buttonText}</Button>
             </DialogTrigger>
-            <DialogContent className="lg:max-w-5xl sm:max-w-xs">
+            <DialogContent className="max-h-10/12 overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>{dialogTitle || ''}</DialogTitle>
-                    <DialogDescription>{dialogDescription || ''}</DialogDescription>
+                    <DialogDescription>
+                        {dialogDescription || ''}
+                    </DialogDescription>
                 </DialogHeader>
                 {children}
             </DialogContent>

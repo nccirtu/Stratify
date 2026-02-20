@@ -15,10 +15,14 @@ import {
     TextColumn,
 } from '@nccirtu/tablefy';
 import { Download, Plus } from 'lucide-react';
+import FormDialog from '@/components/common/formDialog';
+import TransactionForm from '@/components/businessplan/form/transactionForm';
 
 export type TransactionData = App.Models.Transaction;
 
-interface CreateTransactionSchemaOptions {}
+interface CreateTransactionSchemaOptions {
+    catalogItems?: App.Models.CatalogItem[];
+}
 
 export const createTransactionSchema = (
     options: CreateTransactionSchemaOptions = {},
@@ -36,13 +40,19 @@ export const createTransactionSchema = (
             {
                 render: () => (
                     <Button asChild>
-                        <Link
-                            href="/transactions/create"
-                            className="flex items-center space-x-2"
-                        >
-                            <Plus className="mr-2 h-4 w-4" />
-                            Neue Transaktion erstellen
-                        </Link>
+                        <FormDialog
+                            dialogTitle={'Neue Transaktion erstellen'}
+                            dialogDescription={'Erstelle eine neue Transaktion, um deine Einnahmen oder Ausgaben zu verfolgen.'}
+                            buttonText={'Neue Transaktion erstellen'}
+                            children={
+                                <TransactionForm
+                                    catalogItems={[]}
+                                    transactionsCategories={[]}
+                                    currencies={[]}
+                                    taxes={[]}
+                                />
+                            }
+                        />
                     </Button>
                 ),
             },

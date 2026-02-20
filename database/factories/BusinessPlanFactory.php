@@ -18,7 +18,6 @@ class BusinessPlanFactory extends Factory
     {
         return [
             'user_id' => \App\Models\User::factory(),
-            'company_id' => \App\Models\Company::factory(),
             'name' => fake()->sentence(3),
             'slug' => fake()->unique()->slug(),
             'status' => 'draft',

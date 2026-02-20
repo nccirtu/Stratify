@@ -11,6 +11,15 @@ class SaveWizardStepRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('is_headquarter') && in_array($this->is_headquarter, ['true', 'false'], true)) {
+            $this->merge([
+                'is_headquarter' => $this->is_headquarter === 'true',
+            ]);
+        }
+    }
+
     public function rules(): array
     {
         $step = (int) $this->input('step', 1);
@@ -26,8 +35,6 @@ class SaveWizardStepRequest extends FormRequest
             8 => $this->step8Rules(),
             9 => $this->step9Rules(),
             10 => $this->step10Rules(),
-            11 => $this->step11Rules(),
-            12 => $this->step12Rules(),
             default => [],
         };
     }
@@ -49,16 +56,32 @@ class SaveWizardStepRequest extends FormRequest
     private function step2Rules(): array
     {
         return [
-            'create_new_company' => 'boolean',
-            'company_id' => 'nullable|exists:companies,id',
-            'new_company_name' => 'nullable|string|max:255|required_if:create_new_company,true',
-            'branch_id' => 'nullable|required_if:create_new_company,true|exists:branches,id',
+            'company_state' => 'nullable|string|in:new,existing,succession',
+            'handover_date' => 'nullable|date',
+            'existing_date' => 'nullable|date',
+            'is_headquarter' => 'nullable|boolean',
+            'company_name' => 'nullable|string|max:255',
+            'branch_id' => 'nullable|exists:branches,id',
+            'company_description' => 'nullable|string',
+            'address' => 'nullable|string|max:255',
+            'zip_code' => 'nullable|string|max:20',
+            'city' => 'nullable|string|max:255',
+            'state' => 'nullable|string|max:255',
+            'country' => 'nullable|string|max:255',
+            'expected_headquarters' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:50',
+            'website' => 'nullable|string|max:255',
+            'logo' => 'nullable|file|image|max:5120',
         ];
     }
 
     private function step3Rules(): array
     {
         return [
+            'businessplan_target' => 'nullable|string|max:100',
+            'capital_usage' => 'nullable|array',
+            'capital_usage.*' => 'string',
             'period_from' => 'nullable|date',
             'period_until' => 'nullable|date|after_or_equal:period_from',
         ];
@@ -67,62 +90,77 @@ class SaveWizardStepRequest extends FormRequest
     private function step4Rules(): array
     {
         return [
-            'business_idea' => 'nullable|string',
-            'currency_id' => 'nullable|exists:currencies,id',
-            'language' => 'nullable|string|max:10',
+            'business_activities' => 'nullable|string|max:100',
+            'last_year_revenue' => 'nullable|numeric|min:0',
+            'business_model' => 'nullable|array',
+            'business_model.*' => 'string',
+            'customer_problems' => 'nullable|string',
         ];
     }
 
     private function step5Rules(): array
     {
         return [
-            'target_customers' => 'nullable|string',
-            'customer_problems' => 'nullable|string',
-            'location' => 'nullable|string|max:255',
+            'inovation_level' => 'nullable|string|max:100',
+            'usp' => 'nullable|array',
+            'usp.*' => 'string',
+            'price_leadership' => 'nullable|array',
+            'price_leadership.*' => 'string',
+            'quality_leadership' => 'nullable|array',
+            'quality_leadership.*' => 'string',
+            'specialist_leadership' => 'nullable|array',
+            'specialist_leadership.*' => 'string',
+            'technology_leadership' => 'nullable|array',
+            'technology_leadership.*' => 'string',
+            'exclusive_leadership' => 'nullable|array',
+            'exclusive_leadership.*' => 'string',
+            'community_leadership' => 'nullable|array',
+            'community_leadership.*' => 'string',
+            'usp_text' => 'nullable|string',
+            'scalable' => 'nullable|string|max:100',
         ];
     }
 
     private function step6Rules(): array
     {
         return [
-            'solution_description' => 'nullable|string',
-            'competitive_advantage' => 'nullable|string',
-            'pricing_strategy' => 'nullable|string',
+            'offer_type' => 'nullable|array',
+            'offer_type.*' => 'string',
+            'development_state' => 'nullable|string|max:100',
+            'property_rights' => 'nullable|array',
+            'property_rights.*' => 'string',
+            'details_property_rights' => 'nullable|string',
+            'pricing_stategie' => 'nullable|string|max:100',
         ];
     }
 
     private function step7Rules(): array
     {
         return [
-            'competitors' => 'nullable|string',
+            'client_type' => 'nullable|array',
+            'client_type.*' => 'string',
+            'target_market' => 'nullable|string|max:100',
         ];
     }
 
     private function step8Rules(): array
     {
         return [
-            'team_members' => 'nullable|string',
-            'initial_investment' => 'nullable|numeric|min:0',
+            'purchase_decision' => 'nullable|array',
+            'purchase_decision.*' => 'string',
+            'age_group' => 'nullable|string|max:100',
+            'life_situation' => 'nullable|string|max:100',
+            'information_target_group' => 'nullable|array',
+            'information_target_group.*' => 'string',
+            'company_target_group' => 'nullable|array',
+            'company_target_group.*' => 'string',
+            'public_tenders' => 'nullable|string|max:100',
+            'channels' => 'nullable|array',
+            'channels.*' => 'string',
         ];
     }
 
     private function step9Rules(): array
-    {
-        return [
-            'marketing_channels' => 'nullable|string',
-            'revenue_model' => 'nullable|string',
-        ];
-    }
-
-    private function step10Rules(): array
-    {
-        return [
-            'milestones' => 'nullable|string',
-            'risks' => 'nullable|string',
-        ];
-    }
-
-    private function step11Rules(): array
     {
         return [
             'income_transactions' => 'nullable|array',
@@ -143,7 +181,7 @@ class SaveWizardStepRequest extends FormRequest
         ];
     }
 
-    private function step12Rules(): array
+    private function step10Rules(): array
     {
         return [
             'expense_transactions' => 'nullable|array',

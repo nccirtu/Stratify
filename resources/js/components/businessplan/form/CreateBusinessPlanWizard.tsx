@@ -5,48 +5,45 @@ import { useCallback, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-import Step10PlanningRisks from '../wizard/Step10PlanningRisks';
-import Step11Income from '../wizard/Step11Income';
-import Step12Expenses from '../wizard/Step12Expenses';
 import Step1General from '../wizard/Step1General';
 import Step2Company from '../wizard/Step2Company';
-import Step3Period from '../wizard/Step3Period';
-import Step4BusinessIdea from '../wizard/Step4BusinessIdea';
-import Step5TargetMarket from '../wizard/Step5TargetMarket';
-import Step6SolutionOffer from '../wizard/Step6SolutionOffer';
-import Step7Competitors from '../wizard/Step7Competitors';
-import Step8TeamResources from '../wizard/Step8TeamResources';
-import Step9Marketing from '../wizard/Step9Marketing';
+import Step3Vorhaben from '../wizard/Step3Period';
+import Step4Details from '../wizard/Step4BusinessIdea';
+import Step5Usp from '../wizard/Step5TargetMarket';
+import Step6Products from '../wizard/Step6Products';
+import Step7Market from '../wizard/Step7Market';
+import Step8TargetGroup from '../wizard/Step8TargetGroup';
+import Step9Income from '../wizard/Step9Income';
+import Step10Expenses from '../wizard/Step10Expenses';
 import type {
     BusinessPlanFormData,
+    EnumOptions,
     SelectOption,
     WizardStepProps,
 } from '../wizard/types';
 
 const STEPS = [
-    { label: 'Allgemein', component: Step1General },
-    { label: 'Unternehmen', component: Step2Company },
-    { label: 'Zeitraum', component: Step3Period },
-    { label: 'Geschäftsidee', component: Step4BusinessIdea },
-    { label: 'Zielgruppe & Markt', component: Step5TargetMarket },
-    { label: 'Lösung & Angebot', component: Step6SolutionOffer },
-    { label: 'Wettbewerb', component: Step7Competitors },
-    { label: 'Team & Ressourcen', component: Step8TeamResources },
-    { label: 'Marketing & Vertrieb', component: Step9Marketing },
-    { label: 'Planung & Risiken', component: Step10PlanningRisks },
-    { label: 'Einnahmen', component: Step11Income },
-    { label: 'Ausgaben', component: Step12Expenses },
+    { label: 'Stammdaten', component: Step1General },
+    { label: 'Unternehmensdaten', component: Step2Company },
+    { label: 'Vorhaben', component: Step3Vorhaben },
+    { label: 'Details', component: Step4Details },
+    { label: 'USP & Skalierung', component: Step5Usp },
+    { label: 'Produkte & DL', component: Step6Products },
+    { label: 'Markt', component: Step7Market },
+    { label: 'Zielgruppe', component: Step8TargetGroup },
+    { label: 'Einnahmen', component: Step9Income },
+    { label: 'Ausgaben', component: Step10Expenses },
 ] as const;
 
 export interface WizardOptions {
     branches: SelectOption[];
-    companies: SelectOption[];
     currencies: SelectOption[];
     taxes: SelectOption[];
     incomeCategories: SelectOption[];
     expenseCategories: SelectOption[];
     incomeCatalogItems: SelectOption[];
     expenseCatalogItems: SelectOption[];
+    enumOptions: EnumOptions;
 }
 
 export interface CreateBusinessPlanWizardProps {
@@ -56,46 +53,119 @@ export interface CreateBusinessPlanWizardProps {
 }
 
 const defaultFormData: BusinessPlanFormData = {
+    // Step 1
     name: '',
     slug: '',
     description: '',
-    company_id: '',
-    create_new_company: false,
-    new_company_name: '',
+    // Step 2
+    company_state: '',
+    handover_date: '',
+    existing_date: '',
+    is_headquarter: '',
+    company_name: '',
     branch_id: '',
+    company_description: '',
+    address: '',
+    zip_code: '',
+    city: '',
+    state: '',
+    country: '',
+    expected_headquarters: '',
+    email: '',
+    phone: '',
+    website: '',
+    logo: null,
+    // Step 3
+    businessplan_target: '',
+    capital_usage: [],
     period_from: '',
     period_until: '',
-    business_idea: '',
-    currency_id: '',
-    language: '',
-    target_customers: '',
+    // Step 4
+    business_activities: '',
+    last_year_revenue: '',
+    business_model: [],
     customer_problems: '',
-    location: '',
-    solution_description: '',
-    competitive_advantage: '',
-    pricing_strategy: '',
-    competitors: '',
-    team_members: '',
-    initial_investment: '',
-    marketing_channels: '',
-    revenue_model: '',
-    milestones: '',
-    risks: '',
+    // Step 5
+    inovation_level: '',
+    usp: [],
+    price_leadership: [],
+    quality_leadership: [],
+    specialist_leadership: [],
+    technology_leadership: [],
+    exclusive_leadership: [],
+    community_leadership: [],
+    usp_text: '',
+    scalable: '',
+    // Step 6 – Produkte und Dienstleistungen
+    offer_type: [],
+    development_state: '',
+    property_rights: [],
+    details_property_rights: '',
+    pricing_stategie: '',
+    // Step 7 – Markt und Wettbewerb
+    client_type: [],
+    target_market: '',
+    // Step 8 – Zielgruppe
+    purchase_decision: [],
+    age_group: '',
+    life_situation: '',
+    information_target_group: [],
+    company_target_group: [],
+    public_tenders: '',
+    channels: [],
+    // Step 9 & 10
     income_transactions: [],
     expense_transactions: [],
 };
 
 function buildInitialData(businessPlan?: any): BusinessPlanFormData {
-    if (!businessPlan) return { ...defaultFormData };
+    if (!businessPlan) {
+        return { ...defaultFormData };
+    }
 
     return {
         ...defaultFormData,
         ...businessPlan,
-        company_id: businessPlan.company_id
-            ? String(businessPlan.company_id)
-            : '',
         branch_id: businessPlan.branch_id ? String(businessPlan.branch_id) : '',
-        currency_id: businessPlan.currency ? String(businessPlan.currency) : '',
+        is_headquarter:
+            businessPlan.is_headquarter === true
+                ? 'true'
+                : businessPlan.is_headquarter === false
+                  ? 'false'
+                  : '',
+        capital_usage: Array.isArray(businessPlan.capital_usage)
+            ? businessPlan.capital_usage
+            : [],
+        business_model: Array.isArray(businessPlan.business_model)
+            ? businessPlan.business_model
+            : [],
+        usp: Array.isArray(businessPlan.usp) ? businessPlan.usp : [],
+        price_leadership: Array.isArray(businessPlan.price_leadership)
+            ? businessPlan.price_leadership
+            : [],
+        quality_leadership: Array.isArray(businessPlan.quality_leadership)
+            ? businessPlan.quality_leadership
+            : [],
+        specialist_leadership: Array.isArray(businessPlan.specialist_leadership)
+            ? businessPlan.specialist_leadership
+            : [],
+        technology_leadership: Array.isArray(businessPlan.technology_leadership)
+            ? businessPlan.technology_leadership
+            : [],
+        exclusive_leadership: Array.isArray(businessPlan.exclusive_leadership)
+            ? businessPlan.exclusive_leadership
+            : [],
+        community_leadership: Array.isArray(businessPlan.community_leadership)
+            ? businessPlan.community_leadership
+            : [],
+        logo: null,
+        offer_type: Array.isArray(businessPlan.offer_type) ? businessPlan.offer_type : [],
+        property_rights: Array.isArray(businessPlan.property_rights) ? businessPlan.property_rights : [],
+        client_type: Array.isArray(businessPlan.client_type) ? businessPlan.client_type : [],
+        purchase_decision: Array.isArray(businessPlan.purchase_decision) ? businessPlan.purchase_decision : [],
+        information_target_group: Array.isArray(businessPlan.information_target_group) ? businessPlan.information_target_group : [],
+        company_target_group: Array.isArray(businessPlan.company_target_group) ? businessPlan.company_target_group : [],
+        channels: Array.isArray(businessPlan.channels) ? businessPlan.channels : [],
         income_transactions:
             businessPlan.transactions?.filter(
                 (t: any) => t.type === 'income',
@@ -104,8 +174,6 @@ function buildInitialData(businessPlan?: any): BusinessPlanFormData {
             businessPlan.transactions?.filter(
                 (t: any) => t.type === 'expense',
             ) || [],
-        create_new_company: false,
-        new_company_name: '',
     };
 }
 
@@ -131,10 +199,13 @@ export default function CreateBusinessPlanWizard({
         businessPlan?.id ?? null,
     );
     const [savedSteps, setSavedSteps] = useState<Set<number>>(() => {
-        if (!businessPlan?.id) return new Set();
-        // Mark steps up to initialStep as saved when editing
+        if (!businessPlan?.id) {
+            return new Set();
+        }
         const set = new Set<number>();
-        for (let i = 0; i < initialStep; i++) set.add(i);
+        for (let i = 0; i < initialStep; i++) {
+            set.add(i);
+        }
         return set;
     });
 
@@ -150,7 +221,7 @@ export default function CreateBusinessPlanWizard({
         setErrors({});
 
         try {
-            const stepNumber = stepIndex + 1; // 1-based for API
+            const stepNumber = stepIndex + 1;
             const csrfToken = getCsrfToken();
 
             // Step 1 on a new plan → POST to create
@@ -186,13 +257,74 @@ export default function CreateBusinessPlanWizard({
                 return false;
             }
 
-            // All other steps (or step 1 when editing) → PUT to save-step
             const id = businessPlanId;
             if (!id) {
                 setProcessing(false);
                 return false;
             }
 
+            // Step 2 may contain a logo file → use FormData
+            if (stepIndex === 1 && data.logo instanceof File) {
+                const formData = new FormData();
+                formData.append('step', String(stepNumber));
+                formData.append('_method', 'PUT');
+
+                const step2Fields = [
+                    'company_state',
+                    'handover_date',
+                    'existing_date',
+                    'is_headquarter',
+                    'company_name',
+                    'branch_id',
+                    'company_description',
+                    'address',
+                    'zip_code',
+                    'city',
+                    'state',
+                    'country',
+                    'expected_headquarters',
+                    'email',
+                    'phone',
+                    'website',
+                ] as const;
+
+                step2Fields.forEach((key) => {
+                    const value = data[key];
+                    if (value !== undefined && value !== null) {
+                        formData.append(key, String(value));
+                    }
+                });
+
+                formData.append('logo', data.logo);
+
+                const response = await fetch(
+                    `/businessplans/${id}/save-step`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                        body: formData,
+                    },
+                );
+
+                if (response.ok) {
+                    setSavedSteps((prev) => new Set(prev).add(stepIndex));
+                    setProcessing(false);
+                    return true;
+                }
+
+                if (response.status === 422) {
+                    const errorData = await response.json();
+                    setErrors(errorData.errors ?? {});
+                }
+                setProcessing(false);
+                return false;
+            }
+
+            // All other steps → JSON
             const response = await fetch(`/businessplans/${id}/save-step`, {
                 method: 'PUT',
                 headers: {
@@ -244,7 +376,6 @@ export default function CreateBusinessPlanWizard({
     };
 
     const handleStepClick = (index: number) => {
-        // Allow clicking on already-saved steps or the next available step
         if (
             index <= currentStep ||
             savedSteps.has(index) ||
@@ -269,7 +400,7 @@ export default function CreateBusinessPlanWizard({
     return (
         <div className="flex min-h-[600px] flex-col lg:flex-row">
             {/* Step sidebar */}
-            <nav className="bg-muted/30 p-4 lg:w-64 lg:border-b-0">
+            <nav className="bg-muted/30 p-4 lg:w-56 lg:border-b-0">
                 <ol className="flex gap-2 overflow-x-auto lg:flex-col lg:overflow-x-visible">
                     {STEPS.map((step, index) => {
                         const isCurrent = index === currentStep;
@@ -336,7 +467,7 @@ export default function CreateBusinessPlanWizard({
                 </div>
 
                 {/* Navigation */}
-                <div className="flex items-center justify-between px-4">
+                <div className="flex items-center justify-between px-4 pb-4">
                     <Button
                         type="button"
                         variant="outline"

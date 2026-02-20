@@ -7,6 +7,14 @@ import {
     FieldLegend,
     FieldSet,
 } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import {
+    MultiSelect,
+    MultiSelectContent,
+    MultiSelectItem,
+    MultiSelectTrigger,
+    MultiSelectValue,
+} from '@/components/ui/multi-select';
 import {
     Select,
     SelectContent,
@@ -17,100 +25,119 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import type { WizardStepProps } from './types';
 
-const languages = [
-    { value: 'de', label: 'Deutsch' },
-    { value: 'en', label: 'English' },
-    { value: 'fr', label: 'Français' },
-    { value: 'it', label: 'Italiano' },
-];
-
-export default function Step4BusinessIdea({
+export default function Step4Details({
     data,
     setData,
     errors,
     options,
 }: WizardStepProps) {
+    const { enumOptions } = options;
+    const showLastYearRevenue =
+        data.business_activities === 'first_sales' ||
+        data.business_activities === 'pilot_customer';
+
     return (
         <FieldSet>
-            <FieldLegend>Geschäftsidee</FieldLegend>
+            <FieldLegend>Details</FieldLegend>
             <FieldDescription>
-                Beschreiben Sie Ihre Geschäftsidee und wählen Sie die Währung
-                und Sprache.
+                Beschreiben Sie Ihre aktuelle Geschäftssituation und das
+                Geschäftsmodell.
             </FieldDescription>
             <FieldGroup>
                 <Field>
-                    <FieldLabel htmlFor="business_idea">
-                        Geschäftsidee
+                    <FieldLabel>
+                        Welches Geschäftsmodell verfolgen Sie?
+                    </FieldLabel>
+                    <MultiSelect
+                        values={data.business_model ?? []}
+                        onValuesChange={(v) => setData({ business_model: v })}
+                    >
+                        <MultiSelectTrigger>
+                            <MultiSelectValue placeholder="Optionen wählen" />
+                        </MultiSelectTrigger>
+                        <MultiSelectContent>
+                            {enumOptions.businessModels.map((opt) => (
+                                <MultiSelectItem
+                                    key={opt.value}
+                                    value={opt.value}
+                                >
+                                    {opt.label}
+                                </MultiSelectItem>
+                            ))}
+                        </MultiSelectContent>
+                    </MultiSelect>
+                    {errors.business_model && (
+                        <FieldError>{errors.business_model}</FieldError>
+                    )}
+                </Field>
+
+                <Field>
+                    <FieldLabel htmlFor="customer_problems">
+                        Welches Problem lösen Sie?
                     </FieldLabel>
                     <Textarea
-                        id="business_idea"
-                        value={data.business_idea || ''}
+                        id="customer_problems"
+                        value={data.customer_problems || ''}
                         onChange={(e) =>
-                            setData({ business_idea: e.target.value })
+                            setData({ customer_problems: e.target.value })
                         }
-                        rows={5}
-                        placeholder="Beschreiben Sie Ihre Geschäftsidee..."
-                        aria-invalid={!!errors.business_idea}
+                        rows={4}
+                        placeholder="Unsere Schrauben lassen sich einfacher verbauen und werden umweltschonender hergestellt..."
+                        aria-invalid={!!errors.customer_problems}
                     />
-                    {errors.business_idea && (
-                        <FieldError>{errors.business_idea}</FieldError>
+                    {errors.customer_problems && (
+                        <FieldError>{errors.customer_problems}</FieldError>
                     )}
                 </Field>
 
                 <Field>
-                    <FieldLabel htmlFor="currency_id">Währung</FieldLabel>
+                    <FieldLabel htmlFor="business_activities">
+                        Werden Umsätze bereits erwirtschaftet?
+                    </FieldLabel>
                     <Select
-                        value={String(data.currency_id || '')}
-                        onValueChange={(value) =>
-                            setData({ currency_id: value })
+                        value={data.business_activities || ''}
+                        onValueChange={(v) =>
+                            setData({ business_activities: v })
                         }
                     >
-                        <SelectTrigger
-                            id="currency_id"
-                            aria-invalid={!!errors.currency_id}
-                        >
-                            <SelectValue placeholder="Währung auswählen" />
+                        <SelectTrigger id="business_activities">
+                            <SelectValue placeholder="Bitte wählen" />
                         </SelectTrigger>
                         <SelectContent>
-                            {options.currencies.map((currency) => (
-                                <SelectItem
-                                    key={currency.value}
-                                    value={currency.value}
-                                >
-                                    {currency.label}
+                            {enumOptions.businessActivities.map((opt) => (
+                                <SelectItem key={opt.value} value={opt.value}>
+                                    {opt.label}
                                 </SelectItem>
                             ))}
                         </SelectContent>
                     </Select>
-                    {errors.currency_id && (
-                        <FieldError>{errors.currency_id}</FieldError>
+                    {errors.business_activities && (
+                        <FieldError>{errors.business_activities}</FieldError>
                     )}
                 </Field>
 
-                <Field>
-                    <FieldLabel htmlFor="language">Sprache</FieldLabel>
-                    <Select
-                        value={data.language || ''}
-                        onValueChange={(value) => setData({ language: value })}
-                    >
-                        <SelectTrigger
-                            id="language"
-                            aria-invalid={!!errors.language}
-                        >
-                            <SelectValue placeholder="Sprache auswählen" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {languages.map((lang) => (
-                                <SelectItem key={lang.value} value={lang.value}>
-                                    {lang.label}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                    {errors.language && (
-                        <FieldError>{errors.language}</FieldError>
-                    )}
-                </Field>
+                {showLastYearRevenue && (
+                    <Field>
+                        <FieldLabel htmlFor="last_year_revenue">
+                            Jahresumsatz letztes Jahr (€)
+                        </FieldLabel>
+                        <Input
+                            id="last_year_revenue"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            value={data.last_year_revenue || ''}
+                            onChange={(e) =>
+                                setData({ last_year_revenue: e.target.value })
+                            }
+                            placeholder="0.00"
+                            aria-invalid={!!errors.last_year_revenue}
+                        />
+                        {errors.last_year_revenue && (
+                            <FieldError>{errors.last_year_revenue}</FieldError>
+                        )}
+                    </Field>
+                )}
             </FieldGroup>
         </FieldSet>
     );

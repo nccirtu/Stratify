@@ -5,37 +5,27 @@ namespace App\Actions\BusinessPlan;
 use App\Enums\StatusEnum;
 use App\Enums\TypeEnum;
 use App\Models\BusinessPlan;
-use App\Models\Company;
 use App\Models\RecurringTemplate;
 use App\Models\Transaction;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
 class UpdateBusinessPlan
 {
     public function handle(BusinessPlan $businessPlan, array $data): BusinessPlan
     {
-        // Handle "Create New Company"
-        if (isset($data['create_new_company']) && $data['create_new_company']) {
-            $company = Company::create([
-                'name' => $data['new_company_name'],
-                'slug' => Str::slug($data['new_company_name']),
-                'user_id' => auth()->id(),
-                'branch_id' => $data['branch_id'],
-                'address' => '',
-                'zip_code' => '',
-                'city' => '',
-                'state' => '',
-                'country' => '',
-            ]);
-            $data['company_id'] = $company->id;
-        }
-
         // Extract transactions before stripping non-column keys
         $incomeTransactions = $data['income_transactions'] ?? null;
         $expenseTransactions = $data['expense_transactions'] ?? null;
 
+        // Handle logo file upload
+        if (isset($data['logo']) && $data['logo'] instanceof UploadedFile) {
+            $path = $data['logo']->store('logos', 'public');
+            $data['logo'] = $path;
+        }
+
         // Strip non-column keys before updating
-        unset($data['create_new_company'], $data['new_company_name'], $data['income_transactions'], $data['expense_transactions'], $data['step']);
+        unset($data['income_transactions'], $data['expense_transactions'], $data['step']);
 
         // Update main business plan attributes
         $businessPlan->update($data);

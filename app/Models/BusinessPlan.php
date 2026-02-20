@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CompanyStateEnum;
 use App\Enums\StatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,46 +19,94 @@ class BusinessPlan extends Model
         'slug',
         'description',
         'is_active',
-        'company_id',
         'branch_id',
         'user_id',
         'status',
+        'company_state',
+        'handover_date',
+        'existing_date',
+        'is_headquarter',
+        'company_name',
+        'company_description',
+        'address',
+        'zip_code',
+        'city',
+        'state',
+        'country',
+        'expected_headquarters',
+        'email',
+        'phone',
+        'website',
+        'logo',
+        'businessplan_target',
+        'capital_usage',
         'period_from',
         'period_until',
-        'business_idea',
-        'currency',
-        'language',
-        'target_customers',
+        'business_activities',
+        'last_year_revenue',
+        'business_model',
         'customer_problems',
-        'location',
-        'solution_description',
-        'competitive_advantage',
-        'pricing_strategy',
-        'competitors',
-        'team_members',
-        'initial_investment',
-        'marketing_channels',
-        'revenue_model',
-        'milestones',
-        'risks',
+        'inovation_level',
+        'usp',
+        'price_leadership',
+        'quality_leadership',
+        'specialist_leadership',
+        'technology_leadership',
+        'exclusive_leadership',
+        'community_leadership',
+        'usp_text',
+        'scalable',
+        // Step 6: Produkte und Dienstleistungen
+        'offer_type',
+        'development_state',
+        'property_rights',
+        'details_property_rights',
+        'pricing_stategie',
+        // Step 7: Markt und Wettbewerb
+        'client_type',
+        'target_market',
+        // Step 8: Zielgruppe
+        'purchase_decision',
+        'age_group',
+        'life_situation',
+        'information_target_group',
+        'company_target_group',
+        'public_tenders',
+        'channels',
     ];
 
-    protected $casts = [
-        'name' => 'string',
-        'slug' => 'string',
-        'description' => 'string',
-        'is_active' => 'boolean',
-        'company_id' => 'integer',
-        'branch_id' => 'integer',
-        'user_id' => 'integer',
-        'status' => StatusEnum::class,
-        'period_from' => 'date',
-        'period_until' => 'date',
-    ];
-
-    public function company(): BelongsTo
+    public function casts(): array
     {
-        return $this->belongsTo(Company::class);
+        return [
+            'name' => 'string',
+            'slug' => 'string',
+            'description' => 'string',
+            'is_active' => 'boolean',
+            'is_headquarter' => 'boolean',
+            'branch_id' => 'integer',
+            'user_id' => 'integer',
+            'status' => StatusEnum::class,
+            'company_state' => CompanyStateEnum::class,
+            'period_from' => 'date',
+            'period_until' => 'date',
+            'last_year_revenue' => 'decimal:2',
+            'capital_usage' => 'array',
+            'business_model' => 'array',
+            'usp' => 'array',
+            'price_leadership' => 'array',
+            'quality_leadership' => 'array',
+            'specialist_leadership' => 'array',
+            'technology_leadership' => 'array',
+            'exclusive_leadership' => 'array',
+            'community_leadership' => 'array',
+            'offer_type' => 'array',
+            'property_rights' => 'array',
+            'client_type' => 'array',
+            'purchase_decision' => 'array',
+            'information_target_group' => 'array',
+            'company_target_group' => 'array',
+            'channels' => 'array',
+        ];
     }
 
     public function branch(): BelongsTo

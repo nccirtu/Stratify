@@ -12,11 +12,12 @@ import {
     createTransactionSchema,
 } from './tabsComponents/incomes/tableSchema';
 import EditFormOverview from './tabsComponents/overview/editFormOverview';
+import { App } from '@/wayfinder/types';
 
 export default function ViewPageTabs({
-    transactions,
+    transactions, catalogItems,
 }: {
-    transactions: TransactionData[];
+    transactions: TransactionData[]; catalogItems: App.Models.CatalogItem[];
 }) {
     const { columns, config } = createTransactionSchema();
 
