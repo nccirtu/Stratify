@@ -73,6 +73,7 @@ class BusinessPlan extends Model
         'company_target_group',
         'public_tenders',
         'channels',
+        'liquidity_opening_balance',
     ];
 
     public function casts(): array
@@ -90,6 +91,7 @@ class BusinessPlan extends Model
             'period_from' => 'date',
             'period_until' => 'date',
             'last_year_revenue' => 'decimal:2',
+            'liquidity_opening_balance' => 'decimal:2',
             'capital_usage' => 'array',
             'business_model' => 'array',
             'usp' => 'array',
@@ -157,5 +159,15 @@ class BusinessPlan extends Model
     public function serviceProviders(): HasMany
     {
         return $this->hasMany(ServiceProvider::class);
+    }
+
+    public function loans(): HasMany
+    {
+        return $this->hasMany(Loan::class);
+    }
+
+    public function bankAccounts(): HasMany
+    {
+        return $this->hasMany(BankAccount::class)->orderBy('order_index');
     }
 }

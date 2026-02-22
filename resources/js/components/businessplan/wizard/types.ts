@@ -62,6 +62,10 @@ export interface BusinessPlanFormData {
     // Step 9 & 10 – Transaktionen
     income_transactions: TransactionItem[];
     expense_transactions: TransactionItem[];
+    // Step 11 – Mitarbeiter
+    employees: EmployeeItem[];
+    // Step 12 – Darlehen
+    loans: LoanItem[];
 }
 
 export interface TransactionItem {
@@ -81,6 +85,30 @@ export interface TransactionItem {
     start_date: string;
     end_date: string;
     type?: 'income' | 'expense';
+}
+
+export interface EmployeeItem {
+    id?: string;
+    job_title: string;
+    number_of_employees: string;
+    salary: string;
+    date_of_hire: string;
+    payment_day: string;
+    working_hours_per_week: string;
+    qualification: string;
+    area_of_responsibility: string;
+}
+
+export interface LoanItem {
+    id?: string;
+    name: string;
+    description: string;
+    loan_amount: string;
+    interest_rate: string;
+    monthly_installment: string;
+    start_date: string;
+    end_date: string;
+    payment_day: string;
 }
 
 export type SelectOption = {

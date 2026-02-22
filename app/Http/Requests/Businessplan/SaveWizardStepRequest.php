@@ -35,6 +35,8 @@ class SaveWizardStepRequest extends FormRequest
             8 => $this->step8Rules(),
             9 => $this->step9Rules(),
             10 => $this->step10Rules(),
+            11 => $this->step11Rules(),
+            12 => $this->step12Rules(),
             default => [],
         };
     }
@@ -199,6 +201,36 @@ class SaveWizardStepRequest extends FormRequest
             'expense_transactions.*.day_of_month' => 'nullable|integer|min:1|max:31',
             'expense_transactions.*.start_date' => 'nullable|date',
             'expense_transactions.*.end_date' => 'nullable|date',
+        ];
+    }
+
+    private function step11Rules(): array
+    {
+        return [
+            'employees' => 'nullable|array',
+            'employees.*.job_title' => 'required|string|max:255',
+            'employees.*.number_of_employees' => 'required|integer|min:1',
+            'employees.*.salary' => 'required|numeric|min:0',
+            'employees.*.date_of_hire' => 'required|date',
+            'employees.*.payment_day' => 'nullable|integer|min:1|max:31',
+            'employees.*.working_hours_per_week' => 'nullable|numeric|min:0',
+            'employees.*.qualification' => 'nullable|string|max:255',
+            'employees.*.area_of_responsibility' => 'nullable|string',
+        ];
+    }
+
+    private function step12Rules(): array
+    {
+        return [
+            'loans' => 'nullable|array',
+            'loans.*.name' => 'required|string|max:255',
+            'loans.*.loan_amount' => 'required|numeric|min:0',
+            'loans.*.interest_rate' => 'required|numeric|min:0',
+            'loans.*.monthly_installment' => 'required|numeric|min:0',
+            'loans.*.start_date' => 'required|date',
+            'loans.*.end_date' => 'nullable|date',
+            'loans.*.payment_day' => 'nullable|integer|min:1|max:31',
+            'loans.*.description' => 'nullable|string',
         ];
     }
 }

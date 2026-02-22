@@ -42,6 +42,8 @@ use App\Models\CatalogItem;
 use App\Models\Currency;
 use App\Models\Tax;
 use App\Models\TransactionCategory;
+use App\Services\LiquidityPlan\LiquidityPlanBuilder;
+use App\Services\LiquidityPlan\ViewContext;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -106,21 +108,40 @@ class BusinessPlanController extends Controller
         ]);
     }
 
-    public function show(BusinessPlan $businessPlan): Response
+    public function show(BusinessPlan $businessPlan, Request $request): Response
     {
         $catalogItems = CatalogItem::where('user_id', auth()->id())->get()->keyBy('id');
-        $businessPlan->load(['transactions', 'businessPlanSections', 'branch']);
+        $businessPlan->load([
+            'transactions.category',
+            'businessPlanSections',
+            'branch',
+            'employees',
+            'founders',
+            'loans',
+            'bankAccounts',
+        ]);
+
+        $view = in_array($request->query('view'), [ViewContext::YEAR, ViewContext::WEEK], true)
+            ? $request->query('view')
+            : ViewContext::YEAR;
+        $year = (int) $request->query('year', $businessPlan->period_from?->year ?? now()->year);
+        // Default week to 1 so frontend and backend always agree on the initial week
+        $isoWeek = $view === ViewContext::WEEK ? (int) $request->query('week', 1) : null;
+
+        $context = new ViewContext($view, $year, null, $isoWeek);
+        $liquidityPlan = (new LiquidityPlanBuilder($businessPlan, $context))->build();
 
         return Inertia::render('businessplan/show', [
             'catalogItems' => $catalogItems,
             'businessPlan' => $businessPlan,
+            'liquidityPlan' => $liquidityPlan,
         ]);
     }
 
     public function edit(BusinessPlan $businessPlan, Request $request): Response
     {
         $step = $request->query('step', 1);
-        $businessPlan->load('transactions');
+        $businessPlan->load(['transactions', 'employees', 'loans']);
 
         return Inertia::render('businessplan/edit', [
             'businessPlan' => $businessPlan,

@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             TransactionCategorySeeder::class,
             CurrencySeeder::class,
             PostSeeder::class,
+            LiquidityAccountSeeder::class,
         ]);
     }
 }

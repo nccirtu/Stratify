@@ -15,6 +15,8 @@ import Step7Market from '../wizard/Step7Market';
 import Step8TargetGroup from '../wizard/Step8TargetGroup';
 import Step9Income from '../wizard/Step9Income';
 import Step10Expenses from '../wizard/Step10Expenses';
+import StepEmployees from '../wizard/StepEmployees';
+import StepLoans from '../wizard/StepLoans';
 import type {
     BusinessPlanFormData,
     EnumOptions,
@@ -33,6 +35,8 @@ const STEPS = [
     { label: 'Zielgruppe', component: Step8TargetGroup },
     { label: 'Einnahmen', component: Step9Income },
     { label: 'Ausgaben', component: Step10Expenses },
+    { label: 'Mitarbeiter', component: StepEmployees },
+    { label: 'Darlehen', component: StepLoans },
 ] as const;
 
 export interface WizardOptions {
@@ -116,6 +120,9 @@ const defaultFormData: BusinessPlanFormData = {
     // Step 9 & 10
     income_transactions: [],
     expense_transactions: [],
+    // Step 11 & 12
+    employees: [],
+    loans: [],
 };
 
 function buildInitialData(businessPlan?: any): BusinessPlanFormData {
@@ -174,6 +181,34 @@ function buildInitialData(businessPlan?: any): BusinessPlanFormData {
             businessPlan.transactions?.filter(
                 (t: any) => t.type === 'expense',
             ) || [],
+        employees: (businessPlan.employees || []).map((e: any) => ({
+            id: e.id ? String(e.id) : undefined,
+            job_title: e.job_title || '',
+            number_of_employees: e.number_of_employees
+                ? String(e.number_of_employees)
+                : '1',
+            salary: e.salary ? String(e.salary) : '',
+            date_of_hire: e.date_of_hire || '',
+            payment_day: e.payment_day ? String(e.payment_day) : '1',
+            working_hours_per_week: e.working_hours_per_week
+                ? String(e.working_hours_per_week)
+                : '',
+            qualification: e.qualification || '',
+            area_of_responsibility: e.area_of_responsibility || '',
+        })),
+        loans: (businessPlan.loans || []).map((l: any) => ({
+            id: l.id ? String(l.id) : undefined,
+            name: l.name || '',
+            description: l.description || '',
+            loan_amount: l.loan_amount ? String(l.loan_amount) : '',
+            interest_rate: l.interest_rate ? String(l.interest_rate) : '',
+            monthly_installment: l.monthly_installment
+                ? String(l.monthly_installment)
+                : '',
+            start_date: l.start_date || '',
+            end_date: l.end_date || '',
+            payment_day: l.payment_day ? String(l.payment_day) : '1',
+        })),
     };
 }
 

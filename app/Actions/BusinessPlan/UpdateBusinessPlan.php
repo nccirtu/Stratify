@@ -5,6 +5,8 @@ namespace App\Actions\BusinessPlan;
 use App\Enums\StatusEnum;
 use App\Enums\TypeEnum;
 use App\Models\BusinessPlan;
+use App\Models\Employee;
+use App\Models\Loan;
 use App\Models\RecurringTemplate;
 use App\Models\Transaction;
 use Illuminate\Http\UploadedFile;
@@ -14,9 +16,11 @@ class UpdateBusinessPlan
 {
     public function handle(BusinessPlan $businessPlan, array $data): BusinessPlan
     {
-        // Extract transactions before stripping non-column keys
+        // Extract relations before stripping non-column keys
         $incomeTransactions = $data['income_transactions'] ?? null;
         $expenseTransactions = $data['expense_transactions'] ?? null;
+        $employees = $data['employees'] ?? null;
+        $loans = $data['loans'] ?? null;
 
         // Handle logo file upload
         if (isset($data['logo']) && $data['logo'] instanceof UploadedFile) {
@@ -25,7 +29,7 @@ class UpdateBusinessPlan
         }
 
         // Strip non-column keys before updating
-        unset($data['income_transactions'], $data['expense_transactions'], $data['step']);
+        unset($data['income_transactions'], $data['expense_transactions'], $data['employees'], $data['loans'], $data['step']);
 
         // Update main business plan attributes
         $businessPlan->update($data);
@@ -42,7 +46,53 @@ class UpdateBusinessPlan
             $this->storeTransactions($businessPlan, $expenseTransactions, TypeEnum::EXPENSE);
         }
 
+        // Handle Employees
+        if (is_array($employees)) {
+            $businessPlan->employees()->delete();
+            $this->storeEmployees($businessPlan, $employees);
+        }
+
+        // Handle Loans
+        if (is_array($loans)) {
+            $businessPlan->loans()->delete();
+            $this->storeLoans($businessPlan, $loans);
+        }
+
         return $businessPlan;
+    }
+
+    private function storeEmployees(BusinessPlan $businessPlan, array $employees): void
+    {
+        foreach ($employees as $employeeData) {
+            Employee::create([
+                'business_plan_id' => $businessPlan->id,
+                'job_title' => $employeeData['job_title'],
+                'number_of_employees' => $employeeData['number_of_employees'] ?? 1,
+                'salary' => $employeeData['salary'],
+                'date_of_hire' => $employeeData['date_of_hire'],
+                'payment_day' => $employeeData['payment_day'] ?? 1,
+                'working_hours_per_week' => $employeeData['working_hours_per_week'] ?? null,
+                'qualification' => $employeeData['qualification'] ?? null,
+                'area_of_responsibility' => $employeeData['area_of_responsibility'] ?? null,
+            ]);
+        }
+    }
+
+    private function storeLoans(BusinessPlan $businessPlan, array $loans): void
+    {
+        foreach ($loans as $loanData) {
+            Loan::create([
+                'business_plan_id' => $businessPlan->id,
+                'name' => $loanData['name'],
+                'loan_amount' => $loanData['loan_amount'],
+                'interest_rate' => $loanData['interest_rate'],
+                'monthly_installment' => $loanData['monthly_installment'],
+                'start_date' => $loanData['start_date'],
+                'end_date' => $loanData['end_date'] ?? null,
+                'payment_day' => $loanData['payment_day'] ?? 1,
+                'description' => $loanData['description'] ?? null,
+            ]);
+        }
     }
 
     private function storeTransactions(BusinessPlan $businessPlan, array $transactions, TypeEnum $type): void
