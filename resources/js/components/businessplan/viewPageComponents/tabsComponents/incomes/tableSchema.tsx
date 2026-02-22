@@ -1,10 +1,9 @@
-import { Button } from '@/components/ui/button';
 import {
     DropdownMenuItem,
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { App } from '@/wayfinder/types';
-import { Link, router } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 import {
     ActionsColumn,
     DateColumn,
@@ -14,56 +13,63 @@ import {
     TableSchema,
     TextColumn,
 } from '@nccirtu/tablefy';
-import { Download, Plus } from 'lucide-react';
-import FormDialog from '@/components/common/formDialog';
-import TransactionForm from '@/components/businessplan/form/transactionForm';
+import TransactionCreateForm from '@/components/businessplan/viewPageComponents/tabsComponents/transactions/TransactionCreateForm';
 
 export type TransactionData = App.Models.Transaction;
 
+interface SelectOption {
+    value: string;
+    label: string;
+    data?: Record<string, unknown>;
+}
+
 interface CreateTransactionSchemaOptions {
-    catalogItems?: App.Models.CatalogItem[];
+    type?: 'income' | 'expense';
+    businessPlanId?: number;
+    categories?: SelectOption[];
+    catalogItems?: SelectOption[];
+    currencies?: SelectOption[];
+    taxes?: SelectOption[];
 }
 
 export const createTransactionSchema = (
     options: CreateTransactionSchemaOptions = {},
 ) => {
+    const {
+        type = 'income',
+        businessPlanId,
+        categories = [],
+        catalogItems = [],
+        currencies = [],
+        taxes = [],
+    } = options;
+
     let schema = TableSchema.make<TransactionData>()
         .headerActions([
-            {
-                render: () => (
-                    <Button variant="outline">
-                        <Download className="mr-2 h-4 w-4" />
-                        Exportieren
-                    </Button>
-                ),
-            },
-            {
-                render: () => (
-                    <Button asChild>
-                        <FormDialog
-                            dialogTitle={'Neue Transaktion erstellen'}
-                            dialogDescription={'Erstelle eine neue Transaktion, um deine Einnahmen oder Ausgaben zu verfolgen.'}
-                            buttonText={'Neue Transaktion erstellen'}
-                            children={
-                                <TransactionForm
-                                    catalogItems={[]}
-                                    transactionsCategories={[]}
-                                    currencies={[]}
-                                    taxes={[]}
-                                />
-                            }
-                        />
-                    </Button>
-                ),
-            },
+            ...(businessPlanId
+                ? [
+                      {
+                          render: () => (
+                              <TransactionCreateForm
+                                  businessPlanId={businessPlanId}
+                                  type={type}
+                                  categories={categories}
+                                  catalogItems={catalogItems}
+                                  currencies={currencies}
+                                  taxes={taxes}
+                              />
+                          ),
+                      },
+                  ]
+                : []),
         ])
         .emptyState(
             EmptyStateBuilder.make()
                 .imageUrl(
                     '/assets/images/spotly_grafiken_models/Meine-Rechnungen.png',
                 )
-                .title('Noch keine Rechnungen vorhanden')
-                .description('Erstelle deine erste Rechnung, um loszulegen.')
+                .title('Noch keine Einträge vorhanden')
+                .description('Erstelle deinen ersten Eintrag, um loszulegen.')
                 .build(),
         )
         .searchEmptyState(
@@ -71,20 +77,20 @@ export const createTransactionSchema = (
                 .imageUrl(
                     '/assets/images/spotly_grafiken_models/Meine-Rechnungen.png',
                 )
-                .title('Keine Rechnungen gefunden')
+                .title('Keine Einträge gefunden')
                 .description(
                     'Deine Suche ergab keine Treffer. Versuche andere Suchbegriffe.',
                 )
                 .build(),
         )
-        .searchable({ placeholder: 'Rechnung suchen' })
+        .searchable({ placeholder: 'Suchen' })
         .paginated({ pageSize: 10 })
         .sortable({ id: 'createdAt', desc: true })
         .bordered(false)
         .hoverable()
         .columnVisibility();
 
-    // Transaction Number
+    // Name
     schema = schema.columns(
         TextColumn.make<TransactionData>('name')
             .label('Name')
@@ -111,24 +117,33 @@ export const createTransactionSchema = (
             .visibleByDefault(true),
     );
 
-    // Total Amount (Netto)
+    // Quantity
     schema = schema.columns(
-        NumberColumn.make<TransactionData>('amount')
-            .label('Betrag')
+        NumberColumn.make<TransactionData>('quantity')
+            .label('Anzahl')
             .sortable()
-            .money('EUR')
-            .visibilityLabel('Betrag')
+            .visibilityLabel('Anzahl')
             .visibleByDefault(true),
     );
 
-    // Total Amount with Tax (Brutto)
+    // Unit Amount (Einzelbetrag)
     schema = schema.columns(
-        NumberColumn.make<TransactionData>('total_amount')
-            .label('Betrag Brutto')
+        NumberColumn.make<TransactionData>('amount')
+            .label('Einzelbetrag')
             .sortable()
             .money('EUR')
-            .visibilityLabel('Betrag Brutto')
-            .visibleByDefault(false),
+            .visibilityLabel('Einzelbetrag')
+            .visibleByDefault(true),
+    );
+
+    // Total Amount (Gesamt)
+    schema = schema.columns(
+        NumberColumn.make<TransactionData>('total_amount')
+            .label('Gesamt')
+            .sortable()
+            .money('EUR')
+            .visibilityLabel('Gesamt')
+            .visibleByDefault(true),
     );
 
     // Status

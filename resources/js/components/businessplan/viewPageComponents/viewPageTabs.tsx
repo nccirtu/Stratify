@@ -17,21 +17,60 @@ import {
 import { createEmployeeSchema } from './tabsComponents/employees/tableSchema';
 import { createLoanSchema } from './tabsComponents/loans/tableSchema';
 import EditFormOverview from './tabsComponents/overview/editFormOverview';
+import { ChartBarNegative } from './charts/chartBarNegative';
+import { ChartPieSeparatorNone } from './charts/chartPieSeparatorNone';
+import LiquidityViewSelector from './tabsComponents/liquidityComponents/LiquidityViewSelector';
+
+interface SelectOption {
+    value: string;
+    label: string;
+    data?: Record<string, unknown>;
+}
 
 export default function ViewPageTabs({
     transactions,
-    catalogItems,
     liquidityPlan,
     employees,
     loans,
+    businessPlanId,
+    currencies = [],
+    taxes = [],
+    incomeCategories = [],
+    expenseCategories = [],
+    incomeCatalogItems = [],
+    expenseCatalogItems = [],
 }: {
     transactions: TransactionData[];
     catalogItems: App.Models.CatalogItem[];
     liquidityPlan: LiquidityPlanData;
     employees: App.Models.Employee[];
     loans: App.Models.Loan[];
+    businessPlanId?: number;
+    currencies?: SelectOption[];
+    taxes?: SelectOption[];
+    incomeCategories?: SelectOption[];
+    expenseCategories?: SelectOption[];
+    incomeCatalogItems?: SelectOption[];
+    expenseCatalogItems?: SelectOption[];
 }) {
-    const { columns, config } = createTransactionSchema();
+    const { columns: incomeColumns, config: incomeConfig } = createTransactionSchema({
+        type: 'income',
+        businessPlanId,
+        categories: incomeCategories,
+        catalogItems: incomeCatalogItems,
+        currencies,
+        taxes,
+    });
+
+    const { columns: expenseColumns, config: expenseConfig } = createTransactionSchema({
+        type: 'expense',
+        businessPlanId,
+        categories: expenseCategories,
+        catalogItems: expenseCatalogItems,
+        currencies,
+        taxes,
+    });
+
     const { columns: employeeColumns, config: employeeConfig } = createEmployeeSchema();
     const { columns: loanColumns, config: loanConfig } = createLoanSchema();
 
@@ -54,6 +93,25 @@ export default function ViewPageTabs({
                 <TabsTrigger value="analytics">Analytics</TabsTrigger>
             </TabsList>
             <TabsContent value="overview">
+                <div className="mb-4 flex justify-end">
+                    <LiquidityViewSelector data={liquidityPlan} />
+                </div>
+                <div className="mb-4 grid grid-cols-3 gap-4">
+                    <ChartBarNegative
+                        periods={liquidityPlan.columns}
+                        values={liquidityPlan.net_cashflow.months}
+                        title="Nettocashflow"
+                        description={`Liquiditätsplan ${liquidityPlan.year}`}
+                    />
+                    <ChartPieSeparatorNone
+                        title="Einnahmen nach Kategorie"
+                        data={liquidityPlan.chart_income_by_category}
+                    />
+                    <ChartPieSeparatorNone
+                        title="Ausgaben nach Kategorie"
+                        data={liquidityPlan.chart_expense_by_category}
+                    />
+                </div>
                 <Card className="bg-white">
                     <CardHeader>
                         <CardTitle>Übersicht</CardTitle>
@@ -73,9 +131,9 @@ export default function ViewPageTabs({
                     </CardHeader>
                     <CardContent>
                         <DataTable
-                            columns={columns}
+                            columns={incomeColumns}
                             data={incomes}
-                            config={config}
+                            config={incomeConfig}
                         />
                     </CardContent>
                 </Card>
@@ -87,9 +145,9 @@ export default function ViewPageTabs({
                     </CardHeader>
                     <CardContent className="text-sm text-muted-foreground">
                         <DataTable
-                            columns={columns}
+                            columns={expenseColumns}
                             data={expenses}
-                            config={config}
+                            config={expenseConfig}
                         />
                     </CardContent>
                 </Card>
@@ -127,7 +185,8 @@ export default function ViewPageTabs({
                     <CardHeader>
                         <CardTitle>Liquiditätsplan</CardTitle>
                         <CardDescription>
-                            Übersicht aller Ein- und Auszahlungen im Planungszeitraum.
+                            Übersicht aller Ein- und Auszahlungen im
+                            Planungszeitraum.
                         </CardDescription>
                     </CardHeader>
                     <CardContent>

@@ -10,6 +10,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import type { WizardStepProps } from './types';
+import { Card, CardContent } from '@/components/ui/card';
 
 export function slugify(text: string): string {
     return text
@@ -28,64 +29,75 @@ export default function Step1General({
     errors,
 }: WizardStepProps) {
     return (
-        <FieldSet>
-            <FieldLegend>Allgemeine Informationen</FieldLegend>
-            <FieldDescription>
-                Geben Sie die grundlegenden Details für Ihren Businessplan ein.
-            </FieldDescription>
-            <FieldGroup>
-                <Field>
-                    <FieldLabel htmlFor="name">
-                        Name des Businessplans
-                    </FieldLabel>
-                    <Input
-                        id="name"
-                        value={data.name || ''}
-                        onChange={(e) => {
-                            setData({
-                                name: e.target.value,
-                                slug: slugify(e.target.value),
-                            });
-                        }}
-                        autoComplete="off"
-                        aria-invalid={!!errors.name}
-                    />
-                    {errors.name && <FieldError>{errors.name}</FieldError>}
-                </Field>
-
-                <Field>
-                    <FieldLabel htmlFor="slug">Slug</FieldLabel>
-                    <Input
-                        id="slug"
-                        value={data.slug || ''}
-                        onChange={(e) => setData({ slug: e.target.value })}
-                        autoComplete="off"
-                        aria-invalid={!!errors.slug}
-                    />
+        <Card>
+            <CardContent>
+                <FieldSet>
+                    <FieldLegend>Allgemeine Informationen</FieldLegend>
                     <FieldDescription>
-                        Wird automatisch aus dem Namen generiert.
+                        Geben Sie die grundlegenden Details für Ihren
+                        Businessplan ein.
                     </FieldDescription>
-                    {errors.slug && <FieldError>{errors.slug}</FieldError>}
-                </Field>
+                    <FieldGroup>
+                        <Field>
+                            <FieldLabel htmlFor="name">
+                                Name des Businessplans
+                            </FieldLabel>
+                            <Input
+                                id="name"
+                                value={data.name || ''}
+                                onChange={(e) => {
+                                    setData({
+                                        name: e.target.value,
+                                        slug: slugify(e.target.value),
+                                    });
+                                }}
+                                autoComplete="off"
+                                aria-invalid={!!errors.name}
+                            />
+                            {errors.name && (
+                                <FieldError>{errors.name}</FieldError>
+                            )}
+                        </Field>
 
-                <Field>
-                    <FieldLabel htmlFor="description">
-                        Interne Kurzbeschreibung
-                    </FieldLabel>
-                    <Textarea
-                        id="description"
-                        value={data.description || ''}
-                        onChange={(e) =>
-                            setData({ description: e.target.value })
-                        }
-                        rows={3}
-                        aria-invalid={!!errors.description}
-                    />
-                    {errors.description && (
-                        <FieldError>{errors.description}</FieldError>
-                    )}
-                </Field>
-            </FieldGroup>
-        </FieldSet>
+                        <Field>
+                            <FieldLabel htmlFor="slug">Slug</FieldLabel>
+                            <Input
+                                id="slug"
+                                value={data.slug || ''}
+                                onChange={(e) =>
+                                    setData({ slug: e.target.value })
+                                }
+                                autoComplete="off"
+                                aria-invalid={!!errors.slug}
+                            />
+                            <FieldDescription>
+                                Wird automatisch aus dem Namen generiert.
+                            </FieldDescription>
+                            {errors.slug && (
+                                <FieldError>{errors.slug}</FieldError>
+                            )}
+                        </Field>
+
+                        <Field>
+                            <FieldLabel htmlFor="description">
+                                Interne Kurzbeschreibung
+                            </FieldLabel>
+                            <Textarea
+                                id="description"
+                                value={data.description || ''}
+                                onChange={(e) =>
+                                    setData({ description: e.target.value })
+                                }
+                                rows={3}
+                                aria-invalid={!!errors.description}
+                            />
+                            {errors.description && (
+                                <FieldError>{errors.description}</FieldError>
+                            )}
+                        </Field>
+                    </FieldGroup>
+                </FieldSet>
+            </CardContent>
+        </Card>
     );
 }

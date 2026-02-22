@@ -83,7 +83,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
     const { urlIsActive } = useActiveUrl();
     return (
         <>
-            <div className="border-b border-sidebar-border/80 ">
+            <div className="bg-white border-b border-sidebar-border/80 ">
                 <div className="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
                     {/* Mobile Menu */}
                     <div className="lg:hidden">
@@ -175,7 +175,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                                 navigationMenuTriggerStyle(),
                                                 urlIsActive(item.href) &&
                                                     activeItemStyles,
-                                                'h-9 cursor-pointer px-3',
+                                                'h-9 cursor-pointer px-3 bg-transparent',
                                             )}
                                         >
                                             {item.icon && (

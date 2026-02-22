@@ -5,8 +5,23 @@ import CreateBusinessPlanWizard, {
 } from '@/components/businessplan/form/CreateBusinessPlanWizard';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
+import { dashboard } from '@/routes';
+import businessplan from '@/wayfinder/routes/businessplan';
 
-const breadcrumbs: BreadcrumbItem[] = [];
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Dashboard',
+        href: dashboard().url,
+    },
+    {
+        title: 'Businesspläne',
+        href: businessplan.index().url,
+    },
+    {
+        title: 'Businessplan erstellen',
+        href: businessplan.create().url,
+    },
+];
 
 export default function CreateBusinessPlanPage(props: WizardOptions) {
     return (

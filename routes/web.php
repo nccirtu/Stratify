@@ -20,6 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('businessplans')->name('businessplan.')->group(function () {
         Route::put('{businessPlan}/save-step', [BusinessPlanController::class, 'saveStep'])->name('save-step');
+        Route::post('{businessPlan}/transactions', [BusinessPlanController::class, 'storeTransaction'])->name('transaction.store');
     });
 
     Route::resource('businessplans', BusinessPlanController::class)->names([

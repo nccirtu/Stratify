@@ -74,6 +74,7 @@ class BusinessPlan extends Model
         'public_tenders',
         'channels',
         'liquidity_opening_balance',
+        'current_step',
     ];
 
     public function casts(): array
@@ -87,6 +88,7 @@ class BusinessPlan extends Model
             'branch_id' => 'integer',
             'user_id' => 'integer',
             'status' => StatusEnum::class,
+            'current_step' => 'integer',
             'company_state' => CompanyStateEnum::class,
             'period_from' => 'date',
             'period_until' => 'date',

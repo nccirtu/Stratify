@@ -15,6 +15,7 @@ class Transaction extends Model
     protected $casts = [
         'amount' => 'decimal:2',
         'total_amount' => 'decimal:2',
+        'quantity' => 'integer',
         'date' => 'date',
         'date_overdue' => 'date',
         'paid_at' => 'datetime',

@@ -1,3 +1,8 @@
+export interface LiquidityChartCategory {
+    category: string;
+    value: number;
+}
+
 export interface LiquidityRow {
     account_id: number | null;
     label: string;
@@ -31,4 +36,6 @@ export interface LiquidityPlanData {
     net_cashflow: LiquidityRow;
     saldo: LiquidityRow;
     bank_accounts: LiquidityBankAccount[];
+    chart_income_by_category: LiquidityChartCategory[];
+    chart_expense_by_category: LiquidityChartCategory[];
 }

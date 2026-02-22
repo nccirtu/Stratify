@@ -4,6 +4,8 @@ import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
 import { App } from '@/wayfinder/types';
 import { Head } from '@inertiajs/react';
+import { dashboard } from '@/routes';
+import businessplan from '@/wayfinder/routes/businessplan';
 
 interface PaginatedBusinessPlans {
     data: App.Models.BusinessPlan[];
@@ -13,7 +15,16 @@ interface PaginatedBusinessPlans {
     total: number;
 }
 
-const breadcrumbs: BreadcrumbItem[] = [];
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Dashboard',
+        href: dashboard().url,
+    },
+    {
+        title: 'Businesspläne',
+        href: businessplan.index().url,
+    },
+];
 
 export default function Businessplan({
     businessplans,

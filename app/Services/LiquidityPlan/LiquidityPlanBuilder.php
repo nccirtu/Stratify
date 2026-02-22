@@ -6,6 +6,7 @@ use App\Enums\LiquiditySectionEnum;
 use App\Models\BusinessPlan;
 use App\Models\LiquidityAccount;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class LiquidityPlanBuilder
 {
@@ -113,6 +114,8 @@ class LiquidityPlanBuilder
             'net_cashflow' => $this->buildNetCashflowRow($incomeSummary, $expenseSummary),
             'saldo' => $this->buildSaldoRow($saldoValues),
             'bank_accounts' => $this->buildBankAccounts(),
+            'chart_income_by_category' => $this->buildCategoryBreakdown('income'),
+            'chart_expense_by_category' => $this->buildCategoryBreakdown('expense'),
         ];
     }
 
@@ -364,6 +367,47 @@ class LiquidityPlanBuilder
         $key = $periodFrom->dayOfWeekIso;
 
         return in_array($key, $columnKeys, true) ? $key : ($columnKeys[0] ?? null);
+    }
+
+    /**
+     * Returns summed transaction amounts grouped by category name for the current period.
+     *
+     * @return array<int, array{category: string, value: float}>
+     */
+    private function buildCategoryBreakdown(string $type): array
+    {
+        [$start, $end] = $this->context->dateRange();
+
+        $periodFrom = $this->businessPlan->period_from;
+        $periodUntil = $this->businessPlan->period_until;
+
+        if ($periodFrom && $periodFrom->toDateString() > $start) {
+            $start = $periodFrom->toDateString();
+        }
+
+        if ($periodUntil && $periodUntil->toDateString() < $end) {
+            $end = $periodUntil->toDateString();
+        }
+
+        return DB::table('transactions')
+            ->join('transaction_categories', 'transactions.category_id', '=', 'transaction_categories.id')
+            ->where('transactions.business_plan_id', $this->businessPlan->id)
+            ->where('transaction_categories.type', $type)
+            ->where('transactions.is_active', true)
+            ->whereRaw('date(transactions.date) BETWEEN ? AND ?', [$start, $end])
+            ->select(
+                'transaction_categories.name as category',
+                DB::raw('SUM(transactions.total_amount) as value')
+            )
+            ->groupBy('transaction_categories.name')
+            ->orderByDesc('value')
+            ->get()
+            ->map(fn ($row) => [
+                'category' => $row->category,
+                'value' => round((float) $row->value, 2),
+            ])
+            ->values()
+            ->toArray();
     }
 
     /**

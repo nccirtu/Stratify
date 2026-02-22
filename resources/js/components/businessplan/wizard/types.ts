@@ -74,6 +74,7 @@ export interface TransactionItem {
     name: string;
     description: string;
     amount: string;
+    quantity: string;
     category_id: string;
     currency_id: string;
     tax_id: string;

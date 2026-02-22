@@ -5,16 +5,49 @@ import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
 import { LiquidityPlanData } from '@/types/liquidity';
 import { App } from '@/wayfinder/types';
+import { dashboard } from '@/routes';
+import businessplan from '@/wayfinder/routes/businessplan';
 
-const breadcrumbs: BreadcrumbItem[] = [];
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Dashboard',
+        href: dashboard().url,
+    },
+    {
+        title: 'Businesspläne',
+        href: businessplan.index().url,
+    },
+];
+
+interface SelectOption {
+    value: string;
+    label: string;
+    data?: Record<string, unknown>;
+}
 
 interface BusinessPlanShowProps {
     businessPlan: App.Models.BusinessPlan;
     catalogItems: App.Models.CatalogItem[];
     liquidityPlan: LiquidityPlanData;
+    currencies: SelectOption[];
+    taxes: SelectOption[];
+    incomeCategories: SelectOption[];
+    expenseCategories: SelectOption[];
+    incomeCatalogItems: SelectOption[];
+    expenseCatalogItems: SelectOption[];
 }
 
-export default function BusinessplanShow({ businessPlan, catalogItems, liquidityPlan }: BusinessPlanShowProps) {
+export default function BusinessplanShow({
+    businessPlan,
+    catalogItems,
+    liquidityPlan,
+    currencies,
+    taxes,
+    incomeCategories,
+    expenseCategories,
+    incomeCatalogItems,
+    expenseCatalogItems,
+}: BusinessPlanShowProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -26,6 +59,13 @@ export default function BusinessplanShow({ businessPlan, catalogItems, liquidity
                         liquidityPlan={liquidityPlan}
                         employees={businessPlan.employees ?? []}
                         loans={businessPlan.loans ?? []}
+                        businessPlanId={businessPlan.id}
+                        currencies={currencies}
+                        taxes={taxes}
+                        incomeCategories={incomeCategories}
+                        expenseCategories={expenseCategories}
+                        incomeCatalogItems={incomeCatalogItems}
+                        expenseCatalogItems={expenseCatalogItems}
                     />
                 </div>
             </div>

@@ -21,8 +21,10 @@ import type {
     BusinessPlanFormData,
     EnumOptions,
     SelectOption,
+    TransactionItem,
     WizardStepProps,
 } from '../wizard/types';
+import { Card } from '@/components/ui/card';
 
 const STEPS = [
     { label: 'Stammdaten', component: Step1General },
@@ -125,6 +127,38 @@ const defaultFormData: BusinessPlanFormData = {
     loans: [],
 };
 
+function buildTransactionItems(transactions: any[]): TransactionItem[] {
+    const seenTemplates = new Set<number>();
+    return transactions
+        .filter((t) => {
+            if (!t.recurring_template_id) return true;
+            if (seenTemplates.has(t.recurring_template_id)) return false;
+            seenTemplates.add(t.recurring_template_id);
+            return true;
+        })
+        .map((t) => ({
+            id: t.id ? String(t.id) : undefined,
+            catalog_item_id: t.catalog_item_id ? String(t.catalog_item_id) : '',
+            name: t.name || '',
+            description: t.description || '',
+            amount: t.amount ? String(t.amount) : '',
+            quantity: t.quantity ? String(t.quantity) : '1',
+            category_id: t.category_id ? String(t.category_id) : '',
+            currency_id: t.currency_id ? String(t.currency_id) : '',
+            tax_id: t.tax_id ? String(t.tax_id) : '',
+            date: t.date || '',
+            payment_method: t.payment_method || '',
+            is_recurring: t.is_recurring || false,
+            frequency: t.recurring_template?.frequency || '',
+            day_of_month: t.recurring_template?.day_of_month
+                ? String(t.recurring_template.day_of_month)
+                : '',
+            start_date: t.recurring_template?.start_date || '',
+            end_date: t.recurring_template?.end_date || '',
+            type: t.type,
+        }));
+}
+
 function buildInitialData(businessPlan?: any): BusinessPlanFormData {
     if (!businessPlan) {
         return { ...defaultFormData };
@@ -173,14 +207,12 @@ function buildInitialData(businessPlan?: any): BusinessPlanFormData {
         information_target_group: Array.isArray(businessPlan.information_target_group) ? businessPlan.information_target_group : [],
         company_target_group: Array.isArray(businessPlan.company_target_group) ? businessPlan.company_target_group : [],
         channels: Array.isArray(businessPlan.channels) ? businessPlan.channels : [],
-        income_transactions:
-            businessPlan.transactions?.filter(
-                (t: any) => t.type === 'income',
-            ) || [],
-        expense_transactions:
-            businessPlan.transactions?.filter(
-                (t: any) => t.type === 'expense',
-            ) || [],
+        income_transactions: buildTransactionItems(
+            (businessPlan.transactions || []).filter((t: any) => t.type === 'income'),
+        ),
+        expense_transactions: buildTransactionItems(
+            (businessPlan.transactions || []).filter((t: any) => t.type === 'expense'),
+        ),
         employees: (businessPlan.employees || []).map((e: any) => ({
             id: e.id ? String(e.id) : undefined,
             job_title: e.job_title || '',
@@ -435,7 +467,7 @@ export default function CreateBusinessPlanWizard({
     return (
         <div className="flex min-h-[600px] flex-col lg:flex-row">
             {/* Step sidebar */}
-            <nav className="bg-muted/30 p-4 lg:w-56 lg:border-b-0">
+            <Card className="p-4 lg:w-56 lg:border-b-0">
                 <ol className="flex gap-2 overflow-x-auto lg:flex-col lg:overflow-x-visible">
                     {STEPS.map((step, index) => {
                         const isCurrent = index === currentStep;
@@ -493,19 +525,20 @@ export default function CreateBusinessPlanWizard({
                         );
                     })}
                 </ol>
-            </nav>
+            </Card>
 
             {/* Step content */}
             <div className="flex flex-1 flex-col">
-                <div className="flex-1 p-6">
+                <div className="flex-1 px-6">
                     <StepComponent {...stepProps} />
                 </div>
 
                 {/* Navigation */}
-                <div className="flex items-center justify-between px-4 pb-4">
+                <div className="flex items-center justify-between px-6 pt-4">
                     <Button
                         type="button"
-                        variant="outline"
+                        variant="secondary"
+                        className={'bg-white'}
                         onClick={handleBack}
                         disabled={isFirstStep || processing}
                     >

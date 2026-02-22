@@ -27,12 +27,14 @@ import {
 } from '@/components/ui/collapsible';
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
 
 const emptyTransaction: TransactionItem = {
     catalog_item_id: '',
     name: '',
     description: '',
     amount: '',
+    quantity: '1',
     category_id: '',
     currency_id: '',
     tax_id: '',
@@ -109,309 +111,111 @@ export default function Step12Expenses({
     };
 
     return (
-        <FieldSet>
-            <FieldLegend>Ausgaben</FieldLegend>
-            <FieldDescription>
-                Erfassen Sie Ihre geplanten Ausgaben.
-            </FieldDescription>
+        <Card>
+            <CardContent>
+                <FieldSet>
+                    <FieldLegend>Ausgaben</FieldLegend>
+                    <FieldDescription>
+                        Erfassen Sie Ihre geplanten Ausgaben.
+                    </FieldDescription>
 
-            <div className="space-y-3">
-                {items.map((item, index) => (
-                    <Collapsible
-                        key={index}
-                        open={openItems[index]}
-                        onOpenChange={(open) => setItemOpen(index, open)}
-                        className="rounded-lg border"
-                    >
-                        <div className="flex items-center justify-between px-4 py-3">
-                            <CollapsibleTrigger asChild>
-                                <button
-                                    type="button"
-                                    className="flex flex-1 items-center gap-2 text-left text-sm font-medium"
-                                >
-                                    <ChevronDown
-                                        className={cn(
-                                            'h-4 w-4 shrink-0 transition-transform duration-200',
-                                            openItems[index] && 'rotate-180',
-                                        )}
-                                    />
-                                    {item.name
-                                        ? item.name
-                                        : `Ausgabe ${index + 1}`}
-                                </button>
-                            </CollapsibleTrigger>
-                            <Button
-                                type="button"
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => removeItem(index)}
+                    <div className="space-y-3">
+                        {items.map((item, index) => (
+                            <Collapsible
+                                key={index}
+                                open={openItems[index]}
+                                onOpenChange={(open) =>
+                                    setItemOpen(index, open)
+                                }
+                                className="rounded-lg border-2"
                             >
-                                <Trash2 className="h-4 w-4" />
-                            </Button>
-                        </div>
-
-                        <CollapsibleContent>
-                            <div className="border-t px-4 pb-4 pt-3">
-                                <FieldGroup>
-                                    <Field>
-                                        <FieldLabel>Katalogvorlage</FieldLabel>
-                                        <Select
-                                            value={item.catalog_item_id || ''}
-                                            onValueChange={(v) =>
-                                                handleCatalogChange(index, v)
-                                            }
+                                <div className="flex items-center justify-between px-4 py-3">
+                                    <CollapsibleTrigger asChild>
+                                        <button
+                                            type="button"
+                                            className="flex flex-1 items-center gap-2 text-left text-sm font-medium"
                                         >
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Vorlage wählen (optional)" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {options.expenseCatalogItems.map(
-                                                    (c) => (
-                                                        <SelectItem
-                                                            key={c.value}
-                                                            value={c.value}
-                                                        >
-                                                            {c.label}
-                                                        </SelectItem>
-                                                    ),
+                                            <ChevronDown
+                                                className={cn(
+                                                    'h-4 w-4 shrink-0 transition-transform duration-200',
+                                                    openItems[index] &&
+                                                        'rotate-180',
                                                 )}
-                                            </SelectContent>
-                                        </Select>
-                                    </Field>
-
-                                    <Field>
-                                        <FieldLabel>Name</FieldLabel>
-                                        <Input
-                                            value={item.name}
-                                            onChange={(e) =>
-                                                updateItem(index, {
-                                                    name: e.target.value,
-                                                })
-                                            }
-                                            aria-invalid={
-                                                !!errors[
-                                                    `expense_transactions.${index}.name`
-                                                ]
-                                            }
-                                        />
-                                        {errors[
-                                            `expense_transactions.${index}.name`
-                                        ] && (
-                                            <FieldError>
-                                                {
-                                                    errors[
-                                                        `expense_transactions.${index}.name`
-                                                    ]
-                                                }
-                                            </FieldError>
-                                        )}
-                                    </Field>
-
-                                    <Field>
-                                        <FieldLabel>Beschreibung</FieldLabel>
-                                        <Textarea
-                                            value={item.description}
-                                            onChange={(e) =>
-                                                updateItem(index, {
-                                                    description: e.target.value,
-                                                })
-                                            }
-                                            rows={2}
-                                        />
-                                    </Field>
-
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <Field>
-                                            <FieldLabel>Betrag</FieldLabel>
-                                            <Input
-                                                type="number"
-                                                value={item.amount}
-                                                onChange={(e) =>
-                                                    updateItem(index, {
-                                                        amount: e.target.value,
-                                                    })
-                                                }
-                                                aria-invalid={
-                                                    !!errors[
-                                                        `expense_transactions.${index}.amount`
-                                                    ]
-                                                }
                                             />
-                                            {errors[
-                                                `expense_transactions.${index}.amount`
-                                            ] && (
-                                                <FieldError>
-                                                    {
-                                                        errors[
-                                                            `expense_transactions.${index}.amount`
-                                                        ]
-                                                    }
-                                                </FieldError>
-                                            )}
-                                        </Field>
+                                            {item.name
+                                                ? item.name
+                                                : `Ausgabe ${index + 1}`}
+                                        </button>
+                                    </CollapsibleTrigger>
+                                    {item.quantity && item.amount && (
+                                        <div className="px-2 text-sm text-muted-foreground">
+                                            Gesamt:{' '}
+                                            <span className="font-semibold text-foreground">
+                                                {(
+                                                    (parseFloat(
+                                                        item.quantity,
+                                                    ) || 1) *
+                                                    (parseFloat(item.amount) ||
+                                                        0)
+                                                ).toLocaleString('de-DE', {
+                                                    style: 'currency',
+                                                    currency: 'EUR',
+                                                })}
+                                            </span>{' '}
+                                            ({item.quantity} ×{' '}
+                                            {parseFloat(
+                                                item.amount || '0',
+                                            ).toLocaleString('de-DE', {
+                                                style: 'currency',
+                                                currency: 'EUR',
+                                            })}
+                                            )
+                                        </div>
+                                    )}
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => removeItem(index)}
+                                    >
+                                        <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                </div>
 
-                                        <Field>
-                                            <FieldLabel>Datum</FieldLabel>
-                                            <Input
-                                                type="date"
-                                                value={item.date}
-                                                onChange={(e) =>
-                                                    updateItem(index, {
-                                                        date: e.target.value,
-                                                    })
-                                                }
-                                            />
-                                        </Field>
-                                    </div>
-
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <Field>
-                                            <FieldLabel>Kategorie</FieldLabel>
-                                            <Select
-                                                value={item.category_id || ''}
-                                                onValueChange={(v) =>
-                                                    updateItem(index, {
-                                                        category_id: v,
-                                                    })
-                                                }
-                                            >
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Kategorie" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {options.expenseCategories.map(
-                                                        (c) => (
-                                                            <SelectItem
-                                                                key={c.value}
-                                                                value={c.value}
-                                                            >
-                                                                {c.label}
-                                                            </SelectItem>
-                                                        ),
-                                                    )}
-                                                </SelectContent>
-                                            </Select>
-                                        </Field>
-
-                                        <Field>
-                                            <FieldLabel>Währung</FieldLabel>
-                                            <Select
-                                                value={item.currency_id || ''}
-                                                onValueChange={(v) =>
-                                                    updateItem(index, {
-                                                        currency_id: v,
-                                                    })
-                                                }
-                                            >
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Währung" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {options.currencies.map(
-                                                        (c) => (
-                                                            <SelectItem
-                                                                key={c.value}
-                                                                value={c.value}
-                                                            >
-                                                                {c.label}
-                                                            </SelectItem>
-                                                        ),
-                                                    )}
-                                                </SelectContent>
-                                            </Select>
-                                        </Field>
-                                    </div>
-
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <Field>
-                                            <FieldLabel>Steuer</FieldLabel>
-                                            <Select
-                                                value={item.tax_id || ''}
-                                                onValueChange={(v) =>
-                                                    updateItem(index, {
-                                                        tax_id: v,
-                                                    })
-                                                }
-                                            >
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Steuer" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {options.taxes.map((t) => (
-                                                        <SelectItem
-                                                            key={t.value}
-                                                            value={t.value}
-                                                        >
-                                                            {t.label}
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                        </Field>
-
-                                        <Field>
-                                            <FieldLabel>
-                                                Zahlungsmethode
-                                            </FieldLabel>
-                                            <Input
-                                                value={item.payment_method}
-                                                onChange={(e) =>
-                                                    updateItem(index, {
-                                                        payment_method:
-                                                            e.target.value,
-                                                    })
-                                                }
-                                                placeholder="z.B. Überweisung"
-                                                aria-invalid={
-                                                    !!errors[
-                                                        `expense_transactions.${index}.payment_method`
-                                                    ]
-                                                }
-                                            />
-                                        </Field>
-                                    </div>
-
-                                    <Field orientation="horizontal">
-                                        <Switch
-                                            checked={item.is_recurring}
-                                            onCheckedChange={(checked) =>
-                                                updateItem(index, {
-                                                    is_recurring: checked,
-                                                })
-                                            }
-                                        />
-                                        <FieldLabel>Wiederkehrend</FieldLabel>
-                                    </Field>
-
-                                    {item.is_recurring && (
-                                        <div className="grid grid-cols-2 gap-4">
+                                <CollapsibleContent>
+                                    <div className="border-t px-4 pt-3 pb-4">
+                                        <FieldGroup>
                                             <Field>
                                                 <FieldLabel>
-                                                    Frequenz
+                                                    Katalogvorlage
                                                 </FieldLabel>
                                                 <Select
-                                                    value={item.frequency || ''}
+                                                    value={
+                                                        item.catalog_item_id ||
+                                                        ''
+                                                    }
                                                     onValueChange={(v) =>
-                                                        updateItem(index, {
-                                                            frequency: v,
-                                                        })
+                                                        handleCatalogChange(
+                                                            index,
+                                                            v,
+                                                        )
                                                     }
                                                 >
                                                     <SelectTrigger>
-                                                        <SelectValue placeholder="Frequenz" />
+                                                        <SelectValue placeholder="Vorlage wählen (optional)" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {frequencies.map(
-                                                            (f) => (
+                                                        {options.expenseCatalogItems.map(
+                                                            (c) => (
                                                                 <SelectItem
                                                                     key={
-                                                                        f.value
+                                                                        c.value
                                                                     }
                                                                     value={
-                                                                        f.value
+                                                                        c.value
                                                                     }
                                                                 >
-                                                                    {f.label}
+                                                                    {c.label}
                                                                 </SelectItem>
                                                             ),
                                                         )}
@@ -420,70 +224,443 @@ export default function Step12Expenses({
                                             </Field>
 
                                             <Field>
-                                                <FieldLabel>
-                                                    Tag im Monat
-                                                </FieldLabel>
+                                                <FieldLabel>Name</FieldLabel>
                                                 <Input
-                                                    type="number"
-                                                    min={1}
-                                                    max={31}
-                                                    value={item.day_of_month}
+                                                    value={item.name}
                                                     onChange={(e) =>
                                                         updateItem(index, {
-                                                            day_of_month:
-                                                                e.target.value,
+                                                            name: e.target
+                                                                .value,
                                                         })
                                                     }
+                                                    aria-invalid={
+                                                        !!errors[
+                                                            `expense_transactions.${index}.name`
+                                                        ]
+                                                    }
                                                 />
+                                                {errors[
+                                                    `expense_transactions.${index}.name`
+                                                ] && (
+                                                    <FieldError>
+                                                        {
+                                                            errors[
+                                                                `expense_transactions.${index}.name`
+                                                            ]
+                                                        }
+                                                    </FieldError>
+                                                )}
                                             </Field>
 
                                             <Field>
                                                 <FieldLabel>
-                                                    Startdatum
+                                                    Beschreibung
                                                 </FieldLabel>
-                                                <Input
-                                                    type="date"
-                                                    value={item.start_date}
+                                                <Textarea
+                                                    value={item.description}
                                                     onChange={(e) =>
                                                         updateItem(index, {
-                                                            start_date:
+                                                            description:
                                                                 e.target.value,
                                                         })
                                                     }
+                                                    rows={2}
                                                 />
                                             </Field>
 
-                                            <Field>
+                                            <div className="grid grid-cols-3 gap-4">
+                                                <Field>
+                                                    <FieldLabel>
+                                                        Anzahl
+                                                    </FieldLabel>
+                                                    <Input
+                                                        type="number"
+                                                        min={1}
+                                                        value={item.quantity}
+                                                        onChange={(e) =>
+                                                            updateItem(index, {
+                                                                quantity:
+                                                                    e.target
+                                                                        .value,
+                                                            })
+                                                        }
+                                                    />
+                                                </Field>
+
+                                                <Field>
+                                                    <FieldLabel>
+                                                        Betrag (Einzeln)
+                                                    </FieldLabel>
+                                                    <Input
+                                                        type="number"
+                                                        value={item.amount}
+                                                        onChange={(e) =>
+                                                            updateItem(index, {
+                                                                amount: e.target
+                                                                    .value,
+                                                            })
+                                                        }
+                                                        aria-invalid={
+                                                            !!errors[
+                                                                `expense_transactions.${index}.amount`
+                                                            ]
+                                                        }
+                                                    />
+                                                    {errors[
+                                                        `expense_transactions.${index}.amount`
+                                                    ] && (
+                                                        <FieldError>
+                                                            {
+                                                                errors[
+                                                                    `expense_transactions.${index}.amount`
+                                                                ]
+                                                            }
+                                                        </FieldError>
+                                                    )}
+                                                </Field>
+
+                                                <Field>
+                                                    <FieldLabel>
+                                                        Datum
+                                                    </FieldLabel>
+                                                    <Input
+                                                        type="date"
+                                                        value={item.date}
+                                                        onChange={(e) =>
+                                                            updateItem(index, {
+                                                                date: e.target
+                                                                    .value,
+                                                            })
+                                                        }
+                                                    />
+                                                </Field>
+                                            </div>
+                                            {item.quantity && item.amount && (
+                                                <div className="rounded-md bg-secondary px-3 py-2 text-sm text-muted-foreground">
+                                                    Gesamt:{' '}
+                                                    <span className="font-semibold text-foreground">
+                                                        {(
+                                                            (parseFloat(
+                                                                item.quantity,
+                                                            ) || 1) *
+                                                            (parseFloat(
+                                                                item.amount,
+                                                            ) || 0)
+                                                        ).toLocaleString(
+                                                            'de-DE',
+                                                            {
+                                                                style: 'currency',
+                                                                currency: 'EUR',
+                                                            },
+                                                        )}
+                                                    </span>{' '}
+                                                    ({item.quantity} ×{' '}
+                                                    {parseFloat(
+                                                        item.amount || '0',
+                                                    ).toLocaleString('de-DE', {
+                                                        style: 'currency',
+                                                        currency: 'EUR',
+                                                    })}
+                                                    )
+                                                </div>
+                                            )}
+
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <Field>
+                                                    <FieldLabel>
+                                                        Kategorie
+                                                    </FieldLabel>
+                                                    <Select
+                                                        value={
+                                                            item.category_id ||
+                                                            ''
+                                                        }
+                                                        onValueChange={(v) =>
+                                                            updateItem(index, {
+                                                                category_id: v,
+                                                            })
+                                                        }
+                                                    >
+                                                        <SelectTrigger>
+                                                            <SelectValue placeholder="Kategorie" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {options.expenseCategories.map(
+                                                                (c) => (
+                                                                    <SelectItem
+                                                                        key={
+                                                                            c.value
+                                                                        }
+                                                                        value={
+                                                                            c.value
+                                                                        }
+                                                                    >
+                                                                        {
+                                                                            c.label
+                                                                        }
+                                                                    </SelectItem>
+                                                                ),
+                                                            )}
+                                                        </SelectContent>
+                                                    </Select>
+                                                </Field>
+
+                                                <Field>
+                                                    <FieldLabel>
+                                                        Währung
+                                                    </FieldLabel>
+                                                    <Select
+                                                        value={
+                                                            item.currency_id ||
+                                                            ''
+                                                        }
+                                                        onValueChange={(v) =>
+                                                            updateItem(index, {
+                                                                currency_id: v,
+                                                            })
+                                                        }
+                                                    >
+                                                        <SelectTrigger>
+                                                            <SelectValue placeholder="Währung" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {options.currencies.map(
+                                                                (c) => (
+                                                                    <SelectItem
+                                                                        key={
+                                                                            c.value
+                                                                        }
+                                                                        value={
+                                                                            c.value
+                                                                        }
+                                                                    >
+                                                                        {
+                                                                            c.label
+                                                                        }
+                                                                    </SelectItem>
+                                                                ),
+                                                            )}
+                                                        </SelectContent>
+                                                    </Select>
+                                                </Field>
+                                            </div>
+
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <Field>
+                                                    <FieldLabel>
+                                                        Steuer
+                                                    </FieldLabel>
+                                                    <Select
+                                                        value={
+                                                            item.tax_id || ''
+                                                        }
+                                                        onValueChange={(v) =>
+                                                            updateItem(index, {
+                                                                tax_id: v,
+                                                            })
+                                                        }
+                                                    >
+                                                        <SelectTrigger>
+                                                            <SelectValue placeholder="Steuer" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {options.taxes.map(
+                                                                (t) => (
+                                                                    <SelectItem
+                                                                        key={
+                                                                            t.value
+                                                                        }
+                                                                        value={
+                                                                            t.value
+                                                                        }
+                                                                    >
+                                                                        {
+                                                                            t.label
+                                                                        }
+                                                                    </SelectItem>
+                                                                ),
+                                                            )}
+                                                        </SelectContent>
+                                                    </Select>
+                                                </Field>
+
+                                                <Field>
+                                                    <FieldLabel>
+                                                        Zahlungsmethode
+                                                    </FieldLabel>
+                                                    <Input
+                                                        value={
+                                                            item.payment_method
+                                                        }
+                                                        onChange={(e) =>
+                                                            updateItem(index, {
+                                                                payment_method:
+                                                                    e.target
+                                                                        .value,
+                                                            })
+                                                        }
+                                                        placeholder="z.B. Überweisung"
+                                                        aria-invalid={
+                                                            !!errors[
+                                                                `expense_transactions.${index}.payment_method`
+                                                            ]
+                                                        }
+                                                    />
+                                                </Field>
+                                            </div>
+
+                                            <Field orientation="horizontal">
+                                                <Switch
+                                                    checked={item.is_recurring}
+                                                    onCheckedChange={(
+                                                        checked,
+                                                    ) =>
+                                                        updateItem(index, {
+                                                            is_recurring:
+                                                                checked,
+                                                        })
+                                                    }
+                                                />
                                                 <FieldLabel>
-                                                    Enddatum
+                                                    Wiederkehrend
                                                 </FieldLabel>
-                                                <Input
-                                                    type="date"
-                                                    value={item.end_date}
-                                                    onChange={(e) =>
-                                                        updateItem(index, {
-                                                            end_date:
-                                                                e.target.value,
-                                                        })
-                                                    }
-                                                />
                                             </Field>
-                                        </div>
-                                    )}
-                                </FieldGroup>
-                            </div>
-                        </CollapsibleContent>
-                    </Collapsible>
-                ))}
 
-                <Button
-                    type="button"
-                    variant="outline"
-                    onClick={addItem}
-                >
-                    Ausgabe hinzufügen
-                </Button>
-            </div>
-        </FieldSet>
+                                            {item.is_recurring && (
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <Field>
+                                                        <FieldLabel>
+                                                            Frequenz
+                                                        </FieldLabel>
+                                                        <Select
+                                                            value={
+                                                                item.frequency ||
+                                                                ''
+                                                            }
+                                                            onValueChange={(
+                                                                v,
+                                                            ) =>
+                                                                updateItem(
+                                                                    index,
+                                                                    {
+                                                                        frequency:
+                                                                            v,
+                                                                    },
+                                                                )
+                                                            }
+                                                        >
+                                                            <SelectTrigger>
+                                                                <SelectValue placeholder="Frequenz" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {frequencies.map(
+                                                                    (f) => (
+                                                                        <SelectItem
+                                                                            key={
+                                                                                f.value
+                                                                            }
+                                                                            value={
+                                                                                f.value
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                f.label
+                                                                            }
+                                                                        </SelectItem>
+                                                                    ),
+                                                                )}
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </Field>
+
+                                                    <Field>
+                                                        <FieldLabel>
+                                                            Tag im Monat
+                                                        </FieldLabel>
+                                                        <Input
+                                                            type="number"
+                                                            min={1}
+                                                            max={31}
+                                                            value={
+                                                                item.day_of_month
+                                                            }
+                                                            onChange={(e) =>
+                                                                updateItem(
+                                                                    index,
+                                                                    {
+                                                                        day_of_month:
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                    },
+                                                                )
+                                                            }
+                                                        />
+                                                    </Field>
+
+                                                    <Field>
+                                                        <FieldLabel>
+                                                            Startdatum
+                                                        </FieldLabel>
+                                                        <Input
+                                                            type="date"
+                                                            value={
+                                                                item.start_date
+                                                            }
+                                                            onChange={(e) =>
+                                                                updateItem(
+                                                                    index,
+                                                                    {
+                                                                        start_date:
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                    },
+                                                                )
+                                                            }
+                                                        />
+                                                    </Field>
+
+                                                    <Field>
+                                                        <FieldLabel>
+                                                            Enddatum
+                                                        </FieldLabel>
+                                                        <Input
+                                                            type="date"
+                                                            value={
+                                                                item.end_date
+                                                            }
+                                                            onChange={(e) =>
+                                                                updateItem(
+                                                                    index,
+                                                                    {
+                                                                        end_date:
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                    },
+                                                                )
+                                                            }
+                                                        />
+                                                    </Field>
+                                                </div>
+                                            )}
+                                        </FieldGroup>
+                                    </div>
+                                </CollapsibleContent>
+                            </Collapsible>
+                        ))}
+
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={addItem}
+                        >
+                            Ausgabe hinzufügen
+                        </Button>
+                    </div>
+                </FieldSet>
+            </CardContent>
+        </Card>
     );
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\BusinessPlan\CreateBusinessPlan;
 use App\Actions\BusinessPlan\DeleteBusinessPlan;
+use App\Actions\BusinessPlan\StoreBusinessPlanTransaction;
 use App\Actions\BusinessPlan\UpdateBusinessPlan;
 use App\Enums\AgeGroupEnum;
 use App\Enums\BusinessActivitiesEnum;
@@ -35,6 +36,7 @@ use App\Enums\TypeEnum;
 use App\Enums\UspEnum;
 use App\Http\Requests\Businessplan\CreateBusinessPlanRequest;
 use App\Http\Requests\Businessplan\SaveWizardStepRequest;
+use App\Http\Requests\Businessplan\StoreTransactionRequest;
 use App\Http\Requests\Businessplan\UpdateBusinessPlanRequest;
 use App\Models\Branches;
 use App\Models\BusinessPlan;
@@ -101,6 +103,10 @@ class BusinessPlanController extends Controller
 
         $action->handle($businessPlan, $validated);
 
+        if ($step > $businessPlan->current_step) {
+            $businessPlan->update(['current_step' => $step]);
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Schritt '.$step.' gespeichert.',
@@ -135,13 +141,19 @@ class BusinessPlanController extends Controller
             'catalogItems' => $catalogItems,
             'businessPlan' => $businessPlan,
             'liquidityPlan' => $liquidityPlan,
+            'currencies' => Currency::all()->map(fn ($c) => ['value' => (string) $c->id, 'label' => $c->code]),
+            'taxes' => Tax::where('is_active', true)->get()->map(fn ($t) => ['value' => (string) $t->id, 'label' => $t->name]),
+            'incomeCategories' => TransactionCategory::where('type', TypeEnum::INCOME->value)->where('is_active', true)->get()->map(fn ($c) => ['value' => (string) $c->id, 'label' => $c->name]),
+            'expenseCategories' => TransactionCategory::where('type', TypeEnum::EXPENSE->value)->where('is_active', true)->get()->map(fn ($c) => ['value' => (string) $c->id, 'label' => $c->name]),
+            'incomeCatalogItems' => CatalogItem::where('user_id', auth()->id())->where('type', TypeEnum::INCOME)->where('is_active', true)->get()->map(fn ($i) => ['value' => (string) $i->id, 'label' => $i->name, 'data' => $i->only('name', 'description', 'default_amount', 'transaction_category_id', 'currency_id', 'tax_id')]),
+            'expenseCatalogItems' => CatalogItem::where('user_id', auth()->id())->where('type', TypeEnum::EXPENSE)->where('is_active', true)->get()->map(fn ($i) => ['value' => (string) $i->id, 'label' => $i->name, 'data' => $i->only('name', 'description', 'default_amount', 'transaction_category_id', 'currency_id', 'tax_id')]),
         ]);
     }
 
     public function edit(BusinessPlan $businessPlan, Request $request): Response
     {
-        $step = $request->query('step', 1);
-        $businessPlan->load(['transactions', 'employees', 'loans']);
+        $step = $request->query('step', $businessPlan->current_step);
+        $businessPlan->load(['transactions.recurringTemplate', 'employees', 'loans']);
 
         return Inertia::render('businessplan/edit', [
             'businessPlan' => $businessPlan,
@@ -174,6 +186,14 @@ class BusinessPlanController extends Controller
 
         return redirect()->route('businessplan.edit', ['businessplan' => $businessPlan->id, 'step' => $nextStep])
             ->with('success', 'Saved.');
+    }
+
+    public function storeTransaction(StoreTransactionRequest $request, BusinessPlan $businessPlan, StoreBusinessPlanTransaction $action): RedirectResponse
+    {
+        $action->handle($businessPlan, $request->validated());
+
+        return redirect()->route('businessplan.show', $businessPlan)
+            ->with('success', 'Transaktion erstellt.');
     }
 
     public function destroy(BusinessPlan $businessPlan, DeleteBusinessPlan $action): RedirectResponse

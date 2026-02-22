@@ -31,7 +31,7 @@ const BlogGrid = ({
             {postArray.map((post, index) => (
                 <Card
                     key={index}
-                    className="group h-full overflow-hidden shadow-none transition-all duration-300"
+                    className="group h-full overflow-hidden transition-all duration-300"
                 >
                     <CardContent className="space-y-3.5">
                         <div className={'flex items-center justify-end'}>
@@ -118,24 +118,9 @@ const Blog = ({ blogPosts, categories, categoryColors }: BlogProps) => {
 
     return (
         <section className="py-0 sm:py-16 lg:py-8">
-            <div className="mx-auto max-w-7xl space-y-8 lg:space-y-16">
-                {/* Header */}
-                <div className="space-y-4">
-                    <p className="text-sm">Ressourcen & Wissen</p>
-
-                    <h2 className="text-2xl font-semibold md:text-3xl lg:text-4xl">
-                        Dein Navigator für die Selbstständigkeit.
-                    </h2>
-
-                    <p className="text-lg text-muted-foreground md:text-xl">
-                        Experten-Guides zu Recht, Marketing und Vertrieb. Alles,
-                        was du brauchst, um aus deiner Idee ein profitables
-                        Unternehmen zu machen.
-                    </p>
-                </div>
-
+            <div className="space-y-8 lg:space-y-16">
                 {/* Tabs and Search */}
-                <Tabs defaultValue="All" className="gap-8 lg:gap-16">
+                <Tabs defaultValue="All" className="gap-8 lg:gap-8">
                     <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                         <ScrollArea className="w-full rounded-lg bg-muted sm:w-auto">
                             <TabsList className="h-auto gap-1">
