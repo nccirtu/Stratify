@@ -17,6 +17,7 @@ import Step9Income from '../wizard/Step9Income';
 import Step10Expenses from '../wizard/Step10Expenses';
 import StepEmployees from '../wizard/StepEmployees';
 import StepLoans from '../wizard/StepLoans';
+import StepCheckBusinessplan from '../wizard/StepCheckBusinessplan';
 import type {
     BusinessPlanFormData,
     EnumOptions,
@@ -39,6 +40,7 @@ const STEPS = [
     { label: 'Ausgaben', component: Step10Expenses },
     { label: 'Mitarbeiter', component: StepEmployees },
     { label: 'Darlehen', component: StepLoans },
+    { label: 'Überprüfung', component: StepCheckBusinessplan },
 ] as const;
 
 export interface WizardOptions {
@@ -436,6 +438,13 @@ export default function CreateBusinessPlanWizard({
     };
 
     const handleFinish = async () => {
+        // The last step (check step) has no form data to save — just redirect
+        if (currentStep === STEPS.length - 1) {
+            if (businessPlanId) {
+                router.visit(`/businessplans/${businessPlanId}`);
+            }
+            return;
+        }
         const success = await saveStep(currentStep);
         if (success && businessPlanId) {
             router.visit(`/businessplans/${businessPlanId}`);
@@ -462,6 +471,7 @@ export default function CreateBusinessPlanWizard({
         setData: handleSetData,
         errors,
         options,
+        businessPlanId,
     };
 
     return (

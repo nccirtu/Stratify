@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BusinessPlanCheckController;
 use App\Http\Controllers\BusinessPlanController;
 use App\Http\Controllers\BusinessPlanPdfController;
 use App\Http\Controllers\DashboardController;
@@ -21,6 +22,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('businessplans')->name('businessplan.')->group(function () {
         Route::put('{businessPlan}/save-step', [BusinessPlanController::class, 'saveStep'])->name('save-step');
         Route::post('{businessPlan}/transactions', [BusinessPlanController::class, 'storeTransaction'])->name('transaction.store');
+        Route::get('{businessPlan}/checks', [BusinessPlanCheckController::class, 'index'])->name('checks.index');
+        Route::get('{businessPlan}/checks/{group}/stream', [BusinessPlanCheckController::class, 'stream'])->name('checks.stream');
     });
 
     Route::resource('businessplans', BusinessPlanController::class)->names([

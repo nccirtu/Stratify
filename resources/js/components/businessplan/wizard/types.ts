@@ -163,4 +163,5 @@ export interface WizardStepProps {
         expenseCatalogItems: SelectOption[];
         enumOptions: EnumOptions;
     };
+    businessPlanId?: number | null;
 }
