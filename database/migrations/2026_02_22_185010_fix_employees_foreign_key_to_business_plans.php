@@ -54,7 +54,7 @@ return new class extends Migration
             $table->date('date_of_hire')->nullable();
             $table->decimal('salary', 10, 2)->nullable();
             $table->integer('payment_day')->default(1);
-            $table->foreignId('business_plan_id')->nullable()->constrained('businessplans')->nullOnDelete();
+            $table->foreignId('business_plan_id')->nullable()->constrained('business_plans')->nullOnDelete();
             $table->timestamps();
         });
 

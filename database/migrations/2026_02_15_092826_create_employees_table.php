@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('working_hours_per_week', 5, 2)->nullable();
             $table->date('date_of_hire')->nullable();
             $table->decimal('salary', 10, 2)->nullable();
-            $table->foreignId('business_plan_id')->nullable()->constrained('businessplans')->nullOnDelete();
+            $table->foreignId('business_plan_id')->nullable()->constrained('business_plans')->nullOnDelete();
             $table->timestamps();
         });
     }

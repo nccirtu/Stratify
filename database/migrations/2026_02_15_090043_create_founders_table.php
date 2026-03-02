@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('area_of_responsibility')->nullable();
             $table->decimal('equity_percentage', 5, 2)->nullable();
             $table->decimal('salary_expectation', 10, 2)->nullable();
-            $table->foreignId('business_plan_id')->nullable()->constrained('businessplans')->nullOnDelete();
+            $table->foreignId('business_plan_id')->nullable()->constrained('business_plans')->nullOnDelete();
             $table->timestamps();
         });
     }

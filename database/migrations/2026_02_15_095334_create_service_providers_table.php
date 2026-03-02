@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('purpose_of_service')->nullable();
             $table->text('service_description')->nullable();
             $table->decimal('monthly_cost', 10, 2)->nullable();
-            $table->foreignId('business_plan_id')->nullable()->constrained('businessplans')->nullOnDelete();
+            $table->foreignId('business_plan_id')->nullable()->constrained('business_plans')->nullOnDelete();
             $table->timestamps();
         });
     }
