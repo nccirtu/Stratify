@@ -81,9 +81,9 @@ class PostSeeder extends Seeder
                 'description' => $postData['description'],
                 'category' => $postData['category'],
                 'author' => 'Gladys Slawina Cirtu',
-                'image_url' => 'https://images.unsplash.com/photo-1'.fake()->regexify('[0-9]{9}').'?auto=format&fit=crop&q=80&w=800',
+                'image_url' => 'https://images.unsplash.com/photo-1'.\fake()->regexify('[0-9]{9}').'?auto=format&fit=crop&q=80&w=800',
                 'image_alt' => $postData['title'],
-                'content' => fake()->paragraphs(5, true),
+                'content' => \fake()->paragraphs(5, true),
             ]);
         }
     }
