@@ -67,11 +67,14 @@ export default function Step1General({
                                 onChange={(e) =>
                                     setData({ slug: e.target.value })
                                 }
+                                onBlur={(e) =>
+                                    setData({ slug: slugify(e.target.value) })
+                                }
                                 autoComplete="off"
                                 aria-invalid={!!errors.slug}
                             />
                             <FieldDescription>
-                                Wird automatisch aus dem Namen generiert.
+                                Wird automatisch aus dem Namen generiert. Nur Kleinbuchstaben, Zahlen und Bindestriche.
                             </FieldDescription>
                             {errors.slug && (
                                 <FieldError>{errors.slug}</FieldError>

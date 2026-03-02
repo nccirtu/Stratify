@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Businessplan;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SaveWizardStepRequest extends FormRequest
 {
@@ -44,13 +45,18 @@ class SaveWizardStepRequest extends FormRequest
     private function step1Rules(): array
     {
         $businessPlanId = $this->route('businessPlan')?->id;
-        $uniqueSlug = $businessPlanId
-            ? 'unique:business_plans,slug,'.$businessPlanId
-            : 'unique:business_plans,slug';
 
         return [
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|'.$uniqueSlug,
+            'slug' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
+                Rule::unique('business_plans', 'slug')
+                    ->where('user_id', $this->user()->id)
+                    ->ignore($businessPlanId),
+            ],
             'description' => 'nullable|string',
         ];
     }

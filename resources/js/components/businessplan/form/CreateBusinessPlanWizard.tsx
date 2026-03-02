@@ -263,6 +263,7 @@ export default function CreateBusinessPlanWizard({
         buildInitialData(businessPlan),
     );
     const [errors, setErrors] = useState<Record<string, string>>({});
+    const [serverError, setServerError] = useState<string | null>(null);
     const [processing, setProcessing] = useState(false);
     const [businessPlanId, setBusinessPlanId] = useState<number | null>(
         businessPlan?.id ?? null,
@@ -288,6 +289,7 @@ export default function CreateBusinessPlanWizard({
     const saveStep = async (stepIndex: number): Promise<boolean> => {
         setProcessing(true);
         setErrors({});
+        setServerError(null);
 
         try {
             const stepNumber = stepIndex + 1;
@@ -321,6 +323,8 @@ export default function CreateBusinessPlanWizard({
                 if (response.status === 422) {
                     const errorData = await response.json();
                     setErrors(errorData.errors ?? {});
+                } else {
+                    setServerError(`Serverfehler (${response.status}). Bitte versuche es erneut.`);
                 }
                 setProcessing(false);
                 return false;
@@ -388,6 +392,8 @@ export default function CreateBusinessPlanWizard({
                 if (response.status === 422) {
                     const errorData = await response.json();
                     setErrors(errorData.errors ?? {});
+                } else {
+                    setServerError(`Serverfehler (${response.status}). Bitte versuche es erneut.`);
                 }
                 setProcessing(false);
                 return false;
@@ -414,10 +420,13 @@ export default function CreateBusinessPlanWizard({
             if (response.status === 422) {
                 const errorData = await response.json();
                 setErrors(errorData.errors ?? {});
+            } else {
+                setServerError(`Serverfehler (${response.status}). Bitte versuche es erneut.`);
             }
             setProcessing(false);
             return false;
         } catch {
+            setServerError('Verbindungsfehler. Bitte prüfe deine Internetverbindung.');
             setProcessing(false);
             return false;
         }
@@ -544,6 +553,11 @@ export default function CreateBusinessPlanWizard({
                 </div>
 
                 {/* Navigation */}
+                {serverError && (
+                    <div className="mx-6 mb-2 rounded-md bg-destructive/10 px-4 py-2 text-sm text-destructive">
+                        {serverError}
+                    </div>
+                )}
                 <div className="flex items-center justify-between px-6 pt-4">
                     <Button
                         type="button"
