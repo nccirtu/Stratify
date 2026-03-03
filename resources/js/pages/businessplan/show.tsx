@@ -1,12 +1,15 @@
 import { Head } from '@inertiajs/react';
 
 import ViewPageTabs from '@/components/businessplan/viewPageComponents/viewPageTabs';
+import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
 import { LiquidityPlanData } from '@/types/liquidity';
+import { show as pdfShow } from '@/wayfinder/App/Http/Controllers/BusinessPlanPdfController';
 import { App } from '@/wayfinder/types';
 import { dashboard } from '@/routes';
 import businessplan from '@/wayfinder/routes/businessplan';
+import { FileText } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {

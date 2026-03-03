@@ -6,10 +6,24 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Loader2, Plus, Sparkles, Trash2 } from 'lucide-react';
+import {
+    ChevronDown,
+    ChevronUp,
+    Loader2,
+    Pencil,
+    Plus,
+    Sparkles,
+    Trash2,
+    X,
+} from 'lucide-react';
 import { useState } from 'react';
 
 interface BusinessPlanSection {
@@ -27,11 +41,15 @@ interface AnalyticsTabProps {
     generationStatus: string | null;
 }
 
-function getCsrfToken(): string {
-    return (
-        document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')
-            ?.content ?? ''
-    );
+function getXsrfToken(): string {
+    const raw = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('XSRF-TOKEN='))
+        ?.split('=')
+        .slice(1)
+        .join('=');
+
+    return raw ? decodeURIComponent(raw) : '';
 }
 
 function SectionCard({
@@ -45,9 +63,11 @@ function SectionCard({
 }) {
     const [title, setTitle] = useState(section.title);
     const [text, setText] = useState(section.text ?? '');
+    const [editing, setEditing] = useState(false);
     const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
     const [deleting, setDeleting] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleSave = async () => {
         setSaving(true);
@@ -56,7 +76,7 @@ function SectionCard({
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': getCsrfToken(),
+                'X-XSRF-TOKEN': getXsrfToken(),
                 'X-Requested-With': 'XMLHttpRequest',
                 Accept: 'application/json',
             },
@@ -64,6 +84,7 @@ function SectionCard({
         });
         setSaving(false);
         setSaved(true);
+        setEditing(false);
         setTimeout(() => setSaved(false), 2000);
     };
 
@@ -74,7 +95,7 @@ function SectionCard({
             {
                 method: 'DELETE',
                 headers: {
-                    'X-CSRF-TOKEN': getCsrfToken(),
+                    'X-XSRF-TOKEN': getXsrfToken(),
                     'X-Requested-With': 'XMLHttpRequest',
                     Accept: 'application/json',
                 },
@@ -87,63 +108,119 @@ function SectionCard({
     };
 
     return (
-        <Card className="bg-white">
-            <CardHeader className="pb-3">
-                <div className="flex items-center justify-between gap-3">
-                    <div className="flex flex-1 items-center gap-2">
-                        {section.ai_generated && (
-                            <Sparkles className="h-4 w-4 shrink-0 text-primary" />
-                        )}
-                        <Input
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            className="h-8 border-0 bg-transparent px-0 text-base font-semibold shadow-none focus-visible:ring-0"
-                            placeholder="Titel"
-                        />
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Button
-                            size="sm"
-                            variant={saved ? 'default' : 'secondary'}
-                            onClick={handleSave}
-                            disabled={saving}
-                        >
-                            {saving ? (
-                                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                            ) : saved ? (
-                                'Gespeichert'
-                            ) : (
-                                'Speichern'
-                            )}
-                        </Button>
-                        {!section.ai_generated && (
-                            <Button
-                                size="sm"
-                                variant="ghost"
-                                onClick={handleDelete}
-                                disabled={deleting}
-                                className="text-destructive hover:text-destructive"
-                            >
-                                {deleting ? (
-                                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                                ) : (
-                                    <Trash2 className="h-3.5 w-3.5" />
+        <Collapsible open={open} onOpenChange={setOpen}>
+            <Card className="bg-white">
+                <CollapsibleTrigger asChild>
+                    <CardHeader className="cursor-pointer pb-3 select-none">
+                        <div className="flex items-center justify-between gap-3">
+                            <div className="flex min-w-0 flex-1 items-center gap-2">
+                                {section.ai_generated && (
+                                    <Sparkles className="h-4 w-4 shrink-0 text-primary" />
                                 )}
-                            </Button>
+                                <span className="truncate font-semibold">
+                                    {title}
+                                </span>
+                            </div>
+                            <div
+                                className="flex items-center gap-1"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                {saved && (
+                                    <span className="text-xs text-green-600">
+                                        Gespeichert
+                                    </span>
+                                )}
+                                {!section.ai_generated && (
+                                    <Button
+                                        size="sm"
+                                        variant="ghost"
+                                        onClick={handleDelete}
+                                        disabled={deleting}
+                                        className="text-destructive hover:text-destructive"
+                                    >
+                                        {deleting ? (
+                                            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                                        ) : (
+                                            <Trash2 className="h-3.5 w-3.5" />
+                                        )}
+                                    </Button>
+                                )}
+                                {open ? (
+                                    <ChevronUp className="h-4 w-4 shrink-0 text-muted-foreground" />
+                                ) : (
+                                    <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
+                                )}
+                            </div>
+                        </div>
+                    </CardHeader>
+                </CollapsibleTrigger>
+
+                <CollapsibleContent>
+                    <CardContent className="pt-0">
+                        {editing ? (
+                            <div className="space-y-3">
+                                <Input
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    placeholder="Titel"
+                                    className="font-medium"
+                                />
+                                <Textarea
+                                    value={text}
+                                    onChange={(e) => setText(e.target.value)}
+                                    rows={10}
+                                    className="resize-y font-mono text-sm"
+                                    placeholder="Inhalt des Abschnitts (HTML erlaubt)…"
+                                />
+                                <div className="flex gap-2">
+                                    <Button
+                                        size="sm"
+                                        onClick={handleSave}
+                                        disabled={saving}
+                                    >
+                                        {saving ? (
+                                            <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+                                        ) : null}
+                                        Speichern
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        variant="ghost"
+                                        onClick={() => setEditing(false)}
+                                    >
+                                        <X className="mr-1.5 h-3.5 w-3.5" />
+                                        Abbrechen
+                                    </Button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="space-y-3">
+                                {text ? (
+                                    <div
+                                        className="prose prose-sm max-w-none text-foreground [&_h3]:text-base [&_h3]:font-semibold [&_h4]:text-sm [&_h4]:font-semibold [&_ul]:list-disc [&_ul]:pl-5"
+                                        dangerouslySetInnerHTML={{
+                                            __html: text,
+                                        }}
+                                    />
+                                ) : (
+                                    <p className="text-sm text-muted-foreground italic">
+                                        Kein Inhalt vorhanden.
+                                    </p>
+                                )}
+                                <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => setEditing(true)}
+                                >
+                                    <Pencil className="mr-1.5 h-3.5 w-3.5" />
+                                    Bearbeiten
+                                </Button>
+                            </div>
                         )}
-                    </div>
-                </div>
-            </CardHeader>
-            <CardContent>
-                <Textarea
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                    rows={6}
-                    className="resize-y text-sm"
-                    placeholder="Inhalt des Abschnitts…"
-                />
-            </CardContent>
-        </Card>
+                    </CardContent>
+                </CollapsibleContent>
+            </Card>
+        </Collapsible>
     );
 }
 
@@ -158,13 +235,15 @@ function AddSectionForm({
     const [saving, setSaving] = useState(false);
 
     const handleAdd = async () => {
-        if (!title.trim()) return;
+        if (!title.trim()) {
+            return;
+        }
         setSaving(true);
         const res = await fetch(`/businessplans/${businessPlanId}/sections`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': getCsrfToken(),
+                'X-XSRF-TOKEN': getXsrfToken(),
                 'X-Requested-With': 'XMLHttpRequest',
                 Accept: 'application/json',
             },
@@ -267,7 +346,7 @@ export default function AnalyticsTab({
     }
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-3">
             {sections.map((section) => (
                 <SectionCard
                     key={section.id}

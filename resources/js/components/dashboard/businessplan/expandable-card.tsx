@@ -11,19 +11,33 @@ import { Progress as ProgressBar } from '@/components/ui/progress';
 import { useExpandable } from '@/hooks/use-expandable';
 import {
     edit as editBusinessPlan,
+    generate as generateBusinessPlan,
     show as showBusinessPlan,
 } from '@/wayfinder/routes/businessplan';
 import { App } from '@/wayfinder/types';
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
+    AlertTriangle,
     CalendarDays,
     Clock,
     FileText,
     Lock,
+    RefreshCw,
     Sparkles,
 } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+function getXsrfToken(): string {
+    const raw = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('XSRF-TOKEN='))
+        ?.split('=')
+        .slice(1)
+        .join('=');
+
+    return raw ? decodeURIComponent(raw) : '';
+}
 
 const TOTAL_STEPS = 14;
 
@@ -60,11 +74,32 @@ export function BusinessPlanExpandableCard({
 }) {
     const { isExpanded, toggleExpand, animatedHeight } = useExpandable();
     const contentRef = useRef<HTMLDivElement>(null);
+    const [retrying, setRetrying] = useState(false);
 
     const status = businessplan.status as string;
-    const isInProgress = status === 'in_progress';
+    const generationStatus = businessplan.generation_status as string;
+    const isFailed = generationStatus === 'failed';
+    const isInProgress = status === 'in_progress' && !isFailed;
     const isDraft = status === 'draft';
     const isCompleted = status === 'completed';
+
+    const handleRetry = async (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setRetrying(true);
+        try {
+            await fetch(generateBusinessPlan(businessplan.id).url, {
+                method: 'POST',
+                headers: {
+                    'X-XSRF-TOKEN': getXsrfToken(),
+                    'X-Requested-With': 'XMLHttpRequest',
+                    Accept: 'application/json',
+                },
+            });
+            router.reload();
+        } finally {
+            setRetrying(false);
+        }
+    };
 
     const progress = Math.round(
         ((businessplan.current_step ?? 1) / TOTAL_STEPS) * 100,
@@ -94,9 +129,9 @@ export function BusinessPlanExpandableCard({
     return (
         <Card
             className={`relative w-full bg-white transition-all duration-300 hover:shadow-lg ${
-                !isInProgress ? 'cursor-pointer' : 'cursor-default'
+                !isInProgress && !isFailed ? 'cursor-pointer' : 'cursor-default'
             }`}
-            onClick={!isInProgress ? toggleExpand : undefined}
+            onClick={!isInProgress && !isFailed ? toggleExpand : undefined}
         >
             {/* Lock overlay for in_progress */}
             {isInProgress && (
@@ -107,6 +142,36 @@ export function BusinessPlanExpandableCard({
                     <p className="text-sm font-medium text-foreground/80">
                         KI generiert den Plan…
                     </p>
+                </div>
+            )}
+
+            {/* Error overlay for failed generation */}
+            {isFailed && (
+                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 rounded-xl bg-background/80 backdrop-blur-[2px]">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+                        <AlertTriangle className="h-5 w-5 text-red-600" />
+                    </div>
+                    <div className="text-center">
+                        <p className="text-sm font-medium text-foreground/80">
+                            Generierung fehlgeschlagen
+                        </p>
+                        {businessplan.generation_error && (
+                            <p className="mt-0.5 max-w-[200px] truncate text-xs text-muted-foreground">
+                                {businessplan.generation_error}
+                            </p>
+                        )}
+                    </div>
+                    <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={handleRetry}
+                        disabled={retrying}
+                    >
+                        <RefreshCw
+                            className={`mr-1.5 h-3.5 w-3.5 ${retrying ? 'animate-spin' : ''}`}
+                        />
+                        {retrying ? 'Wird gestartet…' : 'Erneut generieren'}
+                    </Button>
                 </div>
             )}
 

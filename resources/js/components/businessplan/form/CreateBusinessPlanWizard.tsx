@@ -302,11 +302,15 @@ function buildInitialData(businessPlan?: any): BusinessPlanFormData {
     };
 }
 
-function getCsrfToken(): string {
-    return (
-        document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')
-            ?.content ?? ''
-    );
+function getXsrfToken(): string {
+    const raw = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('XSRF-TOKEN='))
+        ?.split('=')
+        .slice(1)
+        .join('=');
+
+    return raw ? decodeURIComponent(raw) : '';
 }
 
 export default function CreateBusinessPlanWizard({
@@ -349,7 +353,7 @@ export default function CreateBusinessPlanWizard({
 
         try {
             const stepNumber = stepIndex + 1;
-            const csrfToken = getCsrfToken();
+            const csrfToken = getXsrfToken();
 
             // Step 1 on a new plan → POST to create
             if (stepIndex === 0 && !businessPlanId) {
@@ -358,7 +362,7 @@ export default function CreateBusinessPlanWizard({
                     headers: {
                         'Content-Type': 'application/json',
                         Accept: 'application/json',
-                        'X-CSRF-TOKEN': csrfToken,
+                        'X-XSRF-TOKEN': csrfToken,
                         'X-Requested-With': 'XMLHttpRequest',
                     },
                     body: JSON.stringify({
@@ -432,7 +436,7 @@ export default function CreateBusinessPlanWizard({
                         method: 'POST',
                         headers: {
                             Accept: 'application/json',
-                            'X-CSRF-TOKEN': csrfToken,
+                            'X-XSRF-TOKEN': csrfToken,
                             'X-Requested-With': 'XMLHttpRequest',
                         },
                         body: formData,
@@ -461,7 +465,7 @@ export default function CreateBusinessPlanWizard({
                 headers: {
                     'Content-Type': 'application/json',
                     Accept: 'application/json',
-                    'X-CSRF-TOKEN': csrfToken,
+                    'X-XSRF-TOKEN': csrfToken,
                     'X-Requested-With': 'XMLHttpRequest',
                 },
                 body: JSON.stringify({ ...data, step: stepNumber }),
@@ -506,7 +510,7 @@ export default function CreateBusinessPlanWizard({
         await fetch(`/businessplans/${id}/generate`, {
             method: 'POST',
             headers: {
-                'X-CSRF-TOKEN': getCsrfToken(),
+                'X-XSRF-TOKEN': getXsrfToken(),
                 'X-Requested-With': 'XMLHttpRequest',
                 Accept: 'application/json',
             },

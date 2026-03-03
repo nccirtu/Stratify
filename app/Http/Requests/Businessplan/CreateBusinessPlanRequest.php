@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Businessplan;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class CreateBusinessPlanRequest extends FormRequest
 {
@@ -21,7 +20,6 @@ class CreateBusinessPlanRequest extends FormRequest
                 'string',
                 'max:255',
                 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
-                Rule::unique('business_plans', 'slug')->where('user_id', $this->user()->id),
             ],
             'description' => 'nullable|string',
         ];
@@ -31,7 +29,6 @@ class CreateBusinessPlanRequest extends FormRequest
     {
         return [
             'slug.regex' => 'Der Slug darf nur Kleinbuchstaben, Zahlen und Bindestriche enthalten.',
-            'slug.unique' => 'Du hast bereits einen Businessplan mit diesem Slug. Bitte wähle einen anderen Namen.',
         ];
     }
 }
