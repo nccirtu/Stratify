@@ -144,7 +144,7 @@ export default function Welcome({
                 />
             </Head>
 
-            <div className="min-h-screen bg-[#FDFDFC] text-[#1b1b18] dark:bg-[#0a0a0a] dark:text-[#EDEDEC]">
+            <div className="min-h-screen bg-background text-foreground">
                 <Navbar canRegister={canRegister} />
 
                 <main className="overflow-hidden pt-14">
