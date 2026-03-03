@@ -5,7 +5,7 @@ import { applyUrlDefaults, queryParams, type RouteDefinition, type RouteFormDefi
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::storeTransaction
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:207
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:211
  * @route "/businessplans/{businessPlan}/transactions"
  */
 export const store = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"post"> => ({
@@ -20,7 +20,7 @@ store.definition = {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::storeTransaction
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:207
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:211
  * @route "/businessplans/{businessPlan}/transactions"
  */
 store.url = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -51,7 +51,7 @@ store.url = (args: { businessPlan: number | { id: number } } | [ businessPlan: n
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::storeTransaction
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:207
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:211
  * @route "/businessplans/{businessPlan}/transactions"
  */
 store.post = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"post"> => ({
@@ -61,7 +61,7 @@ store.post = (args: { businessPlan: number | { id: number } } | [ businessPlan: 
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::storeTransaction
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:207
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:211
  * @route "/businessplans/{businessPlan}/transactions"
  */
 const storeForm = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"post"> => ({
@@ -71,7 +71,7 @@ const storeForm = (args: { businessPlan: number | { id: number } } | [ businessP
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::storeTransaction
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:207
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:211
  * @route "/businessplans/{businessPlan}/transactions"
  */
 storeForm.post = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"post"> => ({

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\CompanyStateEnum;
+use App\Enums\GenerationStatusEnum;
 use App\Enums\StatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -95,6 +96,12 @@ class BusinessPlan extends Model
         'marketing_budget_monthly',
         'liquidity_opening_balance',
         'current_step',
+        // Generation tracking
+        'generation_status',
+        'generation_started_at',
+        'generation_completed_at',
+        'generation_cost',
+        'generation_error',
     ];
 
     public function casts(): array
@@ -142,6 +149,11 @@ class BusinessPlan extends Model
             'social_ads_platforms' => 'array',
             'marketing_responsibility' => 'array',
             'marketing_infrastructure' => 'array',
+            // Generation tracking
+            'generation_status' => GenerationStatusEnum::class,
+            'generation_started_at' => 'datetime',
+            'generation_completed_at' => 'datetime',
+            'generation_cost' => 'decimal:6',
         ];
     }
 

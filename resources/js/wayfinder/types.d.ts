@@ -16,7 +16,7 @@ export namespace App {
         /**
          * @see [\App\Models\BusinessPlan](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Models/BusinessPlan.php)
          */
-        export type BusinessPlan = { id: number, name: string, slug: string, description: string | null, is_active: boolean, branch_id: number | null, user_id: number, status: App.Enums.StatusEnum | null, period_from: string | null, period_until: string | null, usp: Record<string, unknown>, created_at: string | null, updated_at: string | null, customer_problems: string | null, generation_status: string, generation_started_at: string | null, generation_completed_at: string | null, generation_cost: number, generation_error: string | null, company_state: App.Enums.CompanyStateEnum | null, handover_date: string | null, existing_date: string | null, is_headquarter: boolean | null, company_name: string | null, company_description: string | null, address: string | null, zip_code: string | null, city: string | null, state: string | null, country: string | null, expected_headquarters: string | null, email: string | null, phone: string | null, website: string | null, logo: string | null, businessplan_target: string | null, capital_usage: Record<string, unknown>, business_activities: string | null, last_year_revenue: number | null, business_model: Record<string, unknown>, inovation_level: string | null, price_leadership: Record<string, unknown>, quality_leadership: Record<string, unknown>, specialist_leadership: Record<string, unknown>, technology_leadership: Record<string, unknown>, exclusive_leadership: Record<string, unknown>, community_leadership: Record<string, unknown>, usp_text: string | null, scalable: string | null, offer_type: Record<string, unknown>, development_state: string | null, property_rights: Record<string, unknown>, details_property_rights: string | null, pricing_stategie: string | null, client_type: Record<string, unknown>, target_market: string | null, purchase_decision: Record<string, unknown>, age_group: string | null, life_situation: string | null, information_target_group: Record<string, unknown>, company_target_group: Record<string, unknown>, public_tenders: string | null, channels: Record<string, unknown>, liquidity_opening_balance: number, current_step: number, acquiring_customers: Record<string, unknown>, acquiring_customers_online_shop: Record<string, unknown>, acquiring_customers_create_online_shop: string | null, payment_methods: Record<string, unknown>, shipping_organization: string | null, direct_sales_responsibility: Record<string, unknown>, existing_sales_structure: Record<string, unknown>, direct_sales_staff_count: number | null, sales_compensation_model: string | null, plan_crm_introduction: string | null, field_service_infrastructure: Record<string, unknown>, field_service_staff_planned_count: number | null, marketing_channels: Record<string, unknown>, social_ads_platforms: Record<string, unknown>, marketing_experience: string | null, marketing_responsibility: Record<string, unknown>, marketing_infrastructure: Record<string, unknown>, marketing_budget_monthly: string | null, branch?: App.Models.Branches | null, user?: App.Models.User | null, business_plan_sections?: App.Models.BusinessPlanSection[], transactions?: App.Models.Transaction[], documents?: App.Models.Document[], notes?: App.Models.Note[], users?: App.Models.User[], founders?: App.Models.Founder[], employees?: App.Models.Employee[], service_providers?: App.Models.ServiceProvider[], loans?: App.Models.Loan[], bank_accounts?: App.Models.BankAccount[] }
+        export type BusinessPlan = { id: number, name: string, slug: string, description: string | null, is_active: boolean, branch_id: number | null, user_id: number, status: App.Enums.StatusEnum | null, period_from: string | null, period_until: string | null, usp: Record<string, unknown>, created_at: string | null, updated_at: string | null, customer_problems: string | null, generation_status: App.Enums.GenerationStatusEnum, generation_started_at: string | null, generation_completed_at: string | null, generation_cost: number, generation_error: string | null, company_state: App.Enums.CompanyStateEnum | null, handover_date: string | null, existing_date: string | null, is_headquarter: boolean | null, company_name: string | null, company_description: string | null, address: string | null, zip_code: string | null, city: string | null, state: string | null, country: string | null, expected_headquarters: string | null, email: string | null, phone: string | null, website: string | null, logo: string | null, businessplan_target: string | null, capital_usage: Record<string, unknown>, business_activities: string | null, last_year_revenue: number | null, business_model: Record<string, unknown>, inovation_level: string | null, price_leadership: Record<string, unknown>, quality_leadership: Record<string, unknown>, specialist_leadership: Record<string, unknown>, technology_leadership: Record<string, unknown>, exclusive_leadership: Record<string, unknown>, community_leadership: Record<string, unknown>, usp_text: string | null, scalable: string | null, offer_type: Record<string, unknown>, development_state: string | null, property_rights: Record<string, unknown>, details_property_rights: string | null, pricing_stategie: string | null, client_type: Record<string, unknown>, target_market: string | null, purchase_decision: Record<string, unknown>, age_group: string | null, life_situation: string | null, information_target_group: Record<string, unknown>, company_target_group: Record<string, unknown>, public_tenders: string | null, channels: Record<string, unknown>, liquidity_opening_balance: number, current_step: number, acquiring_customers: Record<string, unknown>, acquiring_customers_online_shop: Record<string, unknown>, acquiring_customers_create_online_shop: string | null, payment_methods: Record<string, unknown>, shipping_organization: string | null, direct_sales_responsibility: Record<string, unknown>, existing_sales_structure: Record<string, unknown>, direct_sales_staff_count: number | null, sales_compensation_model: string | null, plan_crm_introduction: string | null, field_service_infrastructure: Record<string, unknown>, field_service_staff_planned_count: number | null, marketing_channels: Record<string, unknown>, social_ads_platforms: Record<string, unknown>, marketing_experience: string | null, marketing_responsibility: Record<string, unknown>, marketing_infrastructure: Record<string, unknown>, marketing_budget_monthly: string | null, branch?: App.Models.Branches | null, user?: App.Models.User | null, business_plan_sections?: App.Models.BusinessPlanSection[], transactions?: App.Models.Transaction[], documents?: App.Models.Document[], notes?: App.Models.Note[], users?: App.Models.User[], founders?: App.Models.Founder[], employees?: App.Models.Employee[], service_providers?: App.Models.ServiceProvider[], loans?: App.Models.Loan[], bank_accounts?: App.Models.BankAccount[] }
 
         /**
          * @see [\App\Models\Branches](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Models/Branches.php)
@@ -567,6 +567,13 @@ export namespace App {
                     export type Request = Record<string, unknown>
                 }
 
+                export namespace Generate {
+                    /**
+                     * @see [\App\Http\Controllers\BusinessPlanController::generate](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php)
+                     */
+                    export type Request = Record<string, unknown>
+                }
+
                 export namespace Destroy {
                     /**
                      * @see [\App\Http\Controllers\BusinessPlanController::destroy](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php)
@@ -651,6 +658,31 @@ export namespace App {
                          */
                         export type Request = Record<string, unknown>
                     }
+                }
+            }
+
+            export namespace BusinessPlanSectionController {
+                export namespace Store {
+                    /**
+                     * @see [\App\Http\Controllers\BusinessPlanSectionController::store](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanSectionController.php)
+                     */
+                    export type Request = {    title: string;
+                        text?: string | null;}
+                }
+
+                export namespace Update {
+                    /**
+                     * @see [\App\Http\Controllers\BusinessPlanSectionController::update](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanSectionController.php)
+                     */
+                    export type Request = {    title?: string;
+                        text?: string | null;}
+                }
+
+                export namespace Destroy {
+                    /**
+                     * @see [\App\Http\Controllers\BusinessPlanSectionController::destroy](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanSectionController.php)
+                     */
+                    export type Request = Record<string, unknown>
                 }
             }
 
@@ -748,7 +780,7 @@ export namespace Inertia {
             /**
              * @see [\App\Http\Controllers\BusinessPlanController::show](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php)
              */
-            export type Show = Inertia.SharedData & { catalogItems: Illuminate.Database.Eloquent.Collection, businessPlan: App.Models.BusinessPlan, liquidityPlan: {view: string, year: number, month: number | null, iso_week: number | null, available_years: number[], available_weeks: number[], columns: string[], opening_balance: number, sections: [], net_cashflow: [], saldo: [], bank_accounts: [] }, currencies: unknown[] | Illuminate.Database.Eloquent.Collection, taxes: unknown[] | Illuminate.Database.Eloquent.Collection, incomeCategories: unknown[] | Illuminate.Database.Eloquent.Collection, expenseCategories: unknown[] | Illuminate.Database.Eloquent.Collection, incomeCatalogItems: unknown[] | Illuminate.Database.Eloquent.Collection, expenseCatalogItems: unknown[] | Illuminate.Database.Eloquent.Collection }
+            export type Show = Inertia.SharedData & { catalogItems: Illuminate.Database.Eloquent.Collection, businessPlan: App.Models.BusinessPlan, businessPlanSections: App.Models.BusinessPlanSection[], liquidityPlan: {view: string, year: number, month: number | null, iso_week: number | null, available_years: number[], available_weeks: number[], columns: string[], opening_balance: number, sections: [], net_cashflow: [], saldo: [], bank_accounts: [] }, currencies: unknown[] | Illuminate.Database.Eloquent.Collection, taxes: unknown[] | Illuminate.Database.Eloquent.Collection, incomeCategories: unknown[] | Illuminate.Database.Eloquent.Collection, expenseCategories: unknown[] | Illuminate.Database.Eloquent.Collection, incomeCatalogItems: unknown[] | Illuminate.Database.Eloquent.Collection, expenseCatalogItems: unknown[] | Illuminate.Database.Eloquent.Collection }
 
             /**
              * @see [\App\Http\Controllers\BusinessPlanController::edit](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php)

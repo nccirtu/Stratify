@@ -502,17 +502,30 @@ export default function CreateBusinessPlanWizard({
         }
     };
 
+    const triggerGenerate = async (id: number): Promise<void> => {
+        await fetch(`/businessplans/${id}/generate`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': getCsrfToken(),
+                'X-Requested-With': 'XMLHttpRequest',
+                Accept: 'application/json',
+            },
+        });
+    };
+
     const handleFinish = async () => {
-        // The last step (check step) has no form data to save — just redirect
+        // Last step is the check step — no form data to save, just trigger generation
         if (currentStep === STEPS.length - 1) {
             if (businessPlanId) {
-                router.visit(`/businessplans/${businessPlanId}`);
+                await triggerGenerate(businessPlanId);
+                router.visit('/businessplans');
             }
             return;
         }
         const success = await saveStep(currentStep);
         if (success && businessPlanId) {
-            router.visit(`/businessplans/${businessPlanId}`);
+            await triggerGenerate(businessPlanId);
+            router.visit('/businessplans');
         }
     };
 

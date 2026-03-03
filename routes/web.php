@@ -3,6 +3,7 @@
 use App\Http\Controllers\BusinessPlanCheckController;
 use App\Http\Controllers\BusinessPlanController;
 use App\Http\Controllers\BusinessPlanPdfController;
+use App\Http\Controllers\BusinessPlanSectionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SubscriptionController;
@@ -24,6 +25,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('{businessPlan}/transactions', [BusinessPlanController::class, 'storeTransaction'])->name('transaction.store');
         Route::get('{businessPlan}/checks', [BusinessPlanCheckController::class, 'index'])->name('checks.index');
         Route::get('{businessPlan}/checks/{group}/stream', [BusinessPlanCheckController::class, 'stream'])->name('checks.stream');
+        Route::post('{businessPlan}/generate', [BusinessPlanController::class, 'generate'])->name('generate');
+        Route::post('{businessPlan}/sections', [BusinessPlanSectionController::class, 'store'])->name('sections.store');
+        Route::put('{businessPlan}/sections/{section}', [BusinessPlanSectionController::class, 'update'])->name('sections.update');
+        Route::delete('{businessPlan}/sections/{section}', [BusinessPlanSectionController::class, 'destroy'])->name('sections.destroy');
     });
 
     Route::resource('businessplans', BusinessPlanController::class)->names([

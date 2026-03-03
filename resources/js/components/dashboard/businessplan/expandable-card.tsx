@@ -25,7 +25,7 @@ import {
 } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
-const TOTAL_STEPS = 12;
+const TOTAL_STEPS = 14;
 
 const STATUS_CONFIG = {
     draft: { label: 'Entwurf', className: 'bg-secondary text-secondary-foreground' },

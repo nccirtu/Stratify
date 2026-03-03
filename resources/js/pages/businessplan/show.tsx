@@ -25,8 +25,18 @@ interface SelectOption {
     data?: Record<string, unknown>;
 }
 
+interface BusinessPlanSection {
+    id: number;
+    title: string;
+    text: string | null;
+    ai_generated: boolean;
+    section_type: string;
+    order_index: number;
+}
+
 interface BusinessPlanShowProps {
     businessPlan: App.Models.BusinessPlan;
+    businessPlanSections: BusinessPlanSection[];
     catalogItems: App.Models.CatalogItem[];
     liquidityPlan: LiquidityPlanData;
     currencies: SelectOption[];
@@ -39,6 +49,7 @@ interface BusinessPlanShowProps {
 
 export default function BusinessplanShow({
     businessPlan,
+    businessPlanSections,
     catalogItems,
     liquidityPlan,
     currencies,
@@ -60,6 +71,8 @@ export default function BusinessplanShow({
                         employees={businessPlan.employees ?? []}
                         loans={businessPlan.loans ?? []}
                         businessPlanId={businessPlan.id}
+                        businessPlanSections={businessPlanSections ?? []}
+                        generationStatus={(businessPlan as any).generation_status}
                         currencies={currencies}
                         taxes={taxes}
                         incomeCategories={incomeCategories}

@@ -17,6 +17,7 @@ import {
 import { createEmployeeSchema } from './tabsComponents/employees/tableSchema';
 import { createLoanSchema } from './tabsComponents/loans/tableSchema';
 import EditFormOverview from './tabsComponents/overview/editFormOverview';
+import AnalyticsTab from './tabsComponents/analytics/AnalyticsTab';
 import { ChartBarNegative } from './charts/chartBarNegative';
 import { ChartPieSeparatorNone } from './charts/chartPieSeparatorNone';
 import LiquidityViewSelector from './tabsComponents/liquidityComponents/LiquidityViewSelector';
@@ -27,12 +28,23 @@ interface SelectOption {
     data?: Record<string, unknown>;
 }
 
+interface BusinessPlanSection {
+    id: number;
+    title: string;
+    text: string | null;
+    ai_generated: boolean;
+    section_type: string;
+    order_index: number;
+}
+
 export default function ViewPageTabs({
     transactions,
     liquidityPlan,
     employees,
     loans,
     businessPlanId,
+    businessPlanSections = [],
+    generationStatus = null,
     currencies = [],
     taxes = [],
     incomeCategories = [],
@@ -46,6 +58,8 @@ export default function ViewPageTabs({
     employees: App.Models.Employee[];
     loans: App.Models.Loan[];
     businessPlanId?: number;
+    businessPlanSections?: BusinessPlanSection[];
+    generationStatus?: string | null;
     currencies?: SelectOption[];
     taxes?: SelectOption[];
     incomeCategories?: SelectOption[];
@@ -195,18 +209,11 @@ export default function ViewPageTabs({
                 </Card>
             </TabsContent>
             <TabsContent value="analytics">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Bereiche</CardTitle>
-                        <CardDescription>
-                            Manage your account preferences and options.
-                            Customize your experience to fit your needs.
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent className="text-sm text-muted-foreground">
-                        Configure notifications, security, and themes.
-                    </CardContent>
-                </Card>
+                <AnalyticsTab
+                    businessPlanId={businessPlanId!}
+                    sections={businessPlanSections}
+                    generationStatus={generationStatus}
+                />
             </TabsContent>
         </Tabs>
     );

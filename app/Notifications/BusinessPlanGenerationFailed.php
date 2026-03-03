@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Filament\Resources\BusinessPlanResource;
 use App\Models\BusinessPlan;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -24,7 +23,7 @@ class BusinessPlanGenerationFailed extends Notification
 
     public function toMail(object $notifiable): MailMessage
     {
-        $url = BusinessPlanResource::getUrl('edit', ['record' => $this->businessPlan]);
+        $url = route('businessplan.show', $this->businessPlan);
 
         return (new MailMessage)
             ->subject('Fehler bei der Businessplan-Generierung')

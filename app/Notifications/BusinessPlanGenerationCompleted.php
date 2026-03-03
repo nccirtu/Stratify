@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Filament\Resources\BusinessPlanResource;
 use App\Models\BusinessPlan;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -24,7 +23,7 @@ class BusinessPlanGenerationCompleted extends Notification
 
     public function toMail(object $notifiable): MailMessage
     {
-        $url = BusinessPlanResource::getUrl('edit', ['record' => $this->businessPlan]);
+        $url = route('businessplan.show', $this->businessPlan);
 
         return (new MailMessage)
             ->subject('Ihr Businessplan ist fertig!')
@@ -47,7 +46,7 @@ class BusinessPlanGenerationCompleted extends Notification
                 [
                     'name' => 'view',
                     'label' => 'Ansehen',
-                    'url' => BusinessPlanResource::getUrl('edit', ['record' => $this->businessPlan]),
+                    'url' => route('businessplan.show', $this->businessPlan),
                 ],
             ],
         ];

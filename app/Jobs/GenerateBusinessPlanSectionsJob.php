@@ -3,15 +3,14 @@
 namespace App\Jobs;
 
 use App\Enums\GenerationStatusEnum;
-use App\Filament\Resources\BusinessPlanResource;
-use App\Mail\BusinessPlanCompletedMail;
+use App\Enums\StatusEnum;
 use App\Models\BusinessPlan;
+use App\Notifications\BusinessPlanGenerationCompleted;
+use App\Notifications\BusinessPlanGenerationFailed;
+use App\Notifications\BusinessPlanGenerationStarted;
 use App\Services\BusinessPlanSectionGenerator;
-use Filament\Actions\Action;
-use Filament\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Mail;
 use Throwable;
 
 class GenerateBusinessPlanSectionsJob implements ShouldQueue
@@ -29,18 +28,13 @@ class GenerateBusinessPlanSectionsJob implements ShouldQueue
     public function handle(): void
     {
         $this->businessPlan->update([
+            'status' => StatusEnum::IN_PROGRESS,
             'generation_status' => GenerationStatusEnum::GENERATING,
             'generation_started_at' => now(),
         ]);
 
         $user = $this->businessPlan->user;
-
-        Notification::make()
-            ->title('Businessplan wird erstellt')
-            ->body("Ihr Businessplan \"{$this->businessPlan->name}\" wird gerade mit KI generiert. Dies kann einige Minuten dauern.")
-            ->icon('heroicon-o-sparkles')
-            ->warning()
-            ->sendToDatabase($user);
+        $user->notify(new BusinessPlanGenerationStarted($this->businessPlan));
 
         try {
             $generator = new BusinessPlanSectionGenerator($this->businessPlan);
@@ -48,29 +42,16 @@ class GenerateBusinessPlanSectionsJob implements ShouldQueue
             $totalCost = $generator->getTotalCost();
 
             $this->businessPlan->update([
+                'status' => StatusEnum::COMPLETED,
                 'generation_status' => GenerationStatusEnum::COMPLETED,
                 'generation_completed_at' => now(),
                 'generation_cost' => $totalCost,
             ]);
 
-            Notification::make()
-                ->title('Businessplan fertiggestellt')
-                ->body("Ihr Businessplan \"{$this->businessPlan->name}\" wurde erfolgreich erstellt. ".count($generatedSections).' Abschnitte wurden generiert.')
-                ->icon('heroicon-o-check-circle')
-                ->success()
-                ->actions([
-                    Action::make('view')
-                        ->label('Ansehen')
-                        ->url(BusinessPlanResource::getUrl('edit', ['record' => $this->businessPlan]))
-                        ->markAsRead(),
-                ])
-                ->sendToDatabase($user);
-
-            Mail::to($user)->send(new BusinessPlanCompletedMail(
+            $user->notify(new BusinessPlanGenerationCompleted(
                 businessPlan: $this->businessPlan,
-                sectionCount: count($generatedSections),
+                sectionsGenerated: count($generatedSections),
             ));
-
         } catch (Throwable $e) {
             $this->businessPlan->update([
                 'generation_status' => GenerationStatusEnum::FAILED,
@@ -78,12 +59,10 @@ class GenerateBusinessPlanSectionsJob implements ShouldQueue
                 'generation_error' => $e->getMessage(),
             ]);
 
-            Notification::make()
-                ->title('Fehler bei Businessplan-Generierung')
-                ->body("Bei der Erstellung Ihres Businessplans \"{$this->businessPlan->name}\" ist ein Fehler aufgetreten.")
-                ->icon('heroicon-o-exclamation-circle')
-                ->danger()
-                ->sendToDatabase($user);
+            $user->notify(new BusinessPlanGenerationFailed(
+                businessPlan: $this->businessPlan,
+                errorMessage: $e->getMessage(),
+            ));
 
             report($e);
         }
@@ -97,11 +76,9 @@ class GenerateBusinessPlanSectionsJob implements ShouldQueue
             'generation_error' => $exception->getMessage(),
         ]);
 
-        Notification::make()
-            ->title('Fehler bei Businessplan-Generierung')
-            ->body("Bei der Erstellung Ihres Businessplans \"{$this->businessPlan->name}\" ist ein Fehler aufgetreten.")
-            ->icon('heroicon-o-exclamation-circle')
-            ->danger()
-            ->sendToDatabase($this->businessPlan->user);
+        $this->businessPlan->user->notify(new BusinessPlanGenerationFailed(
+            businessPlan: $this->businessPlan,
+            errorMessage: $exception->getMessage(),
+        ));
     }
 }

@@ -6,6 +6,7 @@ import BusinessPlanPdfController from "./BusinessPlanPdfController";
 import BusinessPlanController from "./BusinessPlanController";
 import SubscriptionController from "./SubscriptionController";
 import PostController from "./PostController";
+import BusinessPlanSectionController from "./BusinessPlanSectionController";
 import DashboardController from "./DashboardController";
 import Settings from "./Settings";
 
@@ -15,6 +16,7 @@ export const Controllers = {
     BusinessPlanController,
     SubscriptionController,
     PostController,
+    BusinessPlanSectionController,
     DashboardController,
     Settings,
 }

@@ -24,6 +24,7 @@ use App\Enums\DirectSalesResponsibilityEnum;
 use App\Enums\ExclusiveLeadershipEnum;
 use App\Enums\ExistingSalesStructureEnum;
 use App\Enums\FieldServiceInfrastructureEnum;
+use App\Enums\GenerationStatusEnum;
 use App\Enums\InformationTargetGroupEnum;
 use App\Enums\InovationLevelEnum;
 use App\Enums\LifeSituationEnum;
@@ -46,6 +47,7 @@ use App\Enums\ScalableCapabilityEnum;
 use App\Enums\ShippingOrganizationEnum;
 use App\Enums\SocialAdsPlatformsEnum;
 use App\Enums\SpecialistLeadershipEnum;
+use App\Enums\StatusEnum;
 use App\Enums\TargetMarketEnum;
 use App\Enums\TechnologyLeadershipEnum;
 use App\Enums\TypeEnum;
@@ -54,6 +56,7 @@ use App\Http\Requests\Businessplan\CreateBusinessPlanRequest;
 use App\Http\Requests\Businessplan\SaveWizardStepRequest;
 use App\Http\Requests\Businessplan\StoreTransactionRequest;
 use App\Http\Requests\Businessplan\UpdateBusinessPlanRequest;
+use App\Jobs\GenerateBusinessPlanSectionsJob;
 use App\Models\Branches;
 use App\Models\BusinessPlan;
 use App\Models\CatalogItem;
@@ -135,7 +138,7 @@ class BusinessPlanController extends Controller
         $catalogItems = CatalogItem::where('user_id', auth()->id())->get()->keyBy('id');
         $businessPlan->load([
             'transactions.category',
-            'businessPlanSections',
+            'businessPlanSections' => fn ($q) => $q->where('is_active', true)->orderBy('order_index'),
             'branch',
             'employees',
             'founders',
@@ -156,6 +159,7 @@ class BusinessPlanController extends Controller
         return Inertia::render('businessplan/show', [
             'catalogItems' => $catalogItems,
             'businessPlan' => $businessPlan,
+            'businessPlanSections' => $businessPlan->businessPlanSections,
             'liquidityPlan' => $liquidityPlan,
             'currencies' => Currency::all()->map(fn ($c) => ['value' => (string) $c->id, 'label' => $c->code]),
             'taxes' => Tax::where('is_active', true)->get()->map(fn ($t) => ['value' => (string) $t->id, 'label' => $t->name]),
@@ -210,6 +214,20 @@ class BusinessPlanController extends Controller
 
         return redirect()->route('businessplan.show', $businessPlan)
             ->with('success', 'Transaktion erstellt.');
+    }
+
+    public function generate(BusinessPlan $businessPlan): JsonResponse
+    {
+        abort_if($businessPlan->user_id !== auth()->id(), 403);
+
+        $businessPlan->update([
+            'status' => StatusEnum::IN_PROGRESS,
+            'generation_status' => GenerationStatusEnum::PENDING,
+        ]);
+
+        GenerateBusinessPlanSectionsJob::dispatch($businessPlan);
+
+        return response()->json(['success' => true]);
     }
 
     public function destroy(BusinessPlan $businessPlan, DeleteBusinessPlan $action): RedirectResponse
