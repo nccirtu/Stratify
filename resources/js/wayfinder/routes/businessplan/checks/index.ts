@@ -5,7 +5,7 @@ import { applyUrlDefaults, formSafeOptions, queryParams, type RouteDefinition, t
 
 /**
  * @see \App\Http\Controllers\BusinessPlanCheckController::index
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:44
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:49
  * @route "/businessplans/{businessPlan}/checks"
  */
 export const index = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -20,7 +20,7 @@ index.definition = {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanCheckController::index
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:44
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:49
  * @route "/businessplans/{businessPlan}/checks"
  */
 index.url = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -51,7 +51,7 @@ index.url = (args: { businessPlan: number | { id: number } } | [ businessPlan: n
 
 /**
  * @see \App\Http\Controllers\BusinessPlanCheckController::index
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:44
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:49
  * @route "/businessplans/{businessPlan}/checks"
  */
 index.get = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -61,7 +61,7 @@ index.get = (args: { businessPlan: number | { id: number } } | [ businessPlan: n
 
 /**
  * @see \App\Http\Controllers\BusinessPlanCheckController::index
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:44
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:49
  * @route "/businessplans/{businessPlan}/checks"
  */
 index.head = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"head"> => ({
@@ -71,7 +71,7 @@ index.head = (args: { businessPlan: number | { id: number } } | [ businessPlan: 
 
 /**
  * @see \App\Http\Controllers\BusinessPlanCheckController::index
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:44
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:49
  * @route "/businessplans/{businessPlan}/checks"
  */
 const indexForm = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -81,7 +81,7 @@ const indexForm = (args: { businessPlan: number | { id: number } } | [ businessP
 
 /**
  * @see \App\Http\Controllers\BusinessPlanCheckController::index
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:44
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:49
  * @route "/businessplans/{businessPlan}/checks"
  */
 indexForm.get = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -91,7 +91,7 @@ indexForm.get = (args: { businessPlan: number | { id: number } } | [ businessPla
 
 /**
  * @see \App\Http\Controllers\BusinessPlanCheckController::index
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:44
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:49
  * @route "/businessplans/{businessPlan}/checks"
  */
 indexForm.head = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -102,7 +102,7 @@ indexForm.head = (args: { businessPlan: number | { id: number } } | [ businessPl
 index.form = indexForm
 /**
  * @see \App\Http\Controllers\BusinessPlanCheckController::stream
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:59
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:64
  * @route "/businessplans/{businessPlan}/checks/{group}/stream"
  */
 export const stream = (args: { businessPlan: number | { id: number }, group: string | number } | [ businessPlan: number | { id: number }, group: string | number ], options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -117,7 +117,7 @@ stream.definition = {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanCheckController::stream
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:59
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:64
  * @route "/businessplans/{businessPlan}/checks/{group}/stream"
  */
 stream.url = (args: { businessPlan: number | { id: number }, group: string | number } | [ businessPlan: number | { id: number }, group: string | number ], options?: RouteQueryOptions) => {
@@ -143,7 +143,7 @@ stream.url = (args: { businessPlan: number | { id: number }, group: string | num
 
 /**
  * @see \App\Http\Controllers\BusinessPlanCheckController::stream
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:59
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:64
  * @route "/businessplans/{businessPlan}/checks/{group}/stream"
  */
 stream.get = (args: { businessPlan: number | { id: number }, group: string | number } | [ businessPlan: number | { id: number }, group: string | number ], options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -153,7 +153,7 @@ stream.get = (args: { businessPlan: number | { id: number }, group: string | num
 
 /**
  * @see \App\Http\Controllers\BusinessPlanCheckController::stream
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:59
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:64
  * @route "/businessplans/{businessPlan}/checks/{group}/stream"
  */
 stream.head = (args: { businessPlan: number | { id: number }, group: string | number } | [ businessPlan: number | { id: number }, group: string | number ], options?: RouteQueryOptions): RouteDefinition<"head"> => ({
@@ -163,7 +163,7 @@ stream.head = (args: { businessPlan: number | { id: number }, group: string | nu
 
 /**
  * @see \App\Http\Controllers\BusinessPlanCheckController::stream
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:59
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:64
  * @route "/businessplans/{businessPlan}/checks/{group}/stream"
  */
 const streamForm = (args: { businessPlan: number | { id: number }, group: string | number } | [ businessPlan: number | { id: number }, group: string | number ], options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -173,7 +173,7 @@ const streamForm = (args: { businessPlan: number | { id: number }, group: string
 
 /**
  * @see \App\Http\Controllers\BusinessPlanCheckController::stream
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:59
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:64
  * @route "/businessplans/{businessPlan}/checks/{group}/stream"
  */
 streamForm.get = (args: { businessPlan: number | { id: number }, group: string | number } | [ businessPlan: number | { id: number }, group: string | number ], options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -183,7 +183,7 @@ streamForm.get = (args: { businessPlan: number | { id: number }, group: string |
 
 /**
  * @see \App\Http\Controllers\BusinessPlanCheckController::stream
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:59
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanCheckController.php:64
  * @route "/businessplans/{businessPlan}/checks/{group}/stream"
  */
 streamForm.head = (args: { businessPlan: number | { id: number }, group: string | number } | [ businessPlan: number | { id: number }, group: string | number ], options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({

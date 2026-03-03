@@ -36,6 +36,11 @@ class BusinessPlanCheckController extends Controller
             'finanzplanung_ausgeglichen' => 'Finanzplanung ausgeglichen',
             'gesamtbewertung' => 'Gesamtbewertung',
         ],
+        4 => [
+            'vertriebsstrategie_plausibel' => 'Vertriebsstrategie plausibel',
+            'marketingkanaele_konsistent' => 'Marketingkanäle konsistent',
+            'marketingbudget_realistisch' => 'Marketingbudget realistisch',
+        ],
     ];
 
     /**

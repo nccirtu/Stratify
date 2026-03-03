@@ -72,6 +72,10 @@ PROMPT;
             'personalplanung_plausibel' => 'Ist die Personalplanung (Mitarbeiter, Gehälter) realistisch und zum Geschäftsmodell passend?',
             'finanzplanung_ausgeglichen' => 'Ist die Finanzplanung insgesamt ausgeglichen und weist der Plan auf Zahlungsfähigkeit hin?',
             'gesamtbewertung' => 'Wie ist der Businessplan insgesamt zu bewerten? Gibt es kritische Lücken oder besonders starke Bereiche?',
+            // Group 4 – Vertrieb & Marketing
+            'vertriebsstrategie_plausibel' => 'Ist die gewählte Vertriebsstrategie (Kundenakquise, Vertriebskanäle, Verantwortlichkeiten) plausibel und zum Geschäftsmodell passend?',
+            'marketingkanaele_konsistent' => 'Sind die gewählten Marketingkanäle und -maßnahmen konsistent mit der Zielgruppe, dem Angebot und dem Budget?',
+            'marketingbudget_realistisch' => 'Ist das geplante Marketingbudget realistisch im Verhältnis zu den Einnahmezielen und der gewählten Strategie?',
             default => "Überprüfe den Aspekt: {$this->checkLabel}",
         };
     }
@@ -141,6 +145,80 @@ PROMPT;
 
         if ($bp->channels && is_array($bp->channels)) {
             $context[] = '**Vertriebskanäle:** '.implode(', ', $bp->channels);
+        }
+
+        // Step 13 – Kundenakquise & Vertrieb
+        if ($bp->acquiring_customers && is_array($bp->acquiring_customers)) {
+            $context[] = '**Kundenakquise-Kanäle:** '.implode(', ', $bp->acquiring_customers);
+        }
+
+        if ($bp->acquiring_customers_online_shop && is_array($bp->acquiring_customers_online_shop)) {
+            $context[] = '**Online-Shop Infrastruktur:** '.implode(', ', $bp->acquiring_customers_online_shop);
+        }
+
+        if ($bp->acquiring_customers_create_online_shop) {
+            $context[] = "**Online-Shop Erstellung geplant via:** {$bp->acquiring_customers_create_online_shop}";
+        }
+
+        if ($bp->payment_methods && is_array($bp->payment_methods)) {
+            $context[] = '**Zahlungsmethoden:** '.implode(', ', $bp->payment_methods);
+        }
+
+        if ($bp->shipping_organization) {
+            $context[] = "**Versandorganisation:** {$bp->shipping_organization}";
+        }
+
+        if ($bp->direct_sales_responsibility && is_array($bp->direct_sales_responsibility)) {
+            $context[] = '**Direktvertrieb-Verantwortliche:** '.implode(', ', $bp->direct_sales_responsibility);
+        }
+
+        if ($bp->existing_sales_structure && is_array($bp->existing_sales_structure)) {
+            $context[] = '**Vorhandene Vertriebsstruktur:** '.implode(', ', $bp->existing_sales_structure);
+        }
+
+        if ($bp->direct_sales_staff_count) {
+            $context[] = "**Direktvertrieb-Mitarbeiter:** {$bp->direct_sales_staff_count}";
+        }
+
+        if ($bp->sales_compensation_model) {
+            $context[] = "**Vergütungsmodell Vertrieb:** {$bp->sales_compensation_model}";
+        }
+
+        if ($bp->plan_crm_introduction) {
+            $context[] = "**CRM-Einführung geplant:** {$bp->plan_crm_introduction}";
+        }
+
+        if ($bp->field_service_infrastructure && is_array($bp->field_service_infrastructure)) {
+            $context[] = '**Außendienst-Infrastruktur:** '.implode(', ', $bp->field_service_infrastructure);
+        }
+
+        if ($bp->field_service_staff_planned_count) {
+            $context[] = "**Außendienstmitarbeiter geplant:** {$bp->field_service_staff_planned_count}";
+        }
+
+        // Step 14 – Marketing
+        if ($bp->marketing_channels && is_array($bp->marketing_channels)) {
+            $context[] = '**Marketingkanäle:** '.implode(', ', $bp->marketing_channels);
+        }
+
+        if ($bp->social_ads_platforms && is_array($bp->social_ads_platforms)) {
+            $context[] = '**Social Ads Plattformen:** '.implode(', ', $bp->social_ads_platforms);
+        }
+
+        if ($bp->marketing_experience) {
+            $context[] = "**Marketingerfahrung:** {$bp->marketing_experience}";
+        }
+
+        if ($bp->marketing_responsibility && is_array($bp->marketing_responsibility)) {
+            $context[] = '**Marketing-Verantwortliche:** '.implode(', ', $bp->marketing_responsibility);
+        }
+
+        if ($bp->marketing_infrastructure && is_array($bp->marketing_infrastructure)) {
+            $context[] = '**Marketing-Infrastruktur:** '.implode(', ', $bp->marketing_infrastructure);
+        }
+
+        if ($bp->marketing_budget_monthly) {
+            $context[] = "**Monatliches Marketingbudget:** {$bp->marketing_budget_monthly}";
         }
 
         if ($bp->address || $bp->city) {
