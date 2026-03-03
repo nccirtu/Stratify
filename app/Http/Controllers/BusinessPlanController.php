@@ -6,6 +6,9 @@ use App\Actions\BusinessPlan\CreateBusinessPlan;
 use App\Actions\BusinessPlan\DeleteBusinessPlan;
 use App\Actions\BusinessPlan\StoreBusinessPlanTransaction;
 use App\Actions\BusinessPlan\UpdateBusinessPlan;
+use App\Enums\AcquiringCustomerCreateOnlineShopEnum;
+use App\Enums\AcquiringCustomerOnlineShopEnum;
+use App\Enums\AcquiringCustomersEnum;
 use App\Enums\AgeGroupEnum;
 use App\Enums\BusinessActivitiesEnum;
 use App\Enums\BusinessModelEnum;
@@ -17,18 +20,31 @@ use App\Enums\CommunityLeadershipEnum;
 use App\Enums\CompanyStateEnum;
 use App\Enums\CompanyTargetGroupEnum;
 use App\Enums\DevelopmentStateEnum;
+use App\Enums\DirectSalesResponsibilityEnum;
 use App\Enums\ExclusiveLeadershipEnum;
+use App\Enums\ExistingSalesStructureEnum;
+use App\Enums\FieldServiceInfrastructureEnum;
 use App\Enums\InformationTargetGroupEnum;
 use App\Enums\InovationLevelEnum;
 use App\Enums\LifeSituationEnum;
+use App\Enums\MarketingBudgetEnum;
+use App\Enums\MarketingChannelsEnum;
+use App\Enums\MarketingExperienceEnum;
+use App\Enums\MarketingInfrastructureEnum;
+use App\Enums\MarketingResponsibilityEnum;
 use App\Enums\OfferTypeEnum;
+use App\Enums\PaymentMethodsEnum;
+use App\Enums\PlanCrmIntroductionEnum;
 use App\Enums\PriceLeadershipEnum;
 use App\Enums\PricingStrategieEnum;
 use App\Enums\PropertyRightsEnum;
 use App\Enums\PublicTenderEnum;
 use App\Enums\PurchaseDecisionEnum;
 use App\Enums\QualityLeadershipEnum;
+use App\Enums\SalesCompensationModelEnum;
 use App\Enums\ScalableCapabilityEnum;
+use App\Enums\ShippingOrganizationEnum;
+use App\Enums\SocialAdsPlatformsEnum;
 use App\Enums\SpecialistLeadershipEnum;
 use App\Enums\TargetMarketEnum;
 use App\Enums\TechnologyLeadershipEnum;
@@ -234,6 +250,24 @@ class BusinessPlanController extends Controller
             'companyTargetGroups' => CompanyTargetGroupEnum::options(),
             'publicTenders' => PublicTenderEnum::options(),
             'channels' => ChannelsEnum::options(),
+            // Step 13: Kundenakquise & Vertrieb
+            'acquiringCustomers' => AcquiringCustomersEnum::options(),
+            'acquiringCustomerOnlineShops' => AcquiringCustomerOnlineShopEnum::options(),
+            'acquiringCustomerCreateOnlineShops' => AcquiringCustomerCreateOnlineShopEnum::options(),
+            'paymentMethods' => PaymentMethodsEnum::options(),
+            'shippingOrganizations' => ShippingOrganizationEnum::options(),
+            'directSalesResponsibilities' => DirectSalesResponsibilityEnum::options(),
+            'existingSalesStructures' => ExistingSalesStructureEnum::options(),
+            'salesCompensationModels' => SalesCompensationModelEnum::options(),
+            'planCrmIntroductions' => PlanCrmIntroductionEnum::options(),
+            'fieldServiceInfrastructures' => FieldServiceInfrastructureEnum::options(),
+            // Step 14: Marketing
+            'marketingChannels' => MarketingChannelsEnum::options(),
+            'socialAdsPlatforms' => SocialAdsPlatformsEnum::options(),
+            'marketingExperiences' => MarketingExperienceEnum::options(),
+            'marketingResponsibilities' => MarketingResponsibilityEnum::options(),
+            'marketingInfrastructures' => MarketingInfrastructureEnum::options(),
+            'marketingBudgets' => MarketingBudgetEnum::options(),
         ];
     }
 }

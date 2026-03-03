@@ -16,7 +16,7 @@ export namespace App {
         /**
          * @see [\App\Models\BusinessPlan](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Models/BusinessPlan.php)
          */
-        export type BusinessPlan = { id: number, name: string, slug: string, description: string | null, is_active: boolean, branch_id: number | null, user_id: number, status: App.Enums.StatusEnum | null, period_from: string | null, period_until: string | null, usp: Record<string, unknown>, created_at: string | null, updated_at: string | null, customer_problems: string | null, generation_status: string, generation_started_at: string | null, generation_completed_at: string | null, generation_cost: number, generation_error: string | null, company_state: App.Enums.CompanyStateEnum | null, handover_date: string | null, existing_date: string | null, is_headquarter: boolean | null, company_name: string | null, company_description: string | null, address: string | null, zip_code: string | null, city: string | null, state: string | null, country: string | null, expected_headquarters: string | null, email: string | null, phone: string | null, website: string | null, logo: string | null, businessplan_target: string | null, capital_usage: Record<string, unknown>, business_activities: string | null, last_year_revenue: number | null, business_model: Record<string, unknown>, inovation_level: string | null, price_leadership: Record<string, unknown>, quality_leadership: Record<string, unknown>, specialist_leadership: Record<string, unknown>, technology_leadership: Record<string, unknown>, exclusive_leadership: Record<string, unknown>, community_leadership: Record<string, unknown>, usp_text: string | null, scalable: string | null, offer_type: Record<string, unknown>, development_state: string | null, property_rights: Record<string, unknown>, details_property_rights: string | null, pricing_stategie: string | null, client_type: Record<string, unknown>, target_market: string | null, purchase_decision: Record<string, unknown>, age_group: string | null, life_situation: string | null, information_target_group: Record<string, unknown>, company_target_group: Record<string, unknown>, public_tenders: string | null, channels: Record<string, unknown>, liquidity_opening_balance: number, current_step: number, branch?: App.Models.Branches | null, user?: App.Models.User | null, business_plan_sections?: App.Models.BusinessPlanSection[], transactions?: App.Models.Transaction[], documents?: App.Models.Document[], notes?: App.Models.Note[], users?: App.Models.User[], founders?: App.Models.Founder[], employees?: App.Models.Employee[], service_providers?: App.Models.ServiceProvider[], loans?: App.Models.Loan[], bank_accounts?: App.Models.BankAccount[] }
+        export type BusinessPlan = { id: number, name: string, slug: string, description: string | null, is_active: boolean, branch_id: number | null, user_id: number, status: App.Enums.StatusEnum | null, period_from: string | null, period_until: string | null, usp: Record<string, unknown>, created_at: string | null, updated_at: string | null, customer_problems: string | null, generation_status: string, generation_started_at: string | null, generation_completed_at: string | null, generation_cost: number, generation_error: string | null, company_state: App.Enums.CompanyStateEnum | null, handover_date: string | null, existing_date: string | null, is_headquarter: boolean | null, company_name: string | null, company_description: string | null, address: string | null, zip_code: string | null, city: string | null, state: string | null, country: string | null, expected_headquarters: string | null, email: string | null, phone: string | null, website: string | null, logo: string | null, businessplan_target: string | null, capital_usage: Record<string, unknown>, business_activities: string | null, last_year_revenue: number | null, business_model: Record<string, unknown>, inovation_level: string | null, price_leadership: Record<string, unknown>, quality_leadership: Record<string, unknown>, specialist_leadership: Record<string, unknown>, technology_leadership: Record<string, unknown>, exclusive_leadership: Record<string, unknown>, community_leadership: Record<string, unknown>, usp_text: string | null, scalable: string | null, offer_type: Record<string, unknown>, development_state: string | null, property_rights: Record<string, unknown>, details_property_rights: string | null, pricing_stategie: string | null, client_type: Record<string, unknown>, target_market: string | null, purchase_decision: Record<string, unknown>, age_group: string | null, life_situation: string | null, information_target_group: Record<string, unknown>, company_target_group: Record<string, unknown>, public_tenders: string | null, channels: Record<string, unknown>, liquidity_opening_balance: number, current_step: number, acquiring_customers: Record<string, unknown>, acquiring_customers_online_shop: Record<string, unknown>, acquiring_customers_create_online_shop: string | null, payment_methods: Record<string, unknown>, shipping_organization: string | null, direct_sales_responsibility: Record<string, unknown>, existing_sales_structure: Record<string, unknown>, direct_sales_staff_count: number | null, sales_compensation_model: string | null, plan_crm_introduction: string | null, field_service_infrastructure: Record<string, unknown>, field_service_staff_planned_count: number | null, marketing_channels: Record<string, unknown>, social_ads_platforms: Record<string, unknown>, marketing_experience: string | null, marketing_responsibility: Record<string, unknown>, marketing_infrastructure: Record<string, unknown>, marketing_budget_monthly: string | null, branch?: App.Models.Branches | null, user?: App.Models.User | null, business_plan_sections?: App.Models.BusinessPlanSection[], transactions?: App.Models.Transaction[], documents?: App.Models.Document[], notes?: App.Models.Note[], users?: App.Models.User[], founders?: App.Models.Founder[], employees?: App.Models.Employee[], service_providers?: App.Models.ServiceProvider[], loans?: App.Models.Loan[], bank_accounts?: App.Models.BankAccount[] }
 
         /**
          * @see [\App\Models\Branches](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Models/Branches.php)
@@ -121,9 +121,19 @@ export namespace App {
         export type GenerationStatusEnum = 'pending' | 'generating' | 'completed' | 'failed' | 'cancelled'
 
         /**
+         * @see [\App\Enums\MarketingExperienceEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/MarketingExperienceEnum.php)
+         */
+        export type MarketingExperienceEnum = 'ja' | 'teilweise' | 'nein'
+
+        /**
          * @see [\App\Enums\CompanyStateEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/CompanyStateEnum.php)
          */
         export type CompanyStateEnum = 'new' | 'existing' | 'succession'
+
+        /**
+         * @see [\App\Enums\PaymentMethodsEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/PaymentMethodsEnum.php)
+         */
+        export type PaymentMethodsEnum = 'paypal' | 'kreditkarte' | 'sofortueberweisung' | 'klarna' | 'noch_unklar'
 
         /**
          * @see [\App\Enums\PlanRecipientEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/PlanRecipientEnum.php)
@@ -131,14 +141,34 @@ export namespace App {
         export type PlanRecipientEnum = 'investor' | 'employment_office' | 'bank' | 'government' | 'own' | 'other'
 
         /**
+         * @see [\App\Enums\MarketingResponsibilityEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/MarketingResponsibilityEnum.php)
+         */
+        export type MarketingResponsibilityEnum = 'gruender' | 'mitarbeiter' | 'agentur' | 'freelancer'
+
+        /**
+         * @see [\App\Enums\SalesCompensationModelEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/SalesCompensationModelEnum.php)
+         */
+        export type SalesCompensationModelEnum = 'fixgehalt' | 'provision' | 'kombination'
+
+        /**
          * @see [\App\Enums\UspEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/UspEnum.php)
          */
         export type UspEnum = 'price_leadership' | 'quality_leadership' | 'specialist_leadership' | 'technology_leadership' | 'exclusive_leadership' | 'community_leadership'
 
         /**
+         * @see [\App\Enums\ShippingOrganizationEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/ShippingOrganizationEnum.php)
+         */
+        export type ShippingOrganizationEnum = 'eigener_versand' | 'fulfillment_dienstleister' | 'noch_offen'
+
+        /**
          * @see [\App\Enums\PriceCalculationEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/PriceCalculationEnum.php)
          */
         export type PriceCalculationEnum = 'competitor_price' | 'cost_with_profit' | 'market_price'
+
+        /**
+         * @see [\App\Enums\AcquiringCustomersEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/AcquiringCustomersEnum.php)
+         */
+        export type AcquiringCustomersEnum = 'online_shop' | 'direktvertrieb' | 'aussendienst' | 'partner_reseller' | 'plattformen' | 'social_media_direktverkauf' | 'beratungsgespraeche' | 'stationaeres_geschaeft'
 
         /**
          * @see [\App\Enums\PublicTenderEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/PublicTenderEnum.php)
@@ -149,6 +179,16 @@ export namespace App {
          * @see [\App\Enums\ExclusiveLeadershipEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/ExclusiveLeadershipEnum.php)
          */
         export type ExclusiveLeadershipEnum = 'supplier' | 'raw_materials' | 'community' | 'relationships' | 'platforms'
+
+        /**
+         * @see [\App\Enums\ExistingSalesStructureEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/ExistingSalesStructureEnum.php)
+         */
+        export type ExistingSalesStructureEnum = 'vertriebsleitfaden_vorhanden' | 'kundendatenbank_vorhanden' | 'crm_system_eingerichtet' | 'angebotsvorlagen_vorhanden' | 'verguetungsmodell_definiert' | 'geschultes_personal_verfuegbar' | 'noch_keine_struktur'
+
+        /**
+         * @see [\App\Enums\MarketingInfrastructureEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/MarketingInfrastructureEnum.php)
+         */
+        export type MarketingInfrastructureEnum = 'website' | 'crm' | 'newsletter_system' | 'tracking_eingerichtet' | 'nichts_vorhanden'
 
         /**
          * @see [\App\Enums\DevelopmentStateEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/DevelopmentStateEnum.php)
@@ -196,6 +236,11 @@ export namespace App {
         export type PostCategoryEnum = 'startups' | 'funding' | 'strategy' | 'marketing' | 'technology' | 'legal' | 'mindset' | 'networking' | 'leadership' | 'sales' | 'growth' | 'case-studies' | 'lessons' | 'lifestyle' | 'guides'
 
         /**
+         * @see [\App\Enums\DirectSalesResponsibilityEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/DirectSalesResponsibilityEnum.php)
+         */
+        export type DirectSalesResponsibilityEnum = 'gruender' | 'mitarbeiter' | 'externe_vertriebsagentur'
+
+        /**
          * @see [\App\Enums\PriceStrategieEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/PriceStrategieEnum.php)
          */
         export type PriceStrategieEnum = 'lowest_price' | 'highest_price' | 'average_price'
@@ -209,6 +254,11 @@ export namespace App {
          * @see [\App\Enums\AgeGroupEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/AgeGroupEnum.php)
          */
         export type AgeGroupEnum = 'unter_25' | '25_35' | '36_50' | '50_plus'
+
+        /**
+         * @see [\App\Enums\PlanCrmIntroductionEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/PlanCrmIntroductionEnum.php)
+         */
+        export type PlanCrmIntroductionEnum = 'ja' | 'nein' | 'noch_unklar'
 
         /**
          * @see [\App\Enums\FoundationTypeEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/FoundationTypeEnum.php)
@@ -236,6 +286,11 @@ export namespace App {
         export type LifeSituationEnum = 'studierend' | 'berufstaetig' | 'fuehrungskraft' | 'familie' | 'ruhestand'
 
         /**
+         * @see [\App\Enums\MarketingBudgetEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/MarketingBudgetEnum.php)
+         */
+        export type MarketingBudgetEnum = 'unter_500' | '500_bis_2000' | '2000_bis_10000' | 'ueber_10000'
+
+        /**
          * @see [\App\Enums\PropertyRightsEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/PropertyRightsEnum.php)
          */
         export type PropertyRightsEnum = 'patent' | 'marke' | 'designschutz' | 'keine'
@@ -246,9 +301,19 @@ export namespace App {
         export type BusinessActivitiesEnum = 'no_revenue' | 'first_sales' | 'pilot_customer'
 
         /**
+         * @see [\App\Enums\AcquiringCustomerOnlineShopEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/AcquiringCustomerOnlineShopEnum.php)
+         */
+        export type AcquiringCustomerOnlineShopEnum = 'domain_registriert' | 'shop_system_eingerichtet' | 'zahlungsanbieter_angebunden' | 'rechtstexte_integriert' | 'tracking_eingerichtet' | 'seo_grundoptimierung' | 'produktdaten_gepflegt' | 'versandstruktur_definiert' | 'kundenservice_prozess_definiert' | 'noch_nichts_vorhanden'
+
+        /**
          * @see [\App\Enums\StatusEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/StatusEnum.php)
          */
         export type StatusEnum = 'draft' | 'in_progress' | 'completed'
+
+        /**
+         * @see [\App\Enums\SocialAdsPlatformsEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/SocialAdsPlatformsEnum.php)
+         */
+        export type SocialAdsPlatformsEnum = 'meta' | 'tiktok' | 'linkedin' | 'pinterest' | 'x'
 
         /**
          * @see [\App\Enums\QualityLeadershipEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/QualityLeadershipEnum.php)
@@ -261,9 +326,24 @@ export namespace App {
         export type LiquiditySectionEnum = 'income' | 'investment' | 'operational' | 'financing'
 
         /**
+         * @see [\App\Enums\MarketingChannelsEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/MarketingChannelsEnum.php)
+         */
+        export type MarketingChannelsEnum = 'seo' | 'google_ads' | 'social_ads' | 'influencer' | 'pr' | 'events' | 'kaltakquise' | 'newsletter' | 'content_marketing'
+
+        /**
+         * @see [\App\Enums\FieldServiceInfrastructureEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/FieldServiceInfrastructureEnum.php)
+         */
+        export type FieldServiceInfrastructureEnum = 'aussendienstmitarbeiter_eingestellt' | 'fahrzeuge_vorhanden' | 'reisekostenbudget_geplant' | 'crm_system_mobil_nutzbar' | 'vertragsunterlagen_vorbereitet' | 'vertriebsziele_definiert' | 'noch_nichts_vorhanden'
+
+        /**
          * @see [\App\Enums\CapitalUsageEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/CapitalUsageEnum.php)
          */
         export type CapitalUsageEnum = 'product_development' | 'employees' | 'marketing' | 'operating_resources' | 'growth' | 'reorientation' | 'efficiency_improvement' | 'internationalization'
+
+        /**
+         * @see [\App\Enums\AcquiringCustomerCreateOnlineShopEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/AcquiringCustomerCreateOnlineShopEnum.php)
+         */
+        export type AcquiringCustomerCreateOnlineShopEnum = 'selbst_baukasten' | 'freelancer' | 'agentur'
 
         /**
          * @see [\App\Enums\BusinessplanTargetEnum](/Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Enums/BusinessplanTargetEnum.php)

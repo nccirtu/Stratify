@@ -17,6 +17,8 @@ import Step9Income from '../wizard/Step9Income';
 import Step10Expenses from '../wizard/Step10Expenses';
 import StepEmployees from '../wizard/StepEmployees';
 import StepLoans from '../wizard/StepLoans';
+import Step13CustomerAcquisition from '../wizard/Step13CustomerAcquisition';
+import Step14Marketing from '../wizard/Step14Marketing';
 import StepCheckBusinessplan from '../wizard/StepCheckBusinessplan';
 import type {
     BusinessPlanFormData,
@@ -40,6 +42,8 @@ const STEPS = [
     { label: 'Ausgaben', component: Step10Expenses },
     { label: 'Mitarbeiter', component: StepEmployees },
     { label: 'Darlehen', component: StepLoans },
+    { label: 'Kundenakquise', component: Step13CustomerAcquisition },
+    { label: 'Marketing', component: Step14Marketing },
     { label: 'Überprüfung', component: StepCheckBusinessplan },
 ] as const;
 
@@ -127,6 +131,26 @@ const defaultFormData: BusinessPlanFormData = {
     // Step 11 & 12
     employees: [],
     loans: [],
+    // Step 13 – Kundenakquise & Vertrieb
+    acquiring_customers: [],
+    acquiring_customers_online_shop: [],
+    acquiring_customers_create_online_shop: '',
+    payment_methods: [],
+    shipping_organization: '',
+    direct_sales_responsibility: [],
+    existing_sales_structure: [],
+    direct_sales_staff_count: '',
+    sales_compensation_model: '',
+    plan_crm_introduction: '',
+    field_service_infrastructure: [],
+    field_service_staff_planned_count: '',
+    // Step 14 – Marketing
+    marketing_channels: [],
+    social_ads_platforms: [],
+    marketing_experience: '',
+    marketing_responsibility: [],
+    marketing_infrastructure: [],
+    marketing_budget_monthly: '',
 };
 
 function buildTransactionItems(transactions: any[]): TransactionItem[] {
@@ -209,6 +233,38 @@ function buildInitialData(businessPlan?: any): BusinessPlanFormData {
         information_target_group: Array.isArray(businessPlan.information_target_group) ? businessPlan.information_target_group : [],
         company_target_group: Array.isArray(businessPlan.company_target_group) ? businessPlan.company_target_group : [],
         channels: Array.isArray(businessPlan.channels) ? businessPlan.channels : [],
+        // Step 13
+        acquiring_customers: Array.isArray(businessPlan.acquiring_customers)
+            ? businessPlan.acquiring_customers
+            : [],
+        acquiring_customers_online_shop: Array.isArray(businessPlan.acquiring_customers_online_shop)
+            ? businessPlan.acquiring_customers_online_shop
+            : [],
+        payment_methods: Array.isArray(businessPlan.payment_methods)
+            ? businessPlan.payment_methods
+            : [],
+        direct_sales_responsibility: Array.isArray(businessPlan.direct_sales_responsibility)
+            ? businessPlan.direct_sales_responsibility
+            : [],
+        existing_sales_structure: Array.isArray(businessPlan.existing_sales_structure)
+            ? businessPlan.existing_sales_structure
+            : [],
+        field_service_infrastructure: Array.isArray(businessPlan.field_service_infrastructure)
+            ? businessPlan.field_service_infrastructure
+            : [],
+        // Step 14
+        marketing_channels: Array.isArray(businessPlan.marketing_channels)
+            ? businessPlan.marketing_channels
+            : [],
+        social_ads_platforms: Array.isArray(businessPlan.social_ads_platforms)
+            ? businessPlan.social_ads_platforms
+            : [],
+        marketing_responsibility: Array.isArray(businessPlan.marketing_responsibility)
+            ? businessPlan.marketing_responsibility
+            : [],
+        marketing_infrastructure: Array.isArray(businessPlan.marketing_infrastructure)
+            ? businessPlan.marketing_infrastructure
+            : [],
         income_transactions: buildTransactionItems(
             (businessPlan.transactions || []).filter((t: any) => t.type === 'income'),
         ),

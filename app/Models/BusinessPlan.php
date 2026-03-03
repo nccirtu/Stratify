@@ -73,6 +73,26 @@ class BusinessPlan extends Model
         'company_target_group',
         'public_tenders',
         'channels',
+        // Step 13: Kundenakquise & Vertrieb
+        'acquiring_customers',
+        'acquiring_customers_online_shop',
+        'acquiring_customers_create_online_shop',
+        'payment_methods',
+        'shipping_organization',
+        'direct_sales_responsibility',
+        'existing_sales_structure',
+        'direct_sales_staff_count',
+        'sales_compensation_model',
+        'plan_crm_introduction',
+        'field_service_infrastructure',
+        'field_service_staff_planned_count',
+        // Step 14: Marketing
+        'marketing_channels',
+        'social_ads_platforms',
+        'marketing_experience',
+        'marketing_responsibility',
+        'marketing_infrastructure',
+        'marketing_budget_monthly',
         'liquidity_opening_balance',
         'current_step',
     ];
@@ -110,6 +130,18 @@ class BusinessPlan extends Model
             'information_target_group' => 'array',
             'company_target_group' => 'array',
             'channels' => 'array',
+            // Step 13: Kundenakquise & Vertrieb
+            'acquiring_customers' => 'array',
+            'acquiring_customers_online_shop' => 'array',
+            'payment_methods' => 'array',
+            'direct_sales_responsibility' => 'array',
+            'existing_sales_structure' => 'array',
+            'field_service_infrastructure' => 'array',
+            // Step 14: Marketing
+            'marketing_channels' => 'array',
+            'social_ads_platforms' => 'array',
+            'marketing_responsibility' => 'array',
+            'marketing_infrastructure' => 'array',
         ];
     }
 

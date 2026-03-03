@@ -7,7 +7,7 @@ import checks from "./checks";
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::saveStep
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:99
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:115
  * @route "/businessplans/{businessPlan}/save-step"
  */
 export const saveStep = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"put"> => ({
@@ -22,7 +22,7 @@ saveStep.definition = {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::saveStep
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:99
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:115
  * @route "/businessplans/{businessPlan}/save-step"
  */
 saveStep.url = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -53,7 +53,7 @@ saveStep.url = (args: { businessPlan: number | { id: number } } | [ businessPlan
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::saveStep
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:99
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:115
  * @route "/businessplans/{businessPlan}/save-step"
  */
 saveStep.put = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"put"> => ({
@@ -63,7 +63,7 @@ saveStep.put = (args: { businessPlan: number | { id: number } } | [ businessPlan
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::saveStep
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:99
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:115
  * @route "/businessplans/{businessPlan}/save-step"
  */
 const saveStepForm = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"post"> => ({
@@ -73,7 +73,7 @@ const saveStepForm = (args: { businessPlan: number | { id: number } } | [ busine
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::saveStep
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:99
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:115
  * @route "/businessplans/{businessPlan}/save-step"
  */
 saveStepForm.put = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"post"> => ({
@@ -84,7 +84,7 @@ saveStepForm.put = (args: { businessPlan: number | { id: number } } | [ business
 saveStep.form = saveStepForm
 /**
  * @see \App\Http\Controllers\BusinessPlanController::index
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:57
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:73
  * @route "/businessplans"
  */
 export const index = (options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -99,7 +99,7 @@ index.definition = {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::index
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:57
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:73
  * @route "/businessplans"
  */
 index.url = (options?: RouteQueryOptions) => {
@@ -108,7 +108,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::index
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:57
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:73
  * @route "/businessplans"
  */
 index.get = (options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -118,7 +118,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<"get"> => ({
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::index
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:57
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:73
  * @route "/businessplans"
  */
 index.head = (options?: RouteQueryOptions): RouteDefinition<"head"> => ({
@@ -128,7 +128,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<"head"> => ({
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::index
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:57
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:73
  * @route "/businessplans"
  */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -138,7 +138,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<"get"> => (
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::index
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:57
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:73
  * @route "/businessplans"
  */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -148,7 +148,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::index
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:57
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:73
  * @route "/businessplans"
  */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -159,7 +159,7 @@ indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
 index.form = indexForm
 /**
  * @see \App\Http\Controllers\BusinessPlanController::create
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:69
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:85
  * @route "/businessplans/create"
  */
 export const create = (options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -174,7 +174,7 @@ create.definition = {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::create
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:69
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:85
  * @route "/businessplans/create"
  */
 create.url = (options?: RouteQueryOptions) => {
@@ -183,7 +183,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::create
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:69
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:85
  * @route "/businessplans/create"
  */
 create.get = (options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -193,7 +193,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<"get"> => ({
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::create
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:69
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:85
  * @route "/businessplans/create"
  */
 create.head = (options?: RouteQueryOptions): RouteDefinition<"head"> => ({
@@ -203,7 +203,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<"head"> => ({
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::create
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:69
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:85
  * @route "/businessplans/create"
  */
 const createForm = (options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -213,7 +213,7 @@ const createForm = (options?: RouteQueryOptions): RouteFormDefinition<"get"> => 
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::create
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:69
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:85
  * @route "/businessplans/create"
  */
 createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -223,7 +223,7 @@ createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::create
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:69
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:85
  * @route "/businessplans/create"
  */
 createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -234,7 +234,7 @@ createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<"get"> => (
 create.form = createForm
 /**
  * @see \App\Http\Controllers\BusinessPlanController::store
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:83
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:99
  * @route "/businessplans"
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<"post"> => ({
@@ -249,7 +249,7 @@ store.definition = {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::store
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:83
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:99
  * @route "/businessplans"
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -258,7 +258,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::store
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:83
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:99
  * @route "/businessplans"
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<"post"> => ({
@@ -268,7 +268,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<"post"> => ({
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::store
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:83
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:99
  * @route "/businessplans"
  */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<"post"> => ({
@@ -278,7 +278,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<"post"> => 
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::store
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:83
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:99
  * @route "/businessplans"
  */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<"post"> => ({
@@ -289,7 +289,7 @@ storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<"post"> => (
 store.form = storeForm
 /**
  * @see \App\Http\Controllers\BusinessPlanController::show
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:117
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:133
  * @route "/businessplans/{businessPlan}"
  */
 export const show = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -304,7 +304,7 @@ show.definition = {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::show
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:117
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:133
  * @route "/businessplans/{businessPlan}"
  */
 show.url = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -335,7 +335,7 @@ show.url = (args: { businessPlan: number | { id: number } } | [ businessPlan: nu
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::show
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:117
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:133
  * @route "/businessplans/{businessPlan}"
  */
 show.get = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -345,7 +345,7 @@ show.get = (args: { businessPlan: number | { id: number } } | [ businessPlan: nu
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::show
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:117
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:133
  * @route "/businessplans/{businessPlan}"
  */
 show.head = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"head"> => ({
@@ -355,7 +355,7 @@ show.head = (args: { businessPlan: number | { id: number } } | [ businessPlan: n
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::show
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:117
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:133
  * @route "/businessplans/{businessPlan}"
  */
 const showForm = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -365,7 +365,7 @@ const showForm = (args: { businessPlan: number | { id: number } } | [ businessPl
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::show
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:117
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:133
  * @route "/businessplans/{businessPlan}"
  */
 showForm.get = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -375,7 +375,7 @@ showForm.get = (args: { businessPlan: number | { id: number } } | [ businessPlan
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::show
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:117
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:133
  * @route "/businessplans/{businessPlan}"
  */
 showForm.head = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -386,7 +386,7 @@ showForm.head = (args: { businessPlan: number | { id: number } } | [ businessPla
 show.form = showForm
 /**
  * @see \App\Http\Controllers\BusinessPlanController::edit
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:153
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:169
  * @route "/businessplans/{businessPlan}/edit"
  */
 export const edit = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -401,7 +401,7 @@ edit.definition = {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::edit
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:153
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:169
  * @route "/businessplans/{businessPlan}/edit"
  */
 edit.url = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -432,7 +432,7 @@ edit.url = (args: { businessPlan: number | { id: number } } | [ businessPlan: nu
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::edit
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:153
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:169
  * @route "/businessplans/{businessPlan}/edit"
  */
 edit.get = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -442,7 +442,7 @@ edit.get = (args: { businessPlan: number | { id: number } } | [ businessPlan: nu
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::edit
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:153
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:169
  * @route "/businessplans/{businessPlan}/edit"
  */
 edit.head = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"head"> => ({
@@ -452,7 +452,7 @@ edit.head = (args: { businessPlan: number | { id: number } } | [ businessPlan: n
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::edit
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:153
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:169
  * @route "/businessplans/{businessPlan}/edit"
  */
 const editForm = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -462,7 +462,7 @@ const editForm = (args: { businessPlan: number | { id: number } } | [ businessPl
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::edit
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:153
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:169
  * @route "/businessplans/{businessPlan}/edit"
  */
 editForm.get = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -472,7 +472,7 @@ editForm.get = (args: { businessPlan: number | { id: number } } | [ businessPlan
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::edit
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:153
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:169
  * @route "/businessplans/{businessPlan}/edit"
  */
 editForm.head = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -483,7 +483,7 @@ editForm.head = (args: { businessPlan: number | { id: number } } | [ businessPla
 edit.form = editForm
 /**
  * @see \App\Http\Controllers\BusinessPlanController::update
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:172
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:188
  * @route "/businessplans/{businessPlan}"
  */
 export const update = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"put"> => ({
@@ -498,7 +498,7 @@ update.definition = {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::update
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:172
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:188
  * @route "/businessplans/{businessPlan}"
  */
 update.url = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -529,7 +529,7 @@ update.url = (args: { businessPlan: number | { id: number } } | [ businessPlan: 
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::update
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:172
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:188
  * @route "/businessplans/{businessPlan}"
  */
 update.put = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"put"> => ({
@@ -539,7 +539,7 @@ update.put = (args: { businessPlan: number | { id: number } } | [ businessPlan: 
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::update
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:172
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:188
  * @route "/businessplans/{businessPlan}"
  */
 update.patch = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"patch"> => ({
@@ -549,7 +549,7 @@ update.patch = (args: { businessPlan: number | { id: number } } | [ businessPlan
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::update
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:172
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:188
  * @route "/businessplans/{businessPlan}"
  */
 const updateForm = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"post"> => ({
@@ -559,7 +559,7 @@ const updateForm = (args: { businessPlan: number | { id: number } } | [ business
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::update
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:172
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:188
  * @route "/businessplans/{businessPlan}"
  */
 updateForm.put = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"post"> => ({
@@ -569,7 +569,7 @@ updateForm.put = (args: { businessPlan: number | { id: number } } | [ businessPl
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::update
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:172
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:188
  * @route "/businessplans/{businessPlan}"
  */
 updateForm.patch = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"post"> => ({
@@ -580,7 +580,7 @@ updateForm.patch = (args: { businessPlan: number | { id: number } } | [ business
 update.form = updateForm
 /**
  * @see \App\Http\Controllers\BusinessPlanController::destroy
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:199
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:215
  * @route "/businessplans/{businessPlan}"
  */
 export const destroy = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"delete"> => ({
@@ -595,7 +595,7 @@ destroy.definition = {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::destroy
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:199
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:215
  * @route "/businessplans/{businessPlan}"
  */
 destroy.url = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -626,7 +626,7 @@ destroy.url = (args: { businessPlan: number | { id: number } } | [ businessPlan:
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::destroy
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:199
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:215
  * @route "/businessplans/{businessPlan}"
  */
 destroy.delete = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"delete"> => ({
@@ -636,7 +636,7 @@ destroy.delete = (args: { businessPlan: number | { id: number } } | [ businessPl
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::destroy
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:199
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:215
  * @route "/businessplans/{businessPlan}"
  */
 const destroyForm = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"post"> => ({
@@ -646,7 +646,7 @@ const destroyForm = (args: { businessPlan: number | { id: number } } | [ busines
 
 /**
  * @see \App\Http\Controllers\BusinessPlanController::destroy
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:199
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanController.php:215
  * @route "/businessplans/{businessPlan}"
  */
 destroyForm.delete = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"post"> => ({

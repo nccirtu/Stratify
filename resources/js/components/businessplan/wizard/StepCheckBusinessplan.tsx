@@ -46,6 +46,11 @@ const GROUP_DEFINITIONS: Omit<GroupDef, 'checks'>[] = [
         label: 'Finanzplanung',
         description: 'Schritte 9–12: Einnahmen, Ausgaben, Mitarbeiter, Darlehen',
     },
+    {
+        groupNumber: 4,
+        label: 'Vertrieb & Marketing',
+        description: 'Schritte 13–14: Kundenakquise, Vertrieb, Marketing',
+    },
 ];
 
 const CHECKS_PER_GROUP: Record<number, { key: string; label: string }[]> = {
@@ -68,6 +73,11 @@ const CHECKS_PER_GROUP: Record<number, { key: string; label: string }[]> = {
         { key: 'personalplanung_plausibel', label: 'Personalplanung plausibel' },
         { key: 'finanzplanung_ausgeglichen', label: 'Finanzplanung ausgeglichen' },
         { key: 'gesamtbewertung', label: 'Gesamtbewertung' },
+    ],
+    4: [
+        { key: 'vertriebsstrategie_plausibel', label: 'Vertriebsstrategie plausibel' },
+        { key: 'marketingkanaele_konsistent', label: 'Marketingkanäle konsistent' },
+        { key: 'marketingbudget_realistisch', label: 'Marketingbudget realistisch' },
     ],
 };
 

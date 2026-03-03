@@ -66,6 +66,26 @@ export interface BusinessPlanFormData {
     employees: EmployeeItem[];
     // Step 12 – Darlehen
     loans: LoanItem[];
+    // Step 13 – Kundenakquise & Vertrieb
+    acquiring_customers: string[];
+    acquiring_customers_online_shop: string[];
+    acquiring_customers_create_online_shop: string;
+    payment_methods: string[];
+    shipping_organization: string;
+    direct_sales_responsibility: string[];
+    existing_sales_structure: string[];
+    direct_sales_staff_count: string;
+    sales_compensation_model: string;
+    plan_crm_introduction: string;
+    field_service_infrastructure: string[];
+    field_service_staff_planned_count: string;
+    // Step 14 – Marketing
+    marketing_channels: string[];
+    social_ads_platforms: string[];
+    marketing_experience: string;
+    marketing_responsibility: string[];
+    marketing_infrastructure: string[];
+    marketing_budget_monthly: string;
 }
 
 export interface TransactionItem {
@@ -147,6 +167,24 @@ export interface EnumOptions {
     companyTargetGroups: SelectOption[];
     publicTenders: SelectOption[];
     channels: SelectOption[];
+    // Step 13: Kundenakquise & Vertrieb
+    acquiringCustomers: SelectOption[];
+    acquiringCustomerOnlineShops: SelectOption[];
+    acquiringCustomerCreateOnlineShops: SelectOption[];
+    paymentMethods: SelectOption[];
+    shippingOrganizations: SelectOption[];
+    directSalesResponsibilities: SelectOption[];
+    existingSalesStructures: SelectOption[];
+    salesCompensationModels: SelectOption[];
+    planCrmIntroductions: SelectOption[];
+    fieldServiceInfrastructures: SelectOption[];
+    // Step 14: Marketing
+    marketingChannels: SelectOption[];
+    socialAdsPlatforms: SelectOption[];
+    marketingExperiences: SelectOption[];
+    marketingResponsibilities: SelectOption[];
+    marketingInfrastructures: SelectOption[];
+    marketingBudgets: SelectOption[];
 }
 
 export interface WizardStepProps {

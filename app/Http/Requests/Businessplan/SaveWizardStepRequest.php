@@ -38,6 +38,8 @@ class SaveWizardStepRequest extends FormRequest
             10 => $this->step10Rules(),
             11 => $this->step11Rules(),
             12 => $this->step12Rules(),
+            13 => $this->step13Rules(),
+            14 => $this->step14Rules(),
             default => [],
         };
     }
@@ -239,6 +241,46 @@ class SaveWizardStepRequest extends FormRequest
             'loans.*.end_date' => 'nullable|date',
             'loans.*.payment_day' => 'nullable|integer|min:1|max:31',
             'loans.*.description' => 'nullable|string',
+        ];
+    }
+
+    private function step13Rules(): array
+    {
+        return [
+            'acquiring_customers' => 'nullable|array',
+            'acquiring_customers.*' => 'string',
+            'acquiring_customers_online_shop' => 'nullable|array',
+            'acquiring_customers_online_shop.*' => 'string',
+            'acquiring_customers_create_online_shop' => 'nullable|string|max:100',
+            'payment_methods' => 'nullable|array',
+            'payment_methods.*' => 'string',
+            'shipping_organization' => 'nullable|string|max:100',
+            'direct_sales_responsibility' => 'nullable|array',
+            'direct_sales_responsibility.*' => 'string',
+            'existing_sales_structure' => 'nullable|array',
+            'existing_sales_structure.*' => 'string',
+            'direct_sales_staff_count' => 'nullable|integer|min:0',
+            'sales_compensation_model' => 'nullable|string|max:100',
+            'plan_crm_introduction' => 'nullable|string|max:100',
+            'field_service_infrastructure' => 'nullable|array',
+            'field_service_infrastructure.*' => 'string',
+            'field_service_staff_planned_count' => 'nullable|integer|min:0',
+        ];
+    }
+
+    private function step14Rules(): array
+    {
+        return [
+            'marketing_channels' => 'nullable|array',
+            'marketing_channels.*' => 'string',
+            'social_ads_platforms' => 'nullable|array',
+            'social_ads_platforms.*' => 'string',
+            'marketing_experience' => 'nullable|string|max:100',
+            'marketing_responsibility' => 'nullable|array',
+            'marketing_responsibility.*' => 'string',
+            'marketing_infrastructure' => 'nullable|array',
+            'marketing_infrastructure.*' => 'string',
+            'marketing_budget_monthly' => 'nullable|string|max:100',
         ];
     }
 }
