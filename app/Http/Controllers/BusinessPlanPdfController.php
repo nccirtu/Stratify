@@ -11,6 +11,8 @@ use Spatie\Browsershot\Browsershot;
 
 class BusinessPlanPdfController extends Controller
 {
+    protected array $validLayouts = ['klassisch', 'modern', 'minimal', 'executive', 'natur'];
+
     public function show(Request $request, BusinessPlan $businessPlan): View
     {
         abort_unless(
@@ -18,6 +20,10 @@ class BusinessPlanPdfController extends Controller
             403,
             'Sie haben keinen Zugriff auf diesen Businessplan.'
         );
+
+        $layout = in_array($request->query('layout'), $this->validLayouts, true)
+            ? $request->query('layout')
+            : 'klassisch';
 
         $sections = $businessPlan->businessPlanSections()
             ->where('is_active', true)
@@ -30,6 +36,7 @@ class BusinessPlanPdfController extends Controller
             'businessPlan' => $businessPlan,
             'sections' => $sections,
             'groupedSections' => $groupedSections,
+            'layout' => $layout,
         ]);
     }
 
@@ -40,6 +47,10 @@ class BusinessPlanPdfController extends Controller
             403,
             'Sie haben keinen Zugriff auf diesen Businessplan.'
         );
+
+        $layout = in_array($request->query('layout'), $this->validLayouts, true)
+            ? $request->query('layout')
+            : 'klassisch';
 
         $sections = $businessPlan->businessPlanSections()
             ->where('is_active', true)
@@ -52,6 +63,7 @@ class BusinessPlanPdfController extends Controller
             'businessPlan' => $businessPlan,
             'sections' => $sections,
             'groupedSections' => $groupedSections,
+            'layout' => $layout,
             'isPdfDownload' => true,
         ])->render();
 

@@ -5,7 +5,7 @@ import { applyUrlDefaults, formSafeOptions, queryParams, type RouteDefinition, t
 
 /**
  * @see \App\Http\Controllers\BusinessPlanPdfController::download
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:36
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:43
  * @route "/business-plan/{businessPlan}/pdf/download"
  */
 export const download = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -20,7 +20,7 @@ download.definition = {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanPdfController::download
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:36
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:43
  * @route "/business-plan/{businessPlan}/pdf/download"
  */
 download.url = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -51,7 +51,7 @@ download.url = (args: { businessPlan: number | { id: number } } | [ businessPlan
 
 /**
  * @see \App\Http\Controllers\BusinessPlanPdfController::download
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:36
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:43
  * @route "/business-plan/{businessPlan}/pdf/download"
  */
 download.get = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -61,7 +61,7 @@ download.get = (args: { businessPlan: number | { id: number } } | [ businessPlan
 
 /**
  * @see \App\Http\Controllers\BusinessPlanPdfController::download
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:36
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:43
  * @route "/business-plan/{businessPlan}/pdf/download"
  */
 download.head = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"head"> => ({
@@ -71,7 +71,7 @@ download.head = (args: { businessPlan: number | { id: number } } | [ businessPla
 
 /**
  * @see \App\Http\Controllers\BusinessPlanPdfController::download
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:36
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:43
  * @route "/business-plan/{businessPlan}/pdf/download"
  */
 const downloadForm = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -81,7 +81,7 @@ const downloadForm = (args: { businessPlan: number | { id: number } } | [ busine
 
 /**
  * @see \App\Http\Controllers\BusinessPlanPdfController::download
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:36
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:43
  * @route "/business-plan/{businessPlan}/pdf/download"
  */
 downloadForm.get = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -91,7 +91,7 @@ downloadForm.get = (args: { businessPlan: number | { id: number } } | [ business
 
 /**
  * @see \App\Http\Controllers\BusinessPlanPdfController::download
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:36
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:43
  * @route "/business-plan/{businessPlan}/pdf/download"
  */
 downloadForm.head = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({

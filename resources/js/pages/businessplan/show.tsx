@@ -1,11 +1,12 @@
 import { Head } from '@inertiajs/react';
+import { useState } from 'react';
 
+import PrintLayoutModal from '@/components/businessplan/PrintLayoutModal';
 import ViewPageTabs from '@/components/businessplan/viewPageComponents/viewPageTabs';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
 import { LiquidityPlanData } from '@/types/liquidity';
-import { show as pdfShow } from '@/wayfinder/App/Http/Controllers/BusinessPlanPdfController';
 import { App } from '@/wayfinder/types';
 import { dashboard } from '@/routes';
 import businessplan from '@/wayfinder/routes/businessplan';
@@ -62,10 +63,39 @@ export default function BusinessplanShow({
     incomeCatalogItems,
     expenseCatalogItems,
 }: BusinessPlanShowProps) {
+    const isCompleted = businessPlan.status === 'completed';
+    const [printModalOpen, setPrintModalOpen] = useState(false);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard" />
+            <Head title={businessPlan.name ?? 'Businessplan'} />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+                {/* Page header */}
+                <div className="flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                        <h1 className="truncate text-xl font-semibold">
+                            {businessPlan.name}
+                        </h1>
+                    </div>
+                    {isCompleted && (
+                        <>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setPrintModalOpen(true)}
+                            >
+                                <FileText className="mr-1.5 h-4 w-4" />
+                                Drucken / PDF
+                            </Button>
+                            <PrintLayoutModal
+                                open={printModalOpen}
+                                onOpenChange={setPrintModalOpen}
+                                businessPlanId={businessPlan.id}
+                            />
+                        </>
+                    )}
+                </div>
+
                 <div className="relative min-h-screen flex-1 overflow-hidden rounded-xl md:min-h-min">
                     <ViewPageTabs
                         catalogItems={catalogItems ?? []}

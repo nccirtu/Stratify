@@ -6,7 +6,7 @@ import pdf81d01da from "./pdf";
 
 /**
  * @see \App\Http\Controllers\BusinessPlanPdfController::show
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:14
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:16
  * @route "/business-plan/{businessPlan}/pdf"
  */
 export const pdf = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -21,7 +21,7 @@ pdf.definition = {
 
 /**
  * @see \App\Http\Controllers\BusinessPlanPdfController::show
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:14
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:16
  * @route "/business-plan/{businessPlan}/pdf"
  */
 pdf.url = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -52,7 +52,7 @@ pdf.url = (args: { businessPlan: number | { id: number } } | [ businessPlan: num
 
 /**
  * @see \App\Http\Controllers\BusinessPlanPdfController::show
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:14
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:16
  * @route "/business-plan/{businessPlan}/pdf"
  */
 pdf.get = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"get"> => ({
@@ -62,7 +62,7 @@ pdf.get = (args: { businessPlan: number | { id: number } } | [ businessPlan: num
 
 /**
  * @see \App\Http\Controllers\BusinessPlanPdfController::show
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:14
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:16
  * @route "/business-plan/{businessPlan}/pdf"
  */
 pdf.head = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<"head"> => ({
@@ -72,7 +72,7 @@ pdf.head = (args: { businessPlan: number | { id: number } } | [ businessPlan: nu
 
 /**
  * @see \App\Http\Controllers\BusinessPlanPdfController::show
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:14
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:16
  * @route "/business-plan/{businessPlan}/pdf"
  */
 const pdfForm = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -82,7 +82,7 @@ const pdfForm = (args: { businessPlan: number | { id: number } } | [ businessPla
 
 /**
  * @see \App\Http\Controllers\BusinessPlanPdfController::show
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:14
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:16
  * @route "/business-plan/{businessPlan}/pdf"
  */
 pdfForm.get = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
@@ -92,7 +92,7 @@ pdfForm.get = (args: { businessPlan: number | { id: number } } | [ businessPlan:
 
 /**
  * @see \App\Http\Controllers\BusinessPlanPdfController::show
- * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:14
+ * @see /Applications/XAMPP/xamppfiles/htdocs/Stratify/app/Http/Controllers/BusinessPlanPdfController.php:16
  * @route "/business-plan/{businessPlan}/pdf"
  */
 pdfForm.head = (args: { businessPlan: number | { id: number } } | [ businessPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<"get"> => ({
