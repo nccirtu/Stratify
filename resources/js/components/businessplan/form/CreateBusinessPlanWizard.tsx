@@ -381,8 +381,15 @@ export default function CreateBusinessPlanWizard({
                 }
 
                 if (response.status === 422) {
-                    const errorData = await response.json();
-                    setErrors(errorData.errors ?? {});
+                    try {
+                        const errorData = await response.json();
+                        setErrors(errorData.errors ?? {});
+                        if (!errorData.errors || Object.keys(errorData.errors).length === 0) {
+                            setServerError('Validierungsfehler. Bitte überprüfe deine Eingaben.');
+                        }
+                    } catch {
+                        setServerError(`Validierungsfehler (422). Bitte überprüfe deine Eingaben.`);
+                    }
                 } else {
                     setServerError(`Serverfehler (${response.status}). Bitte versuche es erneut.`);
                 }
@@ -450,8 +457,15 @@ export default function CreateBusinessPlanWizard({
                 }
 
                 if (response.status === 422) {
-                    const errorData = await response.json();
-                    setErrors(errorData.errors ?? {});
+                    try {
+                        const errorData = await response.json();
+                        setErrors(errorData.errors ?? {});
+                        if (!errorData.errors || Object.keys(errorData.errors).length === 0) {
+                            setServerError('Validierungsfehler. Bitte überprüfe deine Eingaben.');
+                        }
+                    } catch {
+                        setServerError(`Validierungsfehler (422). Bitte überprüfe deine Eingaben.`);
+                    }
                 } else {
                     setServerError(`Serverfehler (${response.status}). Bitte versuche es erneut.`);
                 }
@@ -478,8 +492,15 @@ export default function CreateBusinessPlanWizard({
             }
 
             if (response.status === 422) {
-                const errorData = await response.json();
-                setErrors(errorData.errors ?? {});
+                try {
+                    const errorData = await response.json();
+                    setErrors(errorData.errors ?? {});
+                    if (!errorData.errors || Object.keys(errorData.errors).length === 0) {
+                        setServerError('Validierungsfehler. Bitte überprüfe deine Eingaben.');
+                    }
+                } catch {
+                    setServerError(`Validierungsfehler (422). Bitte überprüfe deine Eingaben.`);
+                }
             } else {
                 setServerError(`Serverfehler (${response.status}). Bitte versuche es erneut.`);
             }
